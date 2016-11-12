@@ -4,42 +4,117 @@
 #include <iostream>
 #include <string>
 
+
 //Muita kokeiluja
-int dvdsaver();
-int blockbuster();
-int blockbuster2();
 
 
-int main()
-{	
-	//Luodaan 20*20 taulukko nollia ja ykkosia, reunat ladataan 1:silla eli seinilla
-	int array [20][20];
-	int m,n;
-	for (n=0;n<20;n++){
-		for (m=0;m<20;m++){
-			if(m==0 || n==0 ||m==19||n==19 ){
-				array[n][m]=1;
-			}else{
-				array[n][m]=0;
+main(){
+	int mapsize=50;
+	int array[mapsize][mapsize];
+	int n,m;
+	
+	//Fill the map with walls
+	for(n=0;n<mapsize;n++){
+		for(m=0;m<mapsize;m++){
+			array[n][m]=1;
+		}
+	}
+	srand (time(NULL));
+	
+	//How many rooms are made
+	int rooms=rand() %5 +12;
+
+	//std::cout<<"Rooms: "<<rooms<<std::endl;
+	int i;
+	
+	//lastx and lasty are used to build tunnels from one room to another
+	int lastx=rand() %(mapsize-1)+1;
+	int lasty=rand() %(mapsize-1)+1;
+	int sizex,sizey,startx,starty;
+	
+	 
+	for(i=0;i<rooms;i++){
+		//A different size and location is randomized for every room
+		sizex=rand() %6 +3;
+		sizey=rand() %6 +3;
+		startx=rand() %(mapsize-sizex-1) +1;
+		starty=rand() %(mapsize-sizey-1) +1;
+		
+		//std::cout<<"sizex: "<<sizex<<" sizey: "<<sizey<<" startx: "<<startx<<" starty: "<<starty<<std::endl;
+		
+		//Make the room by insertin 0's in the array
+		for(n=startx;n<startx+sizex;n++){
+			for(m=starty;m<starty+sizey;m++){
+				if(n>-1 && m>-1 && m<mapsize && m<mapsize){
+					array[n][m]=0;
+				}
 			}
+		}
+		
+		//Build a tunnel from the last room
+		if(lastx<startx){
+			for(n=lastx;n<startx+1;n++){
+				array[n][lasty]=0;
+			}
+		}else{
+			for(n=startx;n<lastx+1;n++){
+				array[n][lasty]=0;
+			}
+		}
+		if(lasty<starty){
+		
+			for(n=lasty;n<starty+1;n++){
+				array[startx][n]=0;
+			}
+		}else{
+			for(n=starty;n<lasty+1;n++){
+				array[startx][n]=0;
+			}
+		}
+		
+		//save coordinates of this room
+		lastx=startx+sizex/2;
+		lasty=starty+sizey/2;
+	}
+	
+	//Add a num. 2 to the last room, could be used as the exit of a level?
+	array[lastx+sizex/2-1][lasty-1]=2;
+	
+	//print map to terminal
+	for(n=0;n<mapsize;n++){
+		for(m=0;m<mapsize;m++){
+			std::cout<<array[m][n]<<" ";
+		}
+		std::cout<<std::endl;
+	}
+
+	
+	
+	
+	
+	
+	//Finds a safe spot for the player to start (not a wall)
+	float mcx=0;
+	float mcy=0;
+	for(n=0;n<mapsize;n++){
+		for(m=0;m<mapsize;m++){
+			if (array[n][m]==0){
+				mcx=n;
+				mcy=m;
+				break;
+			}
+		}
+		if(mcx!=0){
+			break;
 		}
 	}
 	
-	//heitetaan random seinia joukkoon
-	array[5][6]=1;
-	array[15][16]=1;
-	array[15][6]=1;
-	array[3][5]=1;
-	array[5][7]=1;
-	array[18][6]=1;
-	array[10][10]=1;
-	array[7][13]=1;
-
+	
 	//pelaajan aloituspiste taulukossa
-	sf::Vector2f mc(1.f,1.f);
+	sf::Vector2f mc(mcx,mcy);
 	
 
- 	//Ladataan kolme texturea ja laitetaan Sprite-jutskiin (wall, ground, pelihahmo)
+ 	//Loading textures to sprites
 	sf::Texture wallt;
 	if (!wallt.loadFromFile("resources/wall50.png"))
 	{
@@ -60,6 +135,12 @@ int main()
 	    // error...
 	}
 	sf::Sprite jaba(abajt);
+	sf::Texture stair;
+	if (!stair.loadFromFile("resources/stairs.png"))
+	{
+	    // error...
+	}
+	sf::Sprite stairs(stair);
 	
 	//Siirretaan pelihahmon kuva keskelle peliruutua
 	jaba.setPosition(200,200);
@@ -94,7 +175,7 @@ int main()
 			l=true;
 
 		}else if(l){
-			/*kun liikutaan vasemmalle, pitää pelihahmon graffoja kaantaa 90 astetta
+			/*kun liikutaan vasemmalle, pitaa pelihahmon graffoja kaantaa 90 astetta
 			Kuva kiertyy kuitenkin vasemman ylakulman suhteen, joten pitaa siirtaa
 			50 px oikealle jotta on taas oikeassa kohdassa
 			*/
@@ -190,7 +271,7 @@ int main()
 				}
 			}
 			
-			std::cout<<"x%: "<<perx<<" y%: "<<pery<<std::endl;
+			//std::cout<<"x%: "<<perx<<" y%: "<<pery<<std::endl;
 			float per=(clock2.getElapsedTime().asSeconds()-cmdtime)/animationtime;
 			for(n=0;n<9;n++){
 				for(m=0;m<9;m++){
@@ -225,7 +306,7 @@ int main()
 			}
 			for(n=(int) mc.x -5;n<(int) mc.x +6;n++){
 				for(m=(int) mc.y -5;m<(int) mc.y +6;m++){
-					if(n>-1 && m>-1 && n<20 && m<20){
+					if(n>-1 && m>-1 && n<mapsize && m<mapsize){
 						if(array[n][m]==1){
 							wall.setPosition(offsetx+perx*50+50*(-mc.x+n+4),offsety+pery*50+50*(-mc.y+m+4));
 							window.draw(wall);
@@ -235,6 +316,9 @@ int main()
 							window.draw(ground);
 
 
+						}else if(array[n][m]==2){
+							stairs.setPosition(offsetx+perx*50+50*(-mc.x+n+4),offsety+pery*50+50*(-mc.y+m+4));
+							window.draw(stairs);					
 						}
 					}
 
@@ -266,14 +350,22 @@ int main()
 			}
 			for(n=(int) mc.x -5;n<(int) mc.x +6;n++){
 				for(m=(int) mc.y -5;m<(int) mc.y +6;m++){
-					if(n>-1 && m>-1 && n<20 && m<20){
+					if(n>-1 && m>-1 && n<mapsize && m<mapsize){
 						if(array[n][m]==1){
 							wall.setPosition(50*(-mc.x+n+4),50*(-mc.y+m+4));
 							window.draw(wall);
 						}else if(array[n][m]==0){
+					
 						
 							ground.setPosition(50*(-mc.x+n+4),50*(-mc.y+m+4));
 							window.draw(ground);
+
+
+						}else if(array[n][m]==2){
+					
+						
+							stairs.setPosition(50*(-mc.x+n+4),50*(-mc.y+m+4));
+							window.draw(stairs);
 
 
 						}
@@ -287,7 +379,7 @@ int main()
 		window.display();
 		//printtaillaan kaikkea jannaa
 		if(print){
-			std::cout<<"Pos x: "<<mc.x<<" Pos y: "<<mc.y<<std::endl;
+			//std::cout<<"Pos x: "<<mc.x<<" Pos y: "<<mc.y<<std::endl;
 			print=false;
 		}
 	}
@@ -295,292 +387,4 @@ int main()
 }
 
 
-//Alla myos vanhoja saatoja, aika turhia tosin
-int blockbuster2(){
-	int array [20][20];
-	int m,n;
-	for (n=0;n<20;n++){
-		for (m=0;m<20;m++){
-			if(m==0 || n==0 ||m==19||n==19 ){
-				array[n][m]=1;
-			}else{
-				array[n][m]=0;
-			}
-		}
-	}
-	array[5][6]=1;
-	array[15][16]=1;
-	array[15][6]=1;
-	array[3][5]=1;
-	array[5][7]=1;
-	array[18][6]=1;
-	array[10][10]=1;
-	array[7][13]=1;
 
-	sf::Vector2f mc(3.f,2.f);
-	sf::CircleShape bob(50.f);
-	bob.setFillColor(sf::Color::Green);
-	bob.setPosition(400,400);
-
-	sf::Texture wallt;
-	if (!wallt.loadFromFile("resources/wall100.png"))
-	{
-	    // error...
-	}
-	sf::Sprite wall(wallt);
-
-	sf::Texture groundt;
-	if (!groundt.loadFromFile("resources/ground100.png"))
-	{
-	    // error...
-	}
-	sf::Sprite ground(groundt);
-
-	sf::Texture abajt;
-	if (!abajt.loadFromFile("resources/knight100.png"))
-	{
-	    // error...
-	}
-	sf::Sprite jaba(abajt);
-
-	jaba.setPosition(400,400);
-	
-	sf::RectangleShape rec(sf::Vector2f(100, 100));
-	rec.setFillColor(sf::Color::Red);
-
-	int windowx=900;
-	int windowy=900;
-	sf::RenderWindow window(sf::VideoMode(windowx, windowy), "Testi!");
-	bool l,r,u,d,print=false;
-	while (window.isOpen())
-	{
-
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			l=true;
-
-		}else if(l){
-			jaba.setRotation(90);
-			jaba.setOrigin(0,100);
-			print=true;
-			if (not (array[(int)mc.x-1][(int)mc.y]==1)){
-				mc.x-=1;
-			}
-			l=false;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			r=true;
-
-		}else if(r){
-			jaba.setRotation(270);
-			jaba.setOrigin(100,0);
-			print=true;
-			if (not (array[(int)mc.x+1][(int)mc.y]==1)){
-				mc.x+=1;
-			}
-			r=false;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			u=true;
-
-		}else if(u){
-			jaba.setRotation(180);
-			jaba.setOrigin(100,100);
-			print=true;
-			if (not (array[(int)mc.x][(int)mc.y-1]==1)){
-				mc.y-=1;
-			}
-			u=false;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			d=true;
-
-		}else if(d){
-			jaba.setRotation(0);
-			jaba.setOrigin(0,0);
-			print=true;
-			if (not (array[(int)mc.x][(int)mc.y+1]==1)){
-				mc.y+=1;
-			}
-			d=false;
-		}
-
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-
-		window.clear();
-		for(n=0;n<10;n++){
-			for(m=0;m<10;m++){
-				wall.setPosition(100*(n),100*(m));
-				window.draw(wall);
-			}
-		}
-		for(n=(int) mc.x -4;n<(int) mc.x +5;n++){
-			for(m=(int) mc.y -4;m<(int) mc.y +5;m++){
-				if(n>-1 && m>-1 && n<20 && m<20){
-					if(array[n][m]==1){
-						wall.setPosition(100*(-mc.x+n+4),100*(-mc.y+m+4));
-						window.draw(wall);
-					}else if(array[n][m]==0){
-						
-						ground.setPosition(100*(-mc.x+n+4),100*(-mc.y+m+4));
-						window.draw(ground);
-
-
-					}
-				}
-
-			}
-		}
-		window.draw(jaba);
-		window.display();
-		if(print){
-			std::cout<<"Pos x: "<<mc.x<<" Pos y: "<<mc.y<<std::endl;
-			print=false;
-		}
-	}
-}
-int blockbuster(){
-	int array [10][10];
-	int m,n;
-
-	for (n=0;n<10;n++){
-		for (m=0;m<10;m++){
-			if(m==0 || n==0 ||m==9||n==9 ){
-				array[n][m]=1;
-			}else{
-				array[n][m]=0;
-			}
-		}
-	}
-	sf::RectangleShape rec(sf::Vector2f(100, 100));
-	rec.setFillColor(sf::Color::Red);
-
-	sf::Vector2f myspot(5.f,5.f);
-	sf::CircleShape mc(50.f);
-	mc.setFillColor(sf::Color::Green);
-	mc.setPosition(myspot.x*100,myspot.y*100);
-
-	int windowx=1000;
-	int windowy=1000;
-	sf::RenderWindow window(sf::VideoMode(windowx, windowy), "Testi!");
-	bool l,r,u,d=false;
-	while (window.isOpen())
-	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-		{
-			l=true;
-
-		}else if(l){
-			if (not (array[(int)myspot.x-1][(int)myspot.y]==1)){
-				myspot.x-=1;
-				mc.setPosition(myspot.x*100,myspot.y*100);
-			}
-			l=false;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-		{
-			r=true;
-
-		}else if(r){
-			if (not (array[(int)myspot.x+1][(int)myspot.y]==1)){
-				myspot.x+=1;
-				mc.setPosition(myspot.x*100,myspot.y*100);
-			}
-			r=false;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-		{
-			u=true;
-
-		}else if(u){
-			if (not (array[(int)myspot.x][(int)myspot.y-1]==1)){
-				myspot.y-=1;
-				mc.setPosition(myspot.x*100,myspot.y*100);
-			}
-			u=false;
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-		{
-			d=true;
-
-		}else if(d){
-			if (not (array[(int)myspot.x][(int)myspot.y+1]==1)){
-				myspot.y+=1;
-				mc.setPosition(myspot.x*100,myspot.y*100);
-			}
-			d=false;
-		}
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-
-		window.clear();
-		for (n=0;n<10;n++){
-			for (m=0;m<10;m++){
-				if(array[n][m]==1){
-					rec.setPosition(n*100,m*100);
-					window.draw(rec);
-
-
-				}
-			}
-		}
-		window.draw(mc);
-		window.display();
-	}
-	return 0;
-}
-int dvdsaver(){
-	int windowx=1000;
-	int windowy=1000;
-	auto circ=100.f;
-	sf::RenderWindow window(sf::VideoMode(windowx, windowy), "SFML works!");
-	sf::CircleShape shape(circ);
-	shape.setFillColor(sf::Color::Red);
-	shape.setPosition(0,100);
-	float speedx=4.5;
-	float speedy=5.5;
-	sf::Vector2f pos=shape.getPosition();
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-
-		window.clear();
-		window.draw(shape);
-		window.display();
-		pos=shape.getPosition();
-		std::cout<<"Pos x: "<<pos.x<<" Pos y: "<<pos.y<<std::endl;
-		if(pos.x>windowx-2*circ){
-			speedx=-speedx;
-		}
-		if(pos.x<0){
-			speedx=-speedx;
-		}
-		if(pos.y>windowy-2*circ){
-			speedy=-speedy;
-		}
-		if(pos.y<0){
-			speedy=-speedy;
-		}
-		shape.move(speedx,speedy);
-	}
-
-
-	return 0;
-}
