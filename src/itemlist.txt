@@ -1,0 +1,40 @@
+{
+type:weapon
+name:Jumalmiekka 5000
+dmg:20
+}
+{
+type:weapon
+name:Perunaveitsi
+dmg:2
+}
+{
+type:weapon
+name:Ruosteinen Miekka
+dmg:5
+}
+{
+type:weapon
+name:Longsword
+dmg:12
+}
+{
+type:armor
+name:Jumalhaarniska 5000
+armor:20
+}
+{
+type:armor
+name:Plebi vaatteet
+armor:2
+}
+{
+type:armor
+name:Vanha Gladiaattori Haarniska
+armor:8
+}
+{
+type:armor
+name:Linnanvartian Reikäpanssari
+armor:12
+}
