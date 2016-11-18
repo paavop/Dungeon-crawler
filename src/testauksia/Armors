@@ -1,0 +1,30 @@
+Working file format:
+
+1. each item is defined between {} parenthesis. The line with a parenthese cannot have any other characters except whitespace.
+2. Key-value pairs are separated with colon ( : ) and every pair on its own line.
+3. All whitespace character are erased. 
+
+correctly constructed item:
+{
+type : armor
+name : Super2000
+area : 75
+agility_bonus : -2
+defence_bonus : 0
+}
+Output:
+first key: 'type'	
+first value: 'armor'
+etc...
+
+
+incorrectly constructed item:
+
+{	type:armor    
+name : Nimbus2000
+area : 1
+agility_bonus : -2
+defence_bonus : 0
+}
+Output:
+nothing. whole section is skipped.
