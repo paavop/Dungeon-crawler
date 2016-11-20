@@ -1,5 +1,6 @@
 class Hero {
 	public:
+		Hero();
 		Hero(int h, int s, int a, int d, int m);
 		void gainExp(int e);
 		void lvlUp(void);

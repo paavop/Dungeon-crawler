@@ -1,7 +1,18 @@
 #include "hero.hpp"
 
 		
-//Constructor		
+//Constructor
+Hero::Hero(){
+	maxhp=100;
+	hp=maxhp;
+	strength=10;
+	agility=10;
+	defense=10;
+	mana=100;
+	lvl=1;
+	exp=0;
+	expToNextLvl=1000;
+}
 Hero::Hero(int h, int s, int a, int d, int m){
 	maxhp=h;
 	hp=h;

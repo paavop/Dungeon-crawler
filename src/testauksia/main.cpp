@@ -4,32 +4,28 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <utility>
+
 
 
 
 void drawHUD(sf::RenderWindow &window);
 std::vector<std::vector<int>> makeDungeon(int size);
-
+std::pair<float,float> findStart(std::vector<std::vector<int>> map);
 main(){
 	
 	int mapsize=60;
 	std::vector<std::vector<int>> array=makeDungeon(mapsize);
+	
+	
 	int m,n;
+	
+	
 	//Finds a safe spot for the player to start (not a wall)
-	float mcx=0;
-	float mcy=0;
-	for(n=0;n<mapsize;n++){
-		for(m=0;m<mapsize;m++){
-			if (array[n][m]==0){
-				mcx=n;
-				mcy=m;
-				break;
-			}
-		}
-		if(mcx!=0){
-			break;
-		}
-	}
+	std::pair<float,float> p=findStart(array);
+	float mcx=p.first;
+	float mcy=p.second;
+	
 	
 	
 	//pelaajan aloituspiste taulukossa
@@ -52,11 +48,12 @@ main(){
 	sf::Sprite ground(groundt);
 
 	sf::Texture abajt;
-	if (!abajt.loadFromFile("resources/knight50.png"))
+	if (!abajt.loadFromFile("resources/knight_animation.png"))
 	{
 	    // error...
 	}
-	sf::Sprite jaba(abajt);
+	sf::IntRect jabaSourceSprite(0,0,50,50);
+	sf::Sprite jaba(abajt,jabaSourceSprite);
 	sf::Texture stair;
 	if (!stair.loadFromFile("resources/stairs.png"))
 	{
@@ -83,13 +80,16 @@ main(){
 
 	//haluttu animaatioon kuluva aika
 	float animationtime=0.15;
-	float cmdtime,pery,perx,per,offsetx,offsety;
+	float cmdtime,pery,perx,per,offsetx,offsety,animationPer=0;
+	
 	
 	
 	while (window.isOpen())
 	{
 	
-
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+			window.close();
+		}
 		//alla olevat if ja else if -jutut tsekkaavat milloin mitakin nuolinappainta on painettu
 		//ja paastetty irti
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) and !(mu || md || ml || mr))
@@ -304,7 +304,22 @@ main(){
 				}
 			}
 		}
-		//piirtaa viela pelihahmon keskelle ruutua
+		//Draw main character in the middle of the screen
+		//Checks the percentage of movement to display movement animation
+		if(fabs(pery)>fabs(perx)){
+			animationPer=fabs(pery);
+		}else if (fabs(perx)>fabs(pery)){
+			animationPer=fabs(perx);
+		}
+
+		if (animationPer>0 && animationPer<0.5){
+			jabaSourceSprite.left=50;
+		}else if (animationPer>0.5 && animationPer<1){
+			jabaSourceSprite.left=100;
+		}else{
+			jabaSourceSprite.left=0;
+		}
+		jaba.setTextureRect(jabaSourceSprite);
 		window.draw(jaba);
 		
 		drawHUD(window);
@@ -318,6 +333,28 @@ main(){
 
 }
 
+std::pair<float,float> findStart(std::vector<std::vector<int>> map){
+	float mcx=0;
+	float mcy=0;
+	int n,m;
+	int mapsize=map.size();
+	for(n=0;n<mapsize;n++){
+		for(m=0;m<mapsize;m++){
+			if (map[n][m]==0){
+
+				mcx=n;
+				mcy=m;
+				break;
+			}
+		}
+		if(mcx!=0){
+			break;
+		}
+	}
+
+	return std::make_pair(mcx,mcy);
+}
+
 std::vector<std::vector<int>> makeDungeon(int size){
 	int mapsize=size;
 
@@ -328,12 +365,12 @@ std::vector<std::vector<int>> makeDungeon(int size){
 		array[i].resize(mapsize);
 	}
 	
-	perror("moi");
+
 	//Fill the map with walls
 	for(n=0;n<mapsize;n++){
 		for(m=0;m<mapsize;m++){
 			array[n][m]=1;
-			std::cout<<n<<" "<<m<<std::endl;
+
 		}
 	}
 	srand (time(NULL));
@@ -404,7 +441,16 @@ std::vector<std::vector<int>> makeDungeon(int size){
 	//print map to terminal
 	for(n=0;n<mapsize;n++){
 		for(m=0;m<mapsize;m++){
-			std::cout<<array[m][n]<<" ";
+			if(array[m][n]==0){
+				std::cout<<". ";
+			}
+			else if(array[m][n]==1){
+				std::cout<<"# ";
+			}
+			else{
+				std::cout<<array[m][n]<<" ";
+			}
+			
 		}
 		std::cout<<std::endl;
 	}
@@ -419,8 +465,12 @@ void drawStationary(sf::RenderWindow &window,int mcx, int mcy, int(&array)[60][6
 }
 
 void drawHUD(sf::RenderWindow &window){
-	sf::RectangleShape rect(sf::Vector2f(750,150));
-	rect.setPosition(0,450);
+	int bordersize=5;
+	sf::RectangleShape rect(sf::Vector2f(750-2*bordersize,150-2*bordersize));
+	rect.setFillColor(sf::Color(150, 50, 250));
+	rect.setOutlineThickness(bordersize);
+	rect.setOutlineColor(sf::Color(250, 150, 100));
+	rect.setPosition(0+bordersize,450+bordersize);
 	window.draw(rect);
 }
 	
