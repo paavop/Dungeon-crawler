@@ -1,4 +1,4 @@
-#include "hero.hpp"
+
 #include "HUD.hpp"
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>

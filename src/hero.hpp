@@ -7,6 +7,7 @@ class Hero {
 		bool takeDamage(int dmg);
 		void heal(int h);
 		int getHp();
+		int getMaxHp();
 		int getStr();
 		int getLvl();
 		int getExp();

@@ -61,6 +61,9 @@ void Hero::heal(int h){
 int Hero::getHp(){
 	return hp;
 }
+int Hero::getMaxHp(){
+	return maxhp;
+}
 int Hero::getStr(){
 	return strength;
 }
