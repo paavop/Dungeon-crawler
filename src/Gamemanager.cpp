@@ -42,6 +42,20 @@ GameManager::GameManager(){
 	}
 	stairs.setTexture(stairs_t);
 	
+	
+	loadEnemyTexture('resources/enemy_risumies.png');
+}
+
+void GameManager::loadEnemyTexture(Monster& enemy){
+	sf::Texture new_texture;
+	if (!new_texture.loadFromFile(enemy.getPicName())){
+		perror("Couldn't load enemy texture: "+texture_name);
+	}
+	sf::Sprite new_sprite;
+	//SourceSprite=sf::IntRect(0,0,50,50);
+	new_sprite.setTexture(new_texture);
+	enemy_sprites.push_back(new_sprite);
+	enemy.setSprite(enemy_sprites.back());
 }
 
 void GameManager::updateAll(){
@@ -110,9 +124,13 @@ void GameManager::drawMap(sf::RenderWindow& window){
 
 		}
 	}
-	
-	
 }
+
+void Gamemanager::drawEnemies(sf::RenderWindow& window){
+	*/PAAVOO!!!*/
+		// How I'm supposed to draw something?
+}	
+
 void GameManager::updatePercentages(){
 	if(movingUp || movingDown || movingLeft || movingRight){
 		if(movingUp || movingDown){
@@ -351,8 +369,14 @@ void GameManager::movePlayer(int direction){
 
 }
 	
+bool GameManager::isFree(const sf::Vector2u pos){
+	return(map[pos.y][pos.x] == 0);
+}
 	
-	
+void GameManager::setEnemies(){
+	*/	TESTING	/*
+	this->monsters.push_back(sf::Vector2f(MCspot.x+1, MCspot.y));
+}
 	
 	
 	
