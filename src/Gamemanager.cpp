@@ -1,5 +1,5 @@
 #include "Gamemanager.hpp"
-
+#include <math.h>
 GameManager::GameManager(){
 	
 	Hero hero(100,10,10,10,100);
@@ -137,9 +137,31 @@ void GameManager::drawEnemies(sf::RenderWindow& window){
 		
 	//This is how:
 	for(n=0;n<monsters.size();n++){
-		int a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50;
-		int b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50;
-		std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
+		float xmonmove=0;
+		float ymonmove=0;
+		int monoffy=0;
+		int monoffx=0;
+		if(monsters[n].movesUp()){
+			ymonmove=-std::max(fabs(yPercentage),fabs(xPercentage));
+			monoffy=50;
+			//std::cout<<ymonmove<<std::endl;
+		}
+		else if(monsters[n].movesDown()){
+			ymonmove=std::max(fabs(yPercentage),fabs(xPercentage));
+			monoffy=-50;
+		}
+		else if(monsters[n].movesLeft()){
+			xmonmove=-std::max(fabs(yPercentage),fabs(xPercentage));
+			monoffx=50;
+		}
+		else if(monsters[n].movesRight()){
+			xmonmove=std::max(fabs(yPercentage),fabs(xPercentage));
+			monoffx=-50;
+		}
+
+		int a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50+xmonmove*50+monoffx;
+		int b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50+ymonmove*50+monoffy;
+		//std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
 		enemy_sprites[0].setPosition(a,b);
 		window.draw(enemy_sprites[0]);
 	}
@@ -186,6 +208,7 @@ void GameManager::updatePercentages(){
 			movingUp=false;
 			movingDown=false;
 			movingRight=false;
+			monsters[0].stopMove();
 			offsetx=0;
 			offsety=0;
 			xPercentage=0;
@@ -339,10 +362,13 @@ void GameManager::movePlayer(int direction){
 		MC.setRotation(180);
 		MC.setOrigin(50,50);
 		if (not (map[(int)MCspot.x][(int)MCspot.y-1]==1)){
+
 			hud.sendMsg("Moving up");
 			MCspot.y-=1;
 			movingUp=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
+			
+			monsters[0].moveDown();
 		}
 		break;
 		
@@ -355,6 +381,8 @@ void GameManager::movePlayer(int direction){
 			MCspot.y+=1;
 			movingDown=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
+			
+			monsters[0].moveUp();
 		}
 		break;
 		
@@ -367,6 +395,9 @@ void GameManager::movePlayer(int direction){
 			MCspot.x-=1;
 			movingLeft=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
+			
+			
+			monsters[0].moveRight();
 		}
 		break;
 		
@@ -379,6 +410,9 @@ void GameManager::movePlayer(int direction){
 			MCspot.x+=1;
 			movingRight=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
+			
+			
+			monsters[0].moveLeft();
 		}
 		break;
 	}

@@ -26,6 +26,16 @@ class Monster {
 		int 			getAgi();
 		int 			getDef();
 		
+		bool			movesUp();
+		bool			movesDown();
+		bool			movesLeft();
+		bool			movesRight();
+		void			stopMove();
+		void			moveUp();
+		void			moveDown();
+		void			moveLeft();
+		void			moveRight();
+		
 		
 	private:
 		bool alive;
@@ -40,6 +50,7 @@ class Monster {
 		int agility;		//Monster's agility stat
 		int defense;		//Monster's defense stat
 		
+		bool movingUp,movingDown,movingLeft,movingRight;
 
 		sf::Vector2f position;
 		

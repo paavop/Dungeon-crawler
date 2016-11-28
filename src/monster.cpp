@@ -68,3 +68,40 @@ void Monster::die(){
 bool Monster::isAlive(){
 	return alive; 
 }
+
+bool Monster::movesUp(){
+	return movingUp;
+}
+bool Monster::movesDown(){
+	return movingDown;
+}
+bool Monster::movesLeft(){
+	return movingLeft;
+}
+bool Monster::movesRight(){
+	return movingRight;
+}
+void Monster::stopMove(){
+	movingDown=false;
+	movingLeft=false;
+	movingRight=false;
+	movingUp=false;
+}
+
+void Monster::moveUp(){
+	movingUp=true;
+	position.y-=1;
+}
+void Monster::moveDown(){
+	movingDown=true;
+	position.y+=1;
+}
+void Monster::moveLeft(){
+	movingLeft=true;
+	position.x-=1;
+}
+void Monster::moveRight(){
+	movingRight=true;
+	position.x+=1;
+}
+
