@@ -51,7 +51,7 @@ void Game::Loop(){
 		
 		case Game::MainMenu:
 			{
-				gameWindow.clear();
+
 				showMenu();
 				gameWindow.display();
 				break;
@@ -60,7 +60,7 @@ void Game::Loop(){
 			}
 		case Game::Playing:
 			{
-				gameWindow.clear();
+
 				manager.updateAll();
 				manager.drawAll(gameWindow);
 				

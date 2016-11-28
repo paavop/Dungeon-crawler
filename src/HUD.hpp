@@ -5,16 +5,21 @@
 #include <string>
 #include <deque>
 #include <utility>
-
+#include "hero.hpp"
+#include <sstream>
 class HUD{
 
 public:
 	HUD();
+	HUD(Hero& hero);
 	void drawHUD(sf::RenderWindow & window);
 	void sendMsg(std::string s);
+	void updateStats(Hero& hero);
 	
 private:
 	void drawTextBox(sf::RenderWindow & window);
+
+	void drawStats(sf::RenderWindow & window);
 	std::deque<std::string> messages;
 	sf::Color fillColor;
 	sf::Color borderColor;
@@ -27,5 +32,7 @@ private:
 	int height;
 	int startx;
 	int starty;
+
+	int heroMaxHp,heroHp,heroStr,heroAgi,heroDef,heroMana,heroLvl,heroExp, heroExpToNext;
 };
 	

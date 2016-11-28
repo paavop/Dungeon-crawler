@@ -14,8 +14,52 @@ HUD::HUD(){
 	borderColor.r=150;
 	borderColor.r=100;
 
+	heroMaxHp=10;
+	heroHp=0;
+	heroStr=0;
+	heroAgi=0;
+	heroDef=0;
+	heroMana=0;
+	heroLvl=0;
+	heroExp=0;
+	heroExpToNext=0;
 }
 
+HUD::HUD(Hero & hero){
+	bordersize=5;
+	width=750;
+	height=150;
+	startx=0;
+	starty=450;
+	fillColor.r=150;
+	fillColor.g=50;
+	fillColor.b=250;
+
+	borderColor.r=250;
+	borderColor.r=150;
+	borderColor.r=100;
+	
+	heroMaxHp=hero.getMaxHp();
+	heroHp=hero.getHp();
+	heroStr=hero.getStr();
+	heroAgi=hero.getAgi();
+	heroDef=hero.getDef();
+	heroMana=hero.getMana();
+	heroLvl=hero.getLvl();
+	heroExp=hero.getExp();
+	heroExpToNext=hero.getExpToNext();
+}
+void HUD::updateStats(Hero & hero){
+	heroMaxHp=hero.getMaxHp();
+	heroHp=hero.getHp();
+	heroStr=hero.getStr();
+	heroAgi=hero.getAgi();
+	heroDef=hero.getDef();
+	heroMana=hero.getMana();
+	heroLvl=hero.getLvl();
+	heroExp=hero.getExp();
+	heroExpToNext=hero.getExpToNext();
+}
 void HUD::drawHUD(sf::RenderWindow & window){
 	sf::RectangleShape rect(sf::Vector2f(width-2*bordersize,height-2*bordersize));
 	rect.setFillColor(fillColor);
@@ -24,6 +68,7 @@ void HUD::drawHUD(sf::RenderWindow & window){
 	rect.setPosition(startx+bordersize,starty+bordersize);
 	window.draw(rect);
 	drawTextBox(window);
+	drawStats(window);
 }
 
 void HUD::sendMsg(std::string msg){
@@ -32,7 +77,31 @@ void HUD::sendMsg(std::string msg){
 		messages.pop_back();
 	}
 }
+void HUD::drawStats(sf::RenderWindow & window){
 
+	std::ostringstream oss;
+	
+	sf::Font font;
+	font.loadFromFile("resources/Gameplay.ttf");
+	sf::Text text;
+	text.setFont(font);
+	text.setCharacterSize(14);
+	text.setColor(sf::Color::Black);
+	
+	oss<<"Health: "<<heroHp<<"/"<<heroMaxHp<<std::endl;
+	oss<<"Mana: "<<heroMana<<std::endl<<std::endl<<std::endl;
+	oss<<"Exp: "<<heroExp<<"/"<<heroExpToNext<<std::endl;
+	oss<<"Level: "<<heroLvl<<std::endl;
+	oss<<"Str: "<<heroStr<<" Def: "<<heroDef<<" Agil: "<<heroAgi; 
+	std::string str1=oss.str();
+	text.setString(str1);
+	text.setPosition(20,starty+height-bordersize-6*5-5*20);
+	window.draw(text);
+	
+	
+	
+	
+}
 void HUD::drawTextBox(sf::RenderWindow & window){
 	sf::RectangleShape rect(sf::Vector2f(width/3,height-2*bordersize-2*5));
 	rect.setFillColor(sf::Color::Black);

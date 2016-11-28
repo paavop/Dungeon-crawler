@@ -3,7 +3,7 @@
 GameManager::GameManager(){
 	
 	Hero hero(100,10,10,10,100);
-	HUD hud();
+	HUD hud(hero);
 	mapsize=60;
 	map=makeMap(mapsize);
 	findStart(map);
@@ -68,7 +68,7 @@ void GameManager::updateAll(){
 	}else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		movePlayer(4);
 	}
-	
+	hud.updateStats(hero);
 	
 }
 
@@ -92,7 +92,7 @@ void GameManager::drawAll(sf::RenderWindow & window){
 void GameManager::drawFps(sf::RenderWindow& window){
 	fpsTime=fpsClock.restart().asSeconds();
 	int fps=(int) 1.f/(fpsTime);
-	
+	//Actually drawing to game screen not yet implemented
 	std::cout<<"FPS: "<<fps<<std::endl;
 }
 
