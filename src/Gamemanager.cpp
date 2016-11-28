@@ -41,15 +41,16 @@ GameManager::GameManager(){
 	    perror("Couldn't load stairs texture");
 	}
 	stairs.setTexture(stairs_t);
+
+	Monster monsu(100,10,10,10,1,sf::Vector2f(MCspot.x+1,MCspot.y),std::string("vihu"));
 	
-	
-	loadEnemyTexture('resources/enemy_risumies.png');
+	loadEnemyTexture(monsu);
 }
 
 void GameManager::loadEnemyTexture(Monster& enemy){
 	sf::Texture new_texture;
 	if (!new_texture.loadFromFile(enemy.getPicName())){
-		perror("Couldn't load enemy texture: "+texture_name);
+		perror("Couldn't load enemy texture: ");
 	}
 	sf::Sprite new_sprite;
 	//SourceSprite=sf::IntRect(0,0,50,50);
@@ -126,8 +127,8 @@ void GameManager::drawMap(sf::RenderWindow& window){
 	}
 }
 
-void Gamemanager::drawEnemies(sf::RenderWindow& window){
-	*/PAAVOO!!!*/
+void GameManager::drawEnemies(sf::RenderWindow& window){
+	/*PAAVOO!!!*/
 		// How I'm supposed to draw something?
 }	
 
@@ -374,8 +375,9 @@ bool GameManager::isFree(const sf::Vector2u pos){
 }
 	
 void GameManager::setEnemies(){
-	*/	TESTING	/*
+	/*	TESTING	
 	this->monsters.push_back(sf::Vector2f(MCspot.x+1, MCspot.y));
+	*/
 }
 	
 	

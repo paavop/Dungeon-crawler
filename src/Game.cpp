@@ -13,6 +13,7 @@ void Game::Begin(){
 		return;
 	}
 	gameWindow.create(sf::VideoMode(WIDTH,HEIGHT), "Luolaluovinta");
+	gameWindow.setFramerateLimit(60);
 	state=Game::MainMenu;
 
 	while(gameWindow.isOpen()){

@@ -1,5 +1,5 @@
 
-#include "hero.hpp"
+
 #include "monster.hpp"
 
 
@@ -22,12 +22,12 @@ public:
 	void updateAll();
 	void drawAll(sf::RenderWindow & window);
 
-	bool isFreeTile(const sf::Vector2u pos);
+	bool isFree(const sf::Vector2u pos);
 
 	
 private:
 	void setEnemies();
-	void loadEnemyTextures();
+	void loadEnemyTexture(Monster& enemy);
 	
 	std::vector<std::vector<int>> makeMap(int a);
 	void findStart(std::vector<std::vector<int>> map);
@@ -36,6 +36,7 @@ private:
 	void drawMap(sf::RenderWindow& window);
 	void drawMC(sf::RenderWindow& window);
 	void drawFps(sf::RenderWindow& window);
+	void drawEnemies(sf::RenderWindow& window);
 	Hero hero;
 	HUD hud;
 	bool movingUp,movingDown,movingLeft,movingRight;
@@ -58,7 +59,7 @@ private:
 	sf::Sprite ground;
 	sf::Sprite MC;
 	sf::Sprite stairs;
-	std::vector<sf::Texture> enemy_sprites;
+	std::vector<sf::Sprite> enemy_sprites;
 
 	sf::IntRect SourceSprite;
 	std::vector<std::vector<int>> map;

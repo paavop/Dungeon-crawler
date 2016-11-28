@@ -82,17 +82,17 @@ void HUD::drawStats(sf::RenderWindow & window){
 	std::ostringstream oss;
 	
 	sf::Font font;
-	font.loadFromFile("resources/Gameplay.ttf");
+	font.loadFromFile("resources/joystix_monospace.ttf");
 	sf::Text text;
 	text.setFont(font);
 	text.setCharacterSize(14);
 	text.setColor(sf::Color::Black);
 	
 	oss<<"Health: "<<heroHp<<"/"<<heroMaxHp<<std::endl;
-	oss<<"Mana: "<<heroMana<<std::endl<<std::endl<<std::endl;
-	oss<<"Exp: "<<heroExp<<"/"<<heroExpToNext<<std::endl;
-	oss<<"Level: "<<heroLvl<<std::endl;
-	oss<<"Str: "<<heroStr<<" Def: "<<heroDef<<" Agil: "<<heroAgi; 
+	oss<<"Mana  : "<<heroMana<<std::endl<<std::endl;
+	oss<<"Exp   : "<<heroExp<<"/"<<heroExpToNext<<std::endl;
+	oss<<"Level : "<<heroLvl<<std::endl<<std::endl;
+	oss<<"S:"<<heroStr<<" D:"<<heroDef<<" A:"<<heroAgi; 
 	std::string str1=oss.str();
 	text.setString(str1);
 	text.setPosition(20,starty+height-bordersize-6*5-5*20);

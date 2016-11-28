@@ -6,13 +6,13 @@
 
 class Monster {
 	public:
-		Monster();
+		Monster(sf::Vector2f pos);
 		Monster(int health, int strength, int agility, 
-				int defense, int mana, int lvl,
+				int defense,  int lvl,
 				sf::Vector2f pos, std::string name);
 
-		std::string		getPicName() const;
-		std::string	 	getName() const;
+		std::string		getPicName();
+		std::string	 	getName();
 		sf::Vector2f 	getPos();
 		void 			setSprite(sf::Sprite& sprite);
 		void 			setPos(unsigned int x, unsigned int y);
@@ -31,14 +31,15 @@ class Monster {
 		bool alive;
 		std::string pic_name;
 		std::string name;	//Monster's name (daa-a)
-		sf::Texture &texture;
-		sf::Sprite	&sprite;
+		//sf::Texture &texture;
+		//sf::Sprite	&sprite;
 		int maxhp;			//Monster's max health points	
 		int hp;				//Monster's current health points
 		int lvl;			//Level of the Monster
 		int strength;		//Monster's strength stat
 		int agility;		//Monster's agility stat
 		int defense;		//Monster's defense stat
+		
 
 		sf::Vector2f position;
 		
