@@ -5,7 +5,7 @@ Monster::Monster(sf::Vector2f pos){
 	detects_player = false;
 	position = pos;
 	name = "risumies";
-	pic_name = "resources/enemy_risumies.png";
+	pic_name = "resources/gargant.png";
 	maxhp = 1;			//Monster's max health points	
 	hp = maxhp;			//Monster's current health points
 	lvl = 0;			//Level of the Monster

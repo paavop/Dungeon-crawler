@@ -4,8 +4,9 @@
 
 GameManager::GameManager(){
 	
-	Hero hero(100,10,10,10,100);
-	HUD hud();
+	hero=Hero(100,10,10,10,100);
+	hud=HUD(hero);
+	
 	mapsize=60;
 	map=makeMap(mapsize);
 	findStart(map);
@@ -29,7 +30,7 @@ GameManager::GameManager(){
 	ground.setTexture(ground_t);
 
 
-	if (!MC_t.loadFromFile("resources/knight_animation.png"))
+	if (!MC_t.loadFromFile("resources/knight_animation2.png"))
 	{
 	    perror("Couldn't load character texture");
 	}
@@ -146,19 +147,27 @@ void GameManager::drawEnemies(sf::RenderWindow& window){
 		int monoffy=0;
 		int monoffx=0;
 		if(monsters[n].movesUp()){
+			enemy_sprites[0].setRotation(180);
+			enemy_sprites[0].setOrigin(50,50);
 			ymonmove=-std::max(fabs(yPercentage),fabs(xPercentage));
 			monoffy=50;
 			//std::cout<<ymonmove<<std::endl;
 		}
 		else if(monsters[n].movesDown()){
+			enemy_sprites[0].setRotation(0);
+			enemy_sprites[0].setOrigin(0,0);
 			ymonmove=std::max(fabs(yPercentage),fabs(xPercentage));
 			monoffy=-50;
 		}
 		else if(monsters[n].movesLeft()){
+			enemy_sprites[0].setRotation(90);
+			enemy_sprites[0].setOrigin(0,50);
 			xmonmove=-std::max(fabs(yPercentage),fabs(xPercentage));
 			monoffx=50;
 		}
 		else if(monsters[n].movesRight()){
+			enemy_sprites[0].setRotation(270);
+			enemy_sprites[0].setOrigin(50,0);
 			xmonmove=std::max(fabs(yPercentage),fabs(xPercentage));
 			monoffx=-50;
 		}
