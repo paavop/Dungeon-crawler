@@ -43,9 +43,11 @@ GameManager::GameManager(){
 	}
 	stairs.setTexture(stairs_t);
 
-	Monster monsu(100,10,10,10,1,5,sf::Vector2f(MCspot.x+1,MCspot.y),std::string("vihu"));
-	
-	loadEnemyTexture(monsu);
+
+	Monster monsu(sf::Vector2f(MCspot.x+2,MCspot.y+2));
+	monsters.push_back(monsu);
+	loadEnemyTexture(monsters[0]);
+
 }
 
 void GameManager::loadEnemyTexture(Monster& enemy){
@@ -53,11 +55,13 @@ void GameManager::loadEnemyTexture(Monster& enemy){
 	if (!new_texture.loadFromFile(enemy.getPicName())){
 		perror("Couldn't load enemy texture: ");
 	}
-	sf::Sprite new_sprite;
+	enemy_textures.push_back(new_texture);
+	enemy_sprites.push_back(sf::Sprite());
+	
 	//SourceSprite=sf::IntRect(0,0,50,50);
-	new_sprite.setTexture(new_texture);
-	enemy_sprites.push_back(new_sprite);
-	enemy.setSprite(enemy_sprites.back());
+	enemy_sprites[0].setTexture(enemy_textures[0]);
+
+
 }
 
 void GameManager::updateAll(){
@@ -88,6 +92,7 @@ void GameManager::drawAll(sf::RenderWindow & window){
 	//drawFps(window);
 	window.draw(MC);
 	hud.drawHUD(window);
+	drawEnemies(window);
 
 }
 
@@ -99,6 +104,7 @@ void GameManager::drawFps(sf::RenderWindow& window){
 }
 
 void GameManager::drawMap(sf::RenderWindow& window){
+	
 	for(n=-1;n<16;n++){
 		for(m=-1;m<10;m++){
 			wall.setPosition(offsetx+xPercentage*50+50*(n),offsety+yPercentage*50+50*(m));
@@ -131,6 +137,17 @@ void GameManager::drawMap(sf::RenderWindow& window){
 void GameManager::drawEnemies(sf::RenderWindow& window){
 	
 		// How I'm supposed to draw something?
+		
+	//This is how:
+	for(n=0;n<monsters.size();n++){
+		int a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50;
+		int b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50;
+		std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
+		enemy_sprites[0].setPosition(a,b);
+		window.draw(enemy_sprites[0]);
+	}
+		
+	
 }	
 
 void GameManager::updatePercentages(){
