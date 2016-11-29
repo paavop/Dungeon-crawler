@@ -2,7 +2,7 @@
 
 #include "monster.hpp"
 #include <algorithm>
-#include <math>
+#include <math.h>
 
 
 

@@ -8,7 +8,7 @@ class Monster {
 	public:
 		Monster(sf::Vector2f pos);
 		Monster(int health, int strength, int agility, 
-				int defense,  int lvl,
+				int defense,  int lvl, int hearing_radius,
 				sf::Vector2f pos, std::string name);
 
 		std::string		getPicName();

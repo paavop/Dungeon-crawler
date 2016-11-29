@@ -43,7 +43,7 @@ GameManager::GameManager(){
 	}
 	stairs.setTexture(stairs_t);
 
-	Monster monsu(100,10,10,10,1,sf::Vector2f(MCspot.x+1,MCspot.y),std::string("vihu"));
+	Monster monsu(100,10,10,10,1,5,sf::Vector2f(MCspot.x+1,MCspot.y),std::string("vihu"));
 	
 	loadEnemyTexture(monsu);
 }
@@ -128,7 +128,7 @@ void GameManager::drawMap(sf::RenderWindow& window){
 	}
 }
 
-void Gamemanager::drawEnemies(sf::RenderWindow& window){
+void GameManager::drawEnemies(sf::RenderWindow& window){
 	
 		// How I'm supposed to draw something?
 }	
@@ -375,12 +375,15 @@ bool GameManager::isFreeTile(unsigned int x, unsigned int y){
 	return(map[y][x] == 0);
 }
 
-bool Gamemanager::hearPlayer(Monster& monster){
-	float distance = std::sqrt(std::pow(MCspot.x - monster.x, 2)+std::pow(MCspot.y - monster.y, 2));
+bool GameManager::hearPlayer(Monster& monster){
+	float distance = std::sqrt(std::pow(MCspot.x - monster.getPos().x, 2)
+							  +std::pow(MCspot.y - monster.getPos().y, 2));
 	if(monster.getHearingRadius() > distance){
 		monster.detectsPlr();
 		monster.setTargetPos(MCspot);
+		return true;
 	}
+	return false;
 }
 
 bool GameManager::freeLineOfSight(sf::Vector2f a, sf::Vector2f b){
