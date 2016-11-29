@@ -1,5 +1,6 @@
 #include "Gamemanager.hpp"
 
+
 GameManager::GameManager(){
 	
 	Hero hero(100,10,10,10,100);
@@ -374,6 +375,14 @@ bool GameManager::isFreeTile(unsigned int x, unsigned int y){
 	return(map[y][x] == 0);
 }
 
+bool Gamemanager::hearPlayer(Monster& monster){
+	float distance = std::sqrt(std::pow(MCspot.x - monster.x, 2)+std::pow(MCspot.y - monster.y, 2));
+	if(monster.getHearingRadius() > distance){
+		monster.detectsPlr();
+		monster.setTargetPos(MCspot);
+	}
+}
+
 bool GameManager::freeLineOfSight(sf::Vector2f a, sf::Vector2f b){
 	int dx,dy, max_dir_steps;
 
@@ -434,6 +443,7 @@ bool GameManager::freeLineOfSight(sf::Vector2f a, sf::Vector2f b){
 
 		
 	}
+	if(std::abs(dx) == std::abs(dy)) return false;//diagonal line
 
 }
 	

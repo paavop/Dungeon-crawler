@@ -2,6 +2,7 @@
 
 Monster::Monster(sf::Vector2f pos){
 	alive = true;
+	detects_player = false;
 	position = pos;
 	name = "risumies";
 	pic_name = "resources/enemy_risumies.png";
@@ -11,14 +12,16 @@ Monster::Monster(sf::Vector2f pos){
 	strength = 1;		//Monster's strength stat
 	agility = 1;		//Monster's agility stat
 	defense = 1;		//Monster's defense stat
+	hearing = 3;
 
 }
 
 Monster::Monster(	int h, int s, int a, 
-					int d,  int lvl,
+					int d,  int lvl, int hearing_radius,
 					sf::Vector2f pos, std::string name)
 {
 	alive = true;
+	detects_player = false;
 	name = name;
 	position = pos;
 	pic_name = "resources/enemy_risumies.png";
@@ -28,6 +31,7 @@ Monster::Monster(	int h, int s, int a,
 	agility=a;
 	defense=d;
 	lvl = lvl;
+	hearing = hearing_radius;
 
 }
 
@@ -62,9 +66,25 @@ int Monster::getAgi(){
 int Monster::getDef(){
 	return defense;
 }
+
+int	Monster::getHearingRadius(){
+	return hearing;
+}
+
 void Monster::die(){
 	alive = false;
 }
 bool Monster::isAlive(){
 	return alive; 
+}
+
+void Monster::detectsPlr(){
+	detects_player = true;
+}
+void Monster::undetectsPlr(){
+	detects_player = false;
+}
+
+void Monster::setTargetPos(sf::Vector2f pos){
+	target_pos = pos;
 }

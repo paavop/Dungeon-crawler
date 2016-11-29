@@ -16,6 +16,9 @@ class Monster {
 		sf::Vector2f 	getPos();
 		void 			setSprite(sf::Sprite& sprite);
 		void 			setPos(unsigned int x, unsigned int y);
+		void			setTargetPos(sf::Vector2f pos);
+		void			detectsPlr();
+		void 			undetectsPlr();
 		bool 			takeDamage(int dmg);
 		bool 			isAlive();
 		void 			heal(int h);
@@ -25,10 +28,12 @@ class Monster {
 		int				getLvl();
 		int 			getAgi();
 		int 			getDef();
+		int				getHearingRadius();
 		
 		
 	private:
 		bool alive;
+		bool detects_player;
 		std::string pic_name;
 		std::string name;	//Monster's name (daa-a)
 		//sf::Texture &texture;
@@ -39,9 +44,10 @@ class Monster {
 		int strength;		//Monster's strength stat
 		int agility;		//Monster's agility stat
 		int defense;		//Monster's defense stat
+		int hearing;		//hearing radius
 		
 
 		sf::Vector2f position;
-		
+		sf::Vector2f target_pos;	//place where the enemy tries to go
 };
 
