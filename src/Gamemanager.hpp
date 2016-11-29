@@ -1,6 +1,7 @@
 
 #include "hero.hpp"
 #include "monster.hpp"
+#include <algorithm>
 
 
 
@@ -22,12 +23,13 @@ public:
 	void updateAll();
 	void drawAll(sf::RenderWindow & window);
 
-	bool isFreeTile(const sf::Vector2u pos);
+	bool isFreeTile(unsigned int x, unsigned int y);
+	bool freeLineOfSight(sf::Vector2f a, sf::Vector2f b); //Tells you is it possible to see from a to b
 
 	
 private:
 	void setEnemies();
-	void loadEnemyTextures();
+	void loadEnemyTextures(Monster& enemy);
 	
 	std::vector<std::vector<int>> makeMap(int a);
 	void findStart(std::vector<std::vector<int>> map);

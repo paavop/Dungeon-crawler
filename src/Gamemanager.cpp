@@ -3,7 +3,7 @@
 GameManager::GameManager(){
 	
 	Hero hero(100,10,10,10,100);
-	HUD hud(hero);
+	HUD hud();
 	mapsize=60;
 	map=makeMap(mapsize);
 	findStart(map);
@@ -68,7 +68,7 @@ void GameManager::updateAll(){
 	}else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		movePlayer(4);
 	}
-	hud.updateStats(hero);
+	
 	
 }
 
@@ -92,7 +92,7 @@ void GameManager::drawAll(sf::RenderWindow & window){
 void GameManager::drawFps(sf::RenderWindow& window){
 	fpsTime=fpsClock.restart().asSeconds();
 	int fps=(int) 1.f/(fpsTime);
-	//Actually drawing to game screen not yet implemented
+	
 	std::cout<<"FPS: "<<fps<<std::endl;
 }
 
@@ -127,7 +127,7 @@ void GameManager::drawMap(sf::RenderWindow& window){
 }
 
 void Gamemanager::drawEnemies(sf::RenderWindow& window){
-	*/PAAVOO!!!*/
+	*/RBCM -- Ready Before the ChristMas/*
 		// How I'm supposed to draw something?
 }	
 
@@ -369,8 +369,71 @@ void GameManager::movePlayer(int direction){
 
 }
 	
-bool GameManager::isFree(const sf::Vector2u pos){
-	return(map[pos.y][pos.x] == 0);
+bool GameManager::isFreeTile(unsigned int x, unsigned int y){
+	return(map[y][x] == 0);
+}
+
+bool GameManager::freeLineOfSight(sf::Vector2f a, sf::Vector2f b){
+	int dx,dy, max_dir_steps;
+
+	dx = (int) b.x - (int) a.x;
+	dy = (int) b.y - (int) a.y;
+	max_dir_steps = std::max(dx, dy)/std::min(dx,dy) /2; //how many steps we can go same direction in a row
+
+
+	int big_x = std::max(a.x,b.x);
+	int big_y = std::max(a.y,b.y);
+	int small_x = std::min(a.x,b.x);
+	int small_y = std::min(a.y,b.y);
+
+
+	if(!dx){	//they are on same vertical line
+
+
+		if(dy > 0){
+
+			for(unsigned int i=0; i<dy; i++){
+				if(!isFreeTile((int)a.x, (int)a.y +i)){
+					return false;
+				}
+			}
+		}
+		if(dy < 0){
+
+			for(unsigned int i=0; i<dy; i--){
+				if(!isFreeTile((int)a.x, (int)a.y +i)){
+					return false;
+				}
+			}
+		}
+		
+	}
+
+		if(!dy){	//vertical line
+
+
+			if(dx > 0){
+
+				for(unsigned int i=0; i<dx; i++){
+					if(!isFreeTile((int)a.x +i, (int)a.y)){
+						return false;
+					}
+				}
+			}
+			if(dx < 0){
+
+				for(unsigned int i=0; i<dx; i--){
+					if(!isFreeTile((int)a.x +i, (int)a.y)){
+						return false;
+					}
+				}
+			}
+		
+
+
+		
+	}
+
 }
 	
 void GameManager::setEnemies(){
