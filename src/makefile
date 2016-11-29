@@ -2,7 +2,7 @@
 CC=g++
 CFLAGS= -c -std=c++11
 OFLAGS= -lsfml-graphics -lsfml-window -lsfml-system
-SOURCES=DC.cpp Game.cpp hero.cpp Gamemanager.cpp HUD.cpp
+SOURCES=DC.cpp Game.cpp hero.cpp Gamemanager.cpp HUD.cpp monster.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 NAME = main
 
