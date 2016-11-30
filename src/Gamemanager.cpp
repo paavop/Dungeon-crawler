@@ -57,11 +57,11 @@ void GameManager::loadEnemyTexture(Monster& enemy){
 	if (!new_texture.loadFromFile(enemy.getPicName())){
 		perror("Couldn't load enemy texture: ");
 	}
-	enemy_textures.push_back(new_texture);
-	enemy_sprites.push_back(sf::Sprite());
+	enemy_textures[enemy.getName()]=new_texture;
+	enemy_sprites[enemy.getName()]=sf::Sprite();
 	
 	//SourceSprite=sf::IntRect(0,0,50,50);
-	enemy_sprites[0].setTexture(enemy_textures[0]);
+	enemy_sprites[enemy.getName()].setTexture(enemy_textures[enemy.getName()]);
 
 
 }
@@ -146,28 +146,30 @@ void GameManager::drawEnemies(sf::RenderWindow& window){
 		float ymonmove=0;
 		int monoffy=0;
 		int monoffx=0;
-		if(monsters[n].movesUp()){
-			enemy_sprites[0].setRotation(180);
-			enemy_sprites[0].setOrigin(50,50);
+		std::string name=monsters[n].getName();
+		if(monsters[n].movesUp())
+		{
+			enemy_sprites[name].setRotation(180);
+			enemy_sprites[name].setOrigin(50,50);
 			ymonmove=-std::max(fabs(yPercentage),fabs(xPercentage));
 			monoffy=50;
 			//std::cout<<ymonmove<<std::endl;
 		}
 		else if(monsters[n].movesDown()){
-			enemy_sprites[0].setRotation(0);
-			enemy_sprites[0].setOrigin(0,0);
+			enemy_sprites[name].setRotation(0);
+			enemy_sprites[name].setOrigin(0,0);
 			ymonmove=std::max(fabs(yPercentage),fabs(xPercentage));
 			monoffy=-50;
 		}
 		else if(monsters[n].movesLeft()){
-			enemy_sprites[0].setRotation(90);
-			enemy_sprites[0].setOrigin(0,50);
+			enemy_sprites[name].setRotation(90);
+			enemy_sprites[name].setOrigin(0,50);
 			xmonmove=-std::max(fabs(yPercentage),fabs(xPercentage));
 			monoffx=50;
 		}
 		else if(monsters[n].movesRight()){
-			enemy_sprites[0].setRotation(270);
-			enemy_sprites[0].setOrigin(50,0);
+			enemy_sprites[name].setRotation(270);
+			enemy_sprites[name].setOrigin(50,0);
 			xmonmove=std::max(fabs(yPercentage),fabs(xPercentage));
 			monoffx=-50;
 		}
@@ -175,8 +177,8 @@ void GameManager::drawEnemies(sf::RenderWindow& window){
 		int a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50+xmonmove*50+monoffx;
 		int b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50+ymonmove*50+monoffy;
 		//std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
-		enemy_sprites[0].setPosition(a,b);
-		window.draw(enemy_sprites[0]);
+		enemy_sprites[name].setPosition(a,b);
+		window.draw(enemy_sprites[name]);
 	}
 		
 	

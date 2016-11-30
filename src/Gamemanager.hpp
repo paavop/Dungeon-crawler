@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 #include <utility>
-
+#include <map>
 
 
 class GameManager
@@ -58,13 +58,16 @@ private:
 	sf::Texture ground_t;
 	sf::Texture MC_t;
 	sf::Texture stairs_t;
-	std::vector<sf::Texture> enemy_textures;
+	std::map<std::string,sf::Texture> enemy_textures;
+	std::map<std::string,sf::Texture> item_textures;
 	
 	sf::Sprite wall;
 	sf::Sprite ground;
 	sf::Sprite MC;
 	sf::Sprite stairs;
-	std::vector<sf::Sprite> enemy_sprites;
+	std::map<std::string,sf::Sprite> enemy_sprites;
+	std::map<std::string,sf::Sprite> item_sprites;
+	
 
 	sf::IntRect SourceSprite;
 	std::vector<std::vector<int>> map;
