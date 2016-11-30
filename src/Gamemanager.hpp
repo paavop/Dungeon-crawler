@@ -27,6 +27,9 @@ public:
 	bool isFreeTile(unsigned int x, unsigned int y);
 	bool freeLineOfSight(sf::Vector2f a, sf::Vector2f b); //Tells you is it possible to see from a to b
 	bool hearPlayer(Monster& monster);
+	bool seePlayer(Monster& monster);
+
+	void tryDetectPlayer(Monster& monster);
 	
 private:
 	void setEnemies();

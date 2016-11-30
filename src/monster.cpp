@@ -78,7 +78,6 @@ bool Monster::isAlive(){
 	return alive; 
 }
 
-
 bool Monster::movesUp(){
 	return movingUp;
 }
@@ -114,12 +113,12 @@ void Monster::moveRight(){
 	movingRight=true;
 	position.x+=1;
 }
-
-
-void Monster::detectsPlr(){
+void Monster::detectPlr(sf::Vector2f pos){
 	detects_player = true;
+	setTargetPos(pos);
 }
-void Monster::undetectsPlr(){
+
+void Monster::undetectPlr(){
 	detects_player = false;
 }
 
