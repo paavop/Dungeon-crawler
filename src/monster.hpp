@@ -30,6 +30,16 @@ class Monster {
 		int 			getDef();
 		int				getHearingRadius();
 		
+		bool			movesUp();
+		bool			movesDown();
+		bool			movesLeft();
+		bool			movesRight();
+		void			stopMove();
+		void			moveUp();
+		void			moveDown();
+		void			moveLeft();
+		void			moveRight();
+		
 		
 	private:
 		bool alive;
@@ -46,6 +56,7 @@ class Monster {
 		int defense;		//Monster's defense stat
 		int hearing;		//hearing radius
 		
+		bool movingUp,movingDown,movingLeft,movingRight;
 
 		sf::Vector2f position;
 		sf::Vector2f target_pos;	//place where the enemy tries to go

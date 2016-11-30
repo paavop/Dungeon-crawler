@@ -5,7 +5,7 @@ Monster::Monster(sf::Vector2f pos){
 	detects_player = false;
 	position = pos;
 	name = "risumies";
-	pic_name = "resources/enemy_risumies.png";
+	pic_name = "resources/gargant.png";
 	maxhp = 1;			//Monster's max health points	
 	hp = maxhp;			//Monster's current health points
 	lvl = 0;			//Level of the Monster
@@ -78,9 +78,46 @@ bool Monster::isAlive(){
 	return alive; 
 }
 
-void Monster::detectPlr(){
-	detects_player = true;
+bool Monster::movesUp(){
+	return movingUp;
 }
+bool Monster::movesDown(){
+	return movingDown;
+}
+bool Monster::movesLeft(){
+	return movingLeft;
+}
+bool Monster::movesRight(){
+	return movingRight;
+}
+void Monster::stopMove(){
+	movingDown=false;
+	movingLeft=false;
+	movingRight=false;
+	movingUp=false;
+}
+
+void Monster::moveUp(){
+	movingUp=true;
+	position.y-=1;
+}
+void Monster::moveDown(){
+	movingDown=true;
+	position.y+=1;
+}
+void Monster::moveLeft(){
+	movingLeft=true;
+	position.x-=1;
+}
+void Monster::moveRight(){
+	movingRight=true;
+	position.x+=1;
+}
+void Monster::detectPlr(sf::Vector2f pos){
+	detects_player = true;
+	setTargetPos(pos);
+}
+
 void Monster::undetectPlr(){
 	detects_player = false;
 }
@@ -88,3 +125,4 @@ void Monster::undetectPlr(){
 void Monster::setTargetPos(sf::Vector2f pos){
 	target_pos = pos;
 }
+

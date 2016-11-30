@@ -1,3 +1,6 @@
+#include "item.hpp"
+#include <vector>
+
 class Hero {
 	public:
 		Hero();
@@ -15,8 +18,11 @@ class Hero {
 		int getAgi();
 		int getMana();
 		int getDef();
+		bool addItem(Item itm);
+		std::vector<Item> getBag();
 		
 	private:
+		std::vector<Item> bag;  //Hero's available items
 		int maxhp;			//Hero's max health points	
 		int hp;				//Hero's current health points
 		int lvl;			//Level of the hero

@@ -1,6 +1,7 @@
 #include "HUD.hpp"
 
 HUD::HUD(){
+	std::cout<<"nope"<<std::endl;
 	bordersize=5;
 	width=750;
 	height=150;
@@ -26,6 +27,7 @@ HUD::HUD(){
 }
 
 HUD::HUD(Hero & hero){
+	std::cout<<"oikein"<<std::endl;
 	bordersize=5;
 	width=750;
 	height=150;
@@ -48,6 +50,7 @@ HUD::HUD(Hero & hero){
 	heroLvl=hero.getLvl();
 	heroExp=hero.getExp();
 	heroExpToNext=hero.getExpToNext();
+
 }
 void HUD::updateStats(Hero & hero){
 	heroMaxHp=hero.getMaxHp();

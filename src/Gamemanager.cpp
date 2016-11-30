@@ -1,10 +1,12 @@
 #include "Gamemanager.hpp"
 
 
+
 GameManager::GameManager(){
 	
-	Hero hero(100,10,10,10,100);
-	HUD hud();
+	hero=Hero(100,10,10,10,100);
+	hud=HUD(hero);
+	
 	mapsize=60;
 	map=makeMap(mapsize);
 	findStart(map);
@@ -28,7 +30,7 @@ GameManager::GameManager(){
 	ground.setTexture(ground_t);
 
 
-	if (!MC_t.loadFromFile("resources/knight_animation.png"))
+	if (!MC_t.loadFromFile("resources/knight_animation2.png"))
 	{
 	    perror("Couldn't load character texture");
 	}
@@ -55,11 +57,11 @@ void GameManager::loadEnemyTexture(Monster& enemy){
 	if (!new_texture.loadFromFile(enemy.getPicName())){
 		perror("Couldn't load enemy texture: ");
 	}
-	enemy_textures.push_back(new_texture);
-	enemy_sprites.push_back(sf::Sprite());
+	enemy_textures[enemy.getName()]=new_texture;
+	enemy_sprites[enemy.getName()]=sf::Sprite();
 	
 	//SourceSprite=sf::IntRect(0,0,50,50);
-	enemy_sprites[0].setTexture(enemy_textures[0]);
+	enemy_sprites[enemy.getName()].setTexture(enemy_textures[enemy.getName()]);
 
 
 }
@@ -140,11 +142,43 @@ void GameManager::drawEnemies(sf::RenderWindow& window){
 		
 	//This is how:
 	for(n=0;n<monsters.size();n++){
-		int a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50;
-		int b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50;
-		std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
-		enemy_sprites[0].setPosition(a,b);
-		window.draw(enemy_sprites[0]);
+		float xmonmove=0;
+		float ymonmove=0;
+		int monoffy=0;
+		int monoffx=0;
+		std::string name=monsters[n].getName();
+		if(monsters[n].movesUp())
+		{
+			enemy_sprites[name].setRotation(180);
+			enemy_sprites[name].setOrigin(50,50);
+			ymonmove=-std::max(fabs(yPercentage),fabs(xPercentage));
+			monoffy=50;
+			//std::cout<<ymonmove<<std::endl;
+		}
+		else if(monsters[n].movesDown()){
+			enemy_sprites[name].setRotation(0);
+			enemy_sprites[name].setOrigin(0,0);
+			ymonmove=std::max(fabs(yPercentage),fabs(xPercentage));
+			monoffy=-50;
+		}
+		else if(monsters[n].movesLeft()){
+			enemy_sprites[name].setRotation(90);
+			enemy_sprites[name].setOrigin(0,50);
+			xmonmove=-std::max(fabs(yPercentage),fabs(xPercentage));
+			monoffx=50;
+		}
+		else if(monsters[n].movesRight()){
+			enemy_sprites[name].setRotation(270);
+			enemy_sprites[name].setOrigin(50,0);
+			xmonmove=std::max(fabs(yPercentage),fabs(xPercentage));
+			monoffx=-50;
+		}
+
+		int a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50+xmonmove*50+monoffx;
+		int b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50+ymonmove*50+monoffy;
+		//std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
+		enemy_sprites[name].setPosition(a,b);
+		window.draw(enemy_sprites[name]);
 	}
 		
 	
@@ -189,6 +223,7 @@ void GameManager::updatePercentages(){
 			movingUp=false;
 			movingDown=false;
 			movingRight=false;
+			monsters[0].stopMove();
 			offsetx=0;
 			offsety=0;
 			xPercentage=0;
@@ -342,10 +377,13 @@ void GameManager::movePlayer(int direction){
 		MC.setRotation(180);
 		MC.setOrigin(50,50);
 		if (not (map[(int)MCspot.x][(int)MCspot.y-1]==1)){
+
 			hud.sendMsg("Moving up");
 			MCspot.y-=1;
 			movingUp=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
+			
+			monsters[0].moveLeft();
 		}
 		break;
 		
@@ -358,6 +396,8 @@ void GameManager::movePlayer(int direction){
 			MCspot.y+=1;
 			movingDown=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
+			
+			monsters[0].moveRight();
 		}
 		break;
 		
@@ -370,6 +410,9 @@ void GameManager::movePlayer(int direction){
 			MCspot.x-=1;
 			movingLeft=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
+			
+			
+			monsters[0].moveDown();
 		}
 		break;
 		
@@ -382,6 +425,9 @@ void GameManager::movePlayer(int direction){
 			MCspot.x+=1;
 			movingRight=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
+			
+			
+			monsters[0].moveUp();
 		}
 		break;
 	}
