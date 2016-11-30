@@ -46,6 +46,7 @@ GameManager::GameManager(){
 	stairs.setTexture(stairs_t);
 
 
+	/*	TESTING	*/
 	Monster monsu(sf::Vector2f(MCspot.x+2,MCspot.y+2));
 	monsters.push_back(monsu);
 	loadEnemyTexture(monsters[0]);
@@ -76,6 +77,9 @@ void GameManager::updateAll(){
 	}else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		movePlayer(4);
 	}
+
+	/*	TESTING */
+	hearPlayer(monsters[0]);
 	
 	
 }
@@ -438,18 +442,37 @@ bool GameManager::isFreeTile(unsigned int x, unsigned int y){
 	return(map[y][x] == 0);
 }
 
+void GameManager::tryDetectPlayer(Monster& monster){
+	if(!seePlayer(monster)){
+		hearPlayer(monster);
+	}
+}
+
 bool GameManager::hearPlayer(Monster& monster){
 	float distance = std::sqrt(std::pow(MCspot.x - monster.getPos().x, 2)
 							  +std::pow(MCspot.y - monster.getPos().y, 2));
 	if(monster.getHearingRadius() > distance){
-		monster.detectPlr();
-		monster.setTargetPos(MCspot);
+		monster.detectPlr(MCspot);
+		hud.sendMsg("I hear ya!");
 		return true;
 	}
 	else{
 		monster.undetectPlr();
 		return false;	
 	}
+}
+
+bool GameManager::seePlayer(Monster& monster){
+	if (freeLineOfSight(monster.getPos(), MCspot)){
+		monster.detectPlr(MCspot);
+		hud.sendMsg("I see ya!");
+		return true;
+	}
+	else{
+		monster.undetectPlr();
+		return false;
+	}
+
 }
 	
 

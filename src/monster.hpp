@@ -17,7 +17,7 @@ class Monster {
 		void 			setSprite(sf::Sprite& sprite);
 		void 			setPos(unsigned int x, unsigned int y);
 		void			setTargetPos(sf::Vector2f pos);
-		void			detectPlr();
+		void			detectPlr(sf::Vector2f pos);
 		void 			undetectPlr();
 		bool 			takeDamage(int dmg);
 		bool 			isAlive();
