@@ -3,18 +3,18 @@
 
 
 Weapon::Weapon(std::string name, int value, std::string image, double hitchance){
-	name = name;
-	value = value;
+	this->name = name;
+	this->value = value;
 	type = "Weapon";
-	image = image;
-	hitchance = hitchance;
+	this->image = image;
+	this->hitchance = hitchance;
 }
 
 Armor::Armor(std::string name, int value, std::string image){
-	name = name;
-	value = value;
+	this->name = name;
+	this->value = value;
 	type = "Armor";
-	image = image;
+	this->image = image;
 }
 
 std::string Item::getName() const{

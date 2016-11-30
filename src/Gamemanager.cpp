@@ -45,25 +45,46 @@ GameManager::GameManager(){
 	}
 	stairs.setTexture(stairs_t);
 
-
+	//Load example monsters and items
 	Monster monsu(sf::Vector2f(MCspot.x+2,MCspot.y+2));
+	
 	monsters.push_back(monsu);
 	loadEnemyTexture(monsters[0]);
+	
+	Armor arm("Haarniska",5,"resources/stairs.png");
+	std::cout<<arm.getName()<<std::endl;
+	items.push_back(arm);
+	loadItemTexture(items[0]);
+	
+	
 
 }
 
 void GameManager::loadEnemyTexture(Monster& enemy){
-	sf::Texture new_texture;
-	if (!new_texture.loadFromFile(enemy.getPicName())){
-		perror("Couldn't load enemy texture: ");
-	}
-	enemy_textures[enemy.getName()]=new_texture;
-	enemy_sprites[enemy.getName()]=sf::Sprite();
+	if(enemy_textures.find(enemy.getName())==enemy_textures.end()){
+		sf::Texture new_texture;
+		if (!new_texture.loadFromFile(enemy.getPicName())){
+			perror("Couldn't load enemy texture: ");
+		}
+		enemy_textures[enemy.getName()]=new_texture;
+		enemy_sprites[enemy.getName()]=sf::Sprite();
 	
-	//SourceSprite=sf::IntRect(0,0,50,50);
-	enemy_sprites[enemy.getName()].setTexture(enemy_textures[enemy.getName()]);
-
-
+		//SourceSprite=sf::IntRect(0,0,50,50);
+		enemy_sprites[enemy.getName()].setTexture(enemy_textures[enemy.getName()]);
+	}
+}
+void GameManager::loadItemTexture(Item& item){
+	if(item_textures.find(item.getName())==item_textures.end()){
+		sf::Texture new_texture;
+		if (!new_texture.loadFromFile(item.getImagename())){
+			perror("Couldn't load item texture: ");
+		}
+		item_textures[item.getName()]=new_texture;
+		item_sprites[item.getName()]=sf::Sprite();
+	
+		//SourceSprite=sf::IntRect(0,0,50,50);
+		item_sprites[item.getName()].setTexture(item_textures[item.getName()]);
+	}
 }
 
 void GameManager::updateAll(){
@@ -93,7 +114,7 @@ void GameManager::drawAll(sf::RenderWindow & window){
 	drawMap(window);
 	//drawFps(window);
 	window.draw(MC);
-	hud.drawHUD(window);
+	hud.drawHUD(window,item_sprites);
 	drawEnemies(window);
 
 }

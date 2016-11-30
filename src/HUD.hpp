@@ -12,7 +12,7 @@ class HUD{
 public:
 	HUD();
 	HUD(Hero& hero);
-	void drawHUD(sf::RenderWindow & window);
+	void drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites);
 	void sendMsg(std::string s);
 	void updateStats(Hero& hero);
 	
@@ -20,7 +20,9 @@ private:
 	void drawTextBox(sf::RenderWindow & window);
 
 	void drawStats(sf::RenderWindow & window);
+	void drawItems(sf::RenderWindow & window);
 	std::deque<std::string> messages;
+	std::vector<Item> bag;
 	sf::Color fillColor;
 	sf::Color borderColor;
 	

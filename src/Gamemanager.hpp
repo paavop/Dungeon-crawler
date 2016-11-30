@@ -32,6 +32,7 @@ private:
 	void setEnemies();
 
 	void loadEnemyTexture(Monster& enemy);
+	void loadItemTexture(Item& item);
 
 	
 	std::vector<std::vector<int>> makeMap(int a);
@@ -52,6 +53,7 @@ private:
 	float fpsTime;
 	sf::Vector2f MCspot;
 	std::vector<Monster> monsters;
+	std::vector<Item> items;
 	
 	
 	sf::Texture wall_t;
