@@ -78,10 +78,10 @@ bool Monster::isAlive(){
 	return alive; 
 }
 
-void Monster::detectsPlr(){
+void Monster::detectPlr(){
 	detects_player = true;
 }
-void Monster::undetectsPlr(){
+void Monster::undetectPlr(){
 	detects_player = false;
 }
 

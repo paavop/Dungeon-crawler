@@ -396,12 +396,16 @@ bool GameManager::hearPlayer(Monster& monster){
 	float distance = std::sqrt(std::pow(MCspot.x - monster.getPos().x, 2)
 							  +std::pow(MCspot.y - monster.getPos().y, 2));
 	if(monster.getHearingRadius() > distance){
-		monster.detectsPlr();
+		monster.detectPlr();
 		monster.setTargetPos(MCspot);
 		return true;
 	}
-	return false;
+	else{
+		monster.undetectPlr();
+		return false;	
+	}
 }
+	
 
 bool GameManager::freeLineOfSight(sf::Vector2f a, sf::Vector2f b){
 	int dx,dy, max_dir_steps;
