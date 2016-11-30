@@ -1,7 +1,7 @@
 #include "HUD.hpp"
 
 HUD::HUD(){
-	std::cout<<"nope"<<std::endl;
+
 	bordersize=5;
 	width=750;
 	height=150;
@@ -24,10 +24,12 @@ HUD::HUD(){
 	heroLvl=0;
 	heroExp=0;
 	heroExpToNext=0;
+	
+	
 }
 
 HUD::HUD(Hero & hero){
-	std::cout<<"oikein"<<std::endl;
+
 	bordersize=5;
 	width=750;
 	height=150;
@@ -50,6 +52,8 @@ HUD::HUD(Hero & hero){
 	heroLvl=hero.getLvl();
 	heroExp=hero.getExp();
 	heroExpToNext=hero.getExpToNext();
+	
+	bag=hero.getBag();
 
 }
 void HUD::updateStats(Hero & hero){
@@ -62,8 +66,9 @@ void HUD::updateStats(Hero & hero){
 	heroLvl=hero.getLvl();
 	heroExp=hero.getExp();
 	heroExpToNext=hero.getExpToNext();
+	bag=hero.getBag();
 }
-void HUD::drawHUD(sf::RenderWindow & window){
+void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites){
 	sf::RectangleShape rect(sf::Vector2f(width-2*bordersize,height-2*bordersize));
 	rect.setFillColor(fillColor);
 	rect.setOutlineThickness(bordersize);
@@ -72,6 +77,13 @@ void HUD::drawHUD(sf::RenderWindow & window){
 	window.draw(rect);
 	drawTextBox(window);
 	drawStats(window);
+	drawStats(window);
+	sprites["Haarniska"].setPosition(0,0);
+	window.draw(sprites["Haarniska"]);
+
+}
+void drawItems(sf::RenderWindow & window){
+	
 }
 
 void HUD::sendMsg(std::string msg){

@@ -14,7 +14,7 @@
 #include <string>
 #include <vector>
 #include <utility>
-
+#include <map>
 
 
 class GameManager
@@ -27,11 +27,15 @@ public:
 	bool isFreeTile(unsigned int x, unsigned int y);
 	bool freeLineOfSight(sf::Vector2f a, sf::Vector2f b); //Tells you is it possible to see from a to b
 	bool hearPlayer(Monster& monster);
+	bool seePlayer(Monster& monster);
+
+	void tryDetectPlayer(Monster& monster);
 	
 private:
 	void setEnemies();
 
 	void loadEnemyTexture(Monster& enemy);
+	void loadItemTexture(Item& item);
 
 	
 	std::vector<std::vector<int>> makeMap(int a);
@@ -52,19 +56,23 @@ private:
 	float fpsTime;
 	sf::Vector2f MCspot;
 	std::vector<Monster> monsters;
+	std::vector<Item> items;
 	
 	
 	sf::Texture wall_t;
 	sf::Texture ground_t;
 	sf::Texture MC_t;
 	sf::Texture stairs_t;
-	std::vector<sf::Texture> enemy_textures;
+	std::map<std::string,sf::Texture> enemy_textures;
+	std::map<std::string,sf::Texture> item_textures;
 	
 	sf::Sprite wall;
 	sf::Sprite ground;
 	sf::Sprite MC;
 	sf::Sprite stairs;
-	std::vector<sf::Sprite> enemy_sprites;
+	std::map<std::string,sf::Sprite> enemy_sprites;
+	std::map<std::string,sf::Sprite> item_sprites;
+	
 
 	sf::IntRect SourceSprite;
 	std::vector<std::vector<int>> map;

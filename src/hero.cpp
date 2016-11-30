@@ -85,8 +85,19 @@ int Hero::getMana(){
 int Hero::getDef(){
 	return defense;
 }
+bool Hero::addItem(Item itm){
+	if(bag.size()>7){
+		return false;
+	}
+	else{
+		bag.push_back(itm);
+		return true;
+	}
+}
 
-
+std::vector<Item> Hero::getBag(){
+	return bag;
+}
 
 
 	
