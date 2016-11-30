@@ -1,18 +1,20 @@
 #include "item.hpp"
 
+
+
 Weapon::Weapon(std::string name, int value, std::string image, double hitchance){
-	this->name = name;
-	this->value = value;
-	this->type = "Weapon";
-	this->image = image;
-	this->hitchance = hitchance
+	name = name;
+	value = value;
+	type = "Weapon";
+	image = image;
+	hitchance = hitchance;
 }
 
 Armor::Armor(std::string name, int value, std::string image){
-	this->name = name;
-	this->value = value;
-	this->type = "Armor";
-	this->image = image;
+	name = name;
+	value = value;
+	type = "Armor";
+	image = image;
 }
 
 std::string Item::getName() const{

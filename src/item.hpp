@@ -6,13 +6,13 @@
 
 class Item{
 	public:
-		Item(std::string t, std::string n, int v, std::string i);
+		//Item(std::string t, std::string n, int v, std::string i);
 		std::string getName() const;
 		int getValue() const;
 		std::string getType() const;
 		void changeValue(int newvalue); 
 		std::string getImagename() const;
-	private:
+	protected:
 		std::string name;
 		int value;
 		std::string type;

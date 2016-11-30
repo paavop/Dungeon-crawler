@@ -381,7 +381,7 @@ void GameManager::movePlayer(int direction){
 			movingUp=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
-			monsters[0].moveDown();
+			monsters[0].moveLeft();
 		}
 		break;
 		
@@ -395,7 +395,7 @@ void GameManager::movePlayer(int direction){
 			movingDown=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
-			monsters[0].moveUp();
+			monsters[0].moveRight();
 		}
 		break;
 		
@@ -410,7 +410,7 @@ void GameManager::movePlayer(int direction){
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
 			
-			monsters[0].moveRight();
+			monsters[0].moveDown();
 		}
 		break;
 		
@@ -425,7 +425,7 @@ void GameManager::movePlayer(int direction){
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
 			
-			monsters[0].moveLeft();
+			monsters[0].moveUp();
 		}
 		break;
 	}
