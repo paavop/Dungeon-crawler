@@ -25,6 +25,12 @@ HUD::HUD(){
 	heroExp=0;
 	heroExpToNext=0;
 	
+	stx=2*width/3+20;
+	sty=starty+height/2-50;
+	
+	eqWepInd=-1;
+	eqArmInd=-1;
+	
 	
 }
 
@@ -53,6 +59,12 @@ HUD::HUD(Hero & hero){
 	heroExp=hero.getExp();
 	heroExpToNext=hero.getExpToNext();
 	
+	stx=2*width/3+20;
+	sty=starty+height/2-50;
+	
+	eqWepInd=-1;
+	eqArmInd=-1;
+	
 	bag=hero.getBag();
 
 }
@@ -68,7 +80,7 @@ void HUD::updateStats(Hero & hero){
 	heroExpToNext=hero.getExpToNext();
 	bag=hero.getBag();
 }
-void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites){
+void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero& hero){
 	sf::RectangleShape rect(sf::Vector2f(width-2*bordersize,height-2*bordersize));
 	rect.setFillColor(fillColor);
 	rect.setOutlineThickness(bordersize);
@@ -77,22 +89,24 @@ void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & s
 	window.draw(rect);
 	drawTextBox(window);
 	drawStats(window);
-	drawStats(window);
-	drawItems(window,sprites);
+
+	drawItems(window,sprites,hero);
+	
+	
+	
 	
 
 }
-void HUD::drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites){
+void HUD::drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero & hero){
 	int x,y;
-	int stx=2*width/3+20;
-	int sty=starty+height/2-50;
+	
 	sf::RectangleShape rect(sf::Vector2f(200,100));
 	rect.setFillColor(sf::Color(59, 62, 66));
 	rect.setPosition(stx,sty);
 	rect.setOutlineThickness(5);
 	rect.setOutlineColor(sf::Color::Black);
 	window.draw(rect);
-	for(int z=0;z<bag.size();z++){
+	for(int z=0;z<8;z++){
 		if(z<4){
 			x=z;
 			y=0;
@@ -102,17 +116,120 @@ void HUD::drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> &
 		}
 		
 		sf::RectangleShape rect2(sf::Vector2f(50,50));
-		rect2.setOutlineThickness(1);
+
+	
 		rect2.setOutlineColor(sf::Color::Black);
+		rect2.setOutlineThickness(1);
+		
 		rect2.setFillColor(sf::Color::Transparent);
 		rect2.setPosition(stx+x*50,sty+y*50);
 		window.draw(rect2);
+		
+	}
+	for(int z=0;z<bag.size();z++){
+		if(z<4){
+			x=z;
+			y=0;
+		}else{
+			x=z-4;
+			y=1;
+		}
+		
 		sprites[bag[z].getName()].setPosition(stx+x*50,sty+y*50);
 		
 		window.draw(sprites[bag[z].getName()]);
 	}
+	for(int z=0;z<8;z++){
+		if(z<4){
+			x=z;
+			y=0;
+		}else{
+			x=z-4;
+			y=1;
+		}
+		
+		sf::RectangleShape rect2(sf::Vector2f(50,50));
+
+		if(z==eqWepInd){
+			rect2.setOutlineColor(sf::Color::Red);
+			rect2.setOutlineThickness(2);
+			rect2.setFillColor(sf::Color::Transparent);
+			rect2.setPosition(stx+x*50,sty+y*50);
+			window.draw(rect2);
+		}
+		if(z==eqArmInd){
+			rect2.setOutlineColor(sf::Color::Blue);
+			rect2.setOutlineThickness(2);
+			rect2.setFillColor(sf::Color::Transparent);
+			rect2.setPosition(stx+x*50,sty+y*50);
+			window.draw(rect2);
+		}
+	}
+	
+	
+	sf::Vector2i mousePosition=sf::Mouse::getPosition(window);
+	if(mousePosition.x>500 && mousePosition.x<750 && mousePosition.y>450 && mousePosition.y<600){
+		//std::cout<<"x: "<<mousePosition.x<<" y: "<<mousePosition.y<<std::endl;
+		drawItemStats(mousePosition.x-stx,mousePosition.y-sty,window,hero);
+	}
 }
 
+void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
+	if(x<200 && y<100 && x>0 && y>0){
+		int selected=x/50+4*(int)(y/50);
+		if(selected>=0 && selected<bag.size()){
+			//std::cout<<bag[selected].getName()<<std::endl;
+			sf::RectangleShape rect(sf::Vector2f(150,50));
+			//std::cout<<x<<","<<y<<std::endl;
+			rect.setFillColor(sf::Color::Black);
+			rect.setOutlineThickness(3);
+			rect.setOutlineColor(sf::Color::White);
+			rect.setPosition(stx+x-150,sty+y-50);
+			window.draw(rect);
+			sf::Font font;
+			font.loadFromFile("resources/joystix_monospace.ttf");
+			sf::Text text(bag[selected].getName(),font);
+			text.setCharacterSize(14);
+			text.setPosition(stx+x-150,sty+y-50);
+			window.draw(text);
+			
+			std::ostringstream tmp;
+			tmp<<bag[selected].getValue();
+			text.setCharacterSize(10);
+			if(bag[selected].getType()=="Weapon"){
+				text.setString("Attack: "+tmp.str());
+
+			}
+			if(bag[selected].getType()=="Armor"){
+				text.setString("Defense: "+tmp.str());
+			}
+
+			text.move(0,15);
+			window.draw(text);
+			
+			if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+				if(hero.equip(selected)){
+					sendMsg("Equipped "+bag[selected].getName());
+					if(bag[selected].getType()=="Weapon"){
+						eqWepInd=selected;
+
+					}
+					if(bag[selected].getType()=="Armor"){
+						eqArmInd=selected;
+					}
+				}
+			}
+			
+			
+			
+			
+		}
+	}
+	
+	
+	
+
+}
 void HUD::sendMsg(std::string msg){
 	messages.push_front(msg);
 	if(messages.size()>10){

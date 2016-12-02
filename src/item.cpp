@@ -37,6 +37,6 @@ std::string Item::getImagename() const{
 	return image;
 }
 
-double Weapon::getHitchance() const{
+double Weapon::getHitchance(){
 	return hitchance;
 }

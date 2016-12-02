@@ -31,7 +31,7 @@ class Armor: public Item{
 class Weapon: public Item{
 	public:
 		Weapon(std::string name, int value, std::string image, double hitchance);
-		double getHitchance() const;
+		double getHitchance();
 	private:
 		double hitchance;
 };

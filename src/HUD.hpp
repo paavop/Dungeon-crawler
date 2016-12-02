@@ -12,15 +12,20 @@ class HUD{
 public:
 	HUD();
 	HUD(Hero& hero);
-	void drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites);
+	void drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero & hero);
 	void sendMsg(std::string s);
 	void updateStats(Hero& hero);
 	
 private:
+	//Item coordinates
+	int stx;
+	int sty;
+	
+	void drawItemStats(int x,int y,sf::RenderWindow & window,Hero & hero);
 	void drawTextBox(sf::RenderWindow & window);
 
 	void drawStats(sf::RenderWindow & window);
-	void drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites);
+	void drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero & hero);
 	std::deque<std::string> messages;
 	std::vector<Item> bag;
 	sf::Color fillColor;
@@ -36,5 +41,8 @@ private:
 	int starty;
 
 	int heroMaxHp,heroHp,heroStr,heroAgi,heroDef,heroMana,heroLvl,heroExp, heroExpToNext;
+	
+	int eqWepInd;
+	int eqArmInd;
 };
 	
