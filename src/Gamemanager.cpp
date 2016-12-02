@@ -3,6 +3,14 @@
 
 
 GameManager::GameManager(){
+
+	Reader reader("itemlist.txt");
+	std::vector<Item> lista=reader.get_items();
+
+	for(int asd=0;asd<lista.size();asd++){
+		std::cout<<lista[asd].getName()<<std::endl;
+	}
+	
 	
 	hero=Hero(100,10,10,10,100);
 	hud=HUD(hero);
