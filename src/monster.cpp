@@ -54,6 +54,16 @@ void Monster::setSprite(sf::Sprite& sprite){
 int Monster::getHp(){
 	return hp;
 }
+bool Monster::takeDamage(int dmg){
+	 hp -= dmg;
+	 if(hp > 0){
+                 return true;
+	         }
+	 else{
+                 return false;
+	         }
+ }
+
 int Monster::getStr(){
 	return strength;
 }
