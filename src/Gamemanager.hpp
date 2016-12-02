@@ -1,4 +1,5 @@
-
+#ifndef GAMEMANAGER_H
+#define GAMEMANAGER_H
 
 #include "monster.hpp"
 #include <algorithm>
@@ -78,4 +79,6 @@ private:
 	std::vector<std::vector<int>> map;
 	
 };
+
+#endif
 	

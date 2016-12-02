@@ -1,3 +1,6 @@
+#ifndef MONSTER_H
+#define MONSTER_H
+
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
@@ -61,4 +64,4 @@ class Monster {
 		sf::Vector2f position;
 		sf::Vector2f target_pos;	//place where the enemy tries to go
 };
-
+#endif
