@@ -1,3 +1,6 @@
+#ifndef HERO_H
+#define HERO_H
+
 #include "item.hpp"
 #include <vector>
 
@@ -34,3 +37,6 @@ class Hero {
 		int expToNextLvl;	//Needed exp to next lvl
 		
 };
+
+
+#endif
