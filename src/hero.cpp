@@ -91,6 +91,7 @@ bool Hero::addItem(Item itm){
 	}
 	else{
 		bag.push_back(itm);
+
 		return true;
 	}
 }

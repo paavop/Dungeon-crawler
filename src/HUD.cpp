@@ -78,12 +78,39 @@ void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & s
 	drawTextBox(window);
 	drawStats(window);
 	drawStats(window);
-	sprites["Haarniska"].setPosition(0,0);
-	window.draw(sprites["Haarniska"]);
+	drawItems(window,sprites);
+	
 
 }
-void drawItems(sf::RenderWindow & window){
-	
+void HUD::drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites){
+	int x,y;
+	int stx=2*width/3+20;
+	int sty=starty+height/2-50;
+	sf::RectangleShape rect(sf::Vector2f(200,100));
+	rect.setFillColor(sf::Color(59, 62, 66));
+	rect.setPosition(stx,sty);
+	rect.setOutlineThickness(5);
+	rect.setOutlineColor(sf::Color::Black);
+	window.draw(rect);
+	for(int z=0;z<bag.size();z++){
+		if(z<4){
+			x=z;
+			y=0;
+		}else{
+			x=z-4;
+			y=1;
+		}
+		
+		sf::RectangleShape rect2(sf::Vector2f(50,50));
+		rect2.setOutlineThickness(1);
+		rect2.setOutlineColor(sf::Color::Black);
+		rect2.setFillColor(sf::Color::Transparent);
+		rect2.setPosition(stx+x*50,sty+y*50);
+		window.draw(rect2);
+		sprites[bag[z].getName()].setPosition(stx+x*50,sty+y*50);
+		
+		window.draw(sprites[bag[z].getName()]);
+	}
 }
 
 void HUD::sendMsg(std::string msg){

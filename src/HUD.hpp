@@ -20,7 +20,7 @@ private:
 	void drawTextBox(sf::RenderWindow & window);
 
 	void drawStats(sf::RenderWindow & window);
-	void drawItems(sf::RenderWindow & window);
+	void drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites);
 	std::deque<std::string> messages;
 	std::vector<Item> bag;
 	sf::Color fillColor;

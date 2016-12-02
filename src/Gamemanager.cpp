@@ -56,11 +56,17 @@ GameManager::GameManager(){
 	monsters.push_back(monsu);
 	loadEnemyTexture(monsters[0]);
 	
-	Armor arm("Haarniska",5,"resources/stairs.png");
-	std::cout<<arm.getName()<<std::endl;
+	Armor arm("Haarniska",5,"resources/smallsword.png");
 	items.push_back(arm);
 	loadItemTexture(items[0]);
-	
+	hero.addItem(arm);
+	hero.addItem(arm);
+	hero.addItem(arm);
+	hero.addItem(arm);
+	hero.addItem(arm);
+	hero.addItem(arm);
+	hero.addItem(arm);
+	hero.addItem(arm);
 	
 
 }
@@ -102,7 +108,7 @@ void GameManager::updateAll(){
 	}else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){
 		movePlayer(4);
 	}
-
+	hud.updateStats(hero);
 	/*	TESTING */
 	hearPlayer(monsters[0]);
 	
