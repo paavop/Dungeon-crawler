@@ -1,4 +1,6 @@
 #include "Gamemanager.hpp"
+#include <string>
+#include <sstream>
 
 
 // Functions for calculating and executing combat related actions
@@ -12,7 +14,7 @@ bool combat(Hero hero, Monster monster, HUD &hud){
   int hit_chance = std::rand() %100 + 1; // random chance to hit the target
   
   if((monster.getAgi() * 2) > hit_chance){ // if targets agility is high enough, dodge
- //   hud.sendMsg("%s dodged the attack!",monster.getName());
+    hud.sendMsg(monster.getName() +" dodged the attack!");
     return true;
   }
 
@@ -32,7 +34,7 @@ bool combat(Hero hero, Monster monster, HUD &hud){
 
 
 bool combat(Monster monster, Hero hero, HUD &hud){
- // hud.sendMsg("%s is attacking", monster.getName());
+ hud.sendMsg(monster.getName() + " is attacking");
   
   int hit_chance = std::rand() %100 + 1; // random chance to hit the target
   
@@ -47,8 +49,11 @@ bool combat(Monster monster, Hero hero, HUD &hud){
   }
   int damage = (penetration * hit_chance / 10); // Calculating the damage done
 
+  std::ostringstream stm;
+  stm << damage;
+
   hero.takeDamage(damage);
- // hud.sendMsg("The hit dealt %i damage!",damage);
+  hud.sendMsg("The hit dealt "+ stm.str()  + " damage!");
   return true;
 }
   
