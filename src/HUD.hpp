@@ -1,3 +1,5 @@
+#ifndef HUD_H
+#define HUD_H
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
 #include <stdio.h>
@@ -38,3 +40,4 @@ private:
 	int heroMaxHp,heroHp,heroStr,heroAgi,heroDef,heroMana,heroLvl,heroExp, heroExpToNext;
 };
 	
+#endif

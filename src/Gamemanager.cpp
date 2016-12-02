@@ -1,5 +1,5 @@
 #include "Gamemanager.hpp"
-
+bool combat(Hero hero, Monster monster, HUD &hud);
 
 
 GameManager::GameManager(){
@@ -427,6 +427,7 @@ void GameManager::movePlayer(int direction){
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
 			monsters[0].moveLeft();
+			combat(hero,monsters[0],hud);
 		}
 		break;
 		

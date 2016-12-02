@@ -24,8 +24,20 @@ bool combat(Hero hero, Monster monster, HUD &hud){
   }
   int damage = (penetration * hit_chance / 10); // calculating the amount damage done
 
+
+   std::ostringstream stm;
+   stm << damage;
+
   monster.takeDamage(damage);
- // hud.sendMsg("The hit dealt %i damage!",damage);
+  hud.sendMsg("The hit dealt "+ stm.str()  + " damage!");
+  
+  /*
+  std::ostringstream stm2;
+  stm2 << monster.getHp();
+  monster.takeDamage(damage);
+  hud.sendMsg("Enemy has "+ stm2.str()  + " HP left");
+  */
+
   return true;
 }
 
