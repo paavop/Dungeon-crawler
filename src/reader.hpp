@@ -1,6 +1,8 @@
 /*rapeltaja Huotari*/
+
 #ifndef _MYHEADER_H_
 #define _MYHEADER_H_
+
 
 #include <iostream>
 #include <fstream>
@@ -18,4 +20,6 @@ class Reader{
 		std::vector<Item> items;
 };
 
+
 #endif
+

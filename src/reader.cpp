@@ -14,10 +14,12 @@ Reader::Reader(std::string filename){
 				bool gotImage = false;
 				bool gotName = false;
 				bool gotHitchance = false;
+
 				std::string tmpname;
 				std::string tmpimage;
 				int tmpvalue;
 				int tmphitchance;
+
 				while(std::getline(open_file, newline) && newline!="}"){
 					newline.erase(std::remove_if(newline.begin(), newline.end(), isspace), newline.end());
 					std::string delimiter = ":";
@@ -27,6 +29,7 @@ Reader::Reader(std::string filename){
 					}
 					else if(newline.substr(0, newline.find(delimiter)) =="value"){
 						std::string tmptmpvalue = newline.substr(newline.find(delimiter)+1);
+
 						tmpvalue = std::stoi(tmptmpvalue);
 						gotValue = true;
 					}
@@ -36,20 +39,30 @@ Reader::Reader(std::string filename){
 					}
 					else if(newline.substr(0, newline.find(delimiter)) =="name"){
 						tmpname = newline.substr(newline.find(delimiter)+1);
+
+
 						gotName = true;
 					}
+					
 					else if(newline.substr(0, newline.find(delimiter)) =="hitchance"){
 						std::string tmptmphitchance = newline.substr(newline.find(delimiter)+1);
+
 						tmphitchance = std::stoi(tmptmphitchance);
+
+						int tmphitchance = std::stoi(tmptmphitchance);
+
 						gotHitchance = true;
 					}
 				}
 				if(gotType && gotValue && gotImage && gotName && !gotHitchance){
+
 					Armor jokuarmor(tmpname, tmpvalue, tmpimage);
 					items.push_back(jokuarmor);
 				}
+				
 				else if(gotType && gotValue && gotImage && gotName && gotHitchance){
 					Weapon jokuweapon (tmpname, tmpvalue, tmpimage, tmphitchance);
+
 					items.push_back(jokuweapon);
 				}
 				else{
@@ -61,7 +74,7 @@ Reader::Reader(std::string filename){
 	else{
 		std::cout << "Could not open the file: '" << filename << "'" << std::endl;
 	}
-	//std::cout<<items[0].getName()<<std::endl;
+
 
 }
 
@@ -73,13 +86,4 @@ std::vector<Item> Reader::get_items(){
 
 	return items;
 }
-
-/*
-int main(){
-	Reader keskiviikko();
-	auto vektori1 = keskiviikko.get_items();
-	std::string randomnimi = vektori1[0].getName();
-	std::cout << randomnimi << std::endl;
-}
-*/
 
