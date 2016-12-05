@@ -5,9 +5,9 @@
 Hero::Hero(){
 	maxhp=100;
 	hp=maxhp;
-	strength=10;
-	agility=10;
-	defense=10;
+	strength=5;
+	agility=5;
+	defense=5;
 	mana=100;
 	lvl=1;
 	exp=0;
@@ -75,6 +75,7 @@ void Hero::lvlUp(void){
 
 bool Hero::takeDamage(int dmg){
 	hp-=dmg;
+
 	if(hp>0){
 		return true;
 	}
@@ -91,6 +92,7 @@ void Hero::heal(int h){
 }
 
 int Hero::getHp(){
+	//std::cout<<hp<<std::endl<<std::flush;
 	return hp;
 }
 int Hero::getMaxHp(){

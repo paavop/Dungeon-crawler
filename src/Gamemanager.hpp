@@ -37,6 +37,8 @@ private:
 
 	void loadEnemyTexture(Monster& enemy);
 	void loadItemTexture(Item& item);
+	
+	void enemyTurn();
 
 	
 	std::vector<std::vector<int>> makeMap(int a);
@@ -49,7 +51,8 @@ private:
 	void drawEnemies(sf::RenderWindow& window);
 	Hero hero;
 	HUD hud;
-	bool movingUp,movingDown,movingLeft,movingRight;
+	bool movingUp,movingDown,movingLeft,movingRight,plrMadeMove;
+	bool fighting;
 	int n,m,mapsize;
 	float animationTime,cmdTime,yPercentage,xPercentage,movePercentage,offsety,offsetx;
 	sf::Clock clock;

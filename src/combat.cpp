@@ -8,7 +8,7 @@
 
 
 
-bool combat(Hero hero, Monster monster, HUD &hud){
+bool combat(Hero & hero, Monster & monster, HUD &hud){
   hud.sendMsg("Player is attacking");
   
   int hit_chance = std::rand() %100 + 1; // random chance to hit the target
@@ -45,7 +45,7 @@ bool combat(Hero hero, Monster monster, HUD &hud){
 
 
 
-bool combat(Monster monster, Hero hero, HUD &hud){
+bool combat(Monster & monster, Hero & hero, HUD &hud){
  hud.sendMsg(monster.getName() + " is attacking");
   
   int hit_chance = std::rand() %100 + 1; // random chance to hit the target
@@ -65,7 +65,8 @@ bool combat(Monster monster, Hero hero, HUD &hud){
   stm << damage;
 
   hero.takeDamage(damage);
-  hud.sendMsg("The hit dealt "+ stm.str()  + " damage!");
+
+  hud.sendMsg("You took "+ stm.str()  + " damage!");
   return true;
 }
   

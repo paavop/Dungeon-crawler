@@ -4,15 +4,23 @@ Monster::Monster(sf::Vector2f pos){
 	alive = true;
 	detects_player = false;
 	position = pos;
-	name = "risumies";
+	name = "Gargant";
 	pic_name = "resources/gargant.png";
-	maxhp = 1;			//Monster's max health points	
+	maxhp = 100;			//Monster's max health points	
 	hp = maxhp;			//Monster's current health points
 	lvl = 0;			//Level of the Monster
 	strength = 1;		//Monster's strength stat
 	agility = 1;		//Monster's agility stat
 	defense = 1;		//Monster's defense stat
 	hearing = 3;
+	movingUp = false;
+	movingDown = false;
+	movingLeft = false;
+	movingRight = false;
+	faceUp = false;
+	faceDown = false;
+	faceLeft = false;
+	faceRight = false;
 
 }
 
@@ -32,6 +40,15 @@ Monster::Monster(	int h, int s, int a,
 	defense=d;
 	lvl = lvl;
 	hearing = hearing_radius;
+	
+	movingUp = false;
+	movingDown = false;
+	movingLeft = false;
+	movingRight = false;
+	faceUp = false;
+	faceDown = false;
+	faceLeft = false;
+	faceRight = false;
 
 }
 
@@ -45,7 +62,9 @@ sf::Vector2f Monster::getPos(){
 	return position;
 }
 void Monster::setPos(unsigned int x, unsigned int y){
+	
 	position = sf::Vector2f(x,y);
+
 }
 void Monster::setSprite(sf::Sprite& sprite){
 	sprite = sprite;
@@ -53,6 +72,10 @@ void Monster::setSprite(sf::Sprite& sprite){
 
 int Monster::getHp(){
 	return hp;
+}
+
+int Monster::getMaxHp(){
+	return maxhp;
 }
 bool Monster::takeDamage(int dmg){
 	 hp -= dmg;
@@ -107,20 +130,74 @@ void Monster::stopMove(){
 	movingUp=false;
 }
 
+int Monster::faceWhere(){
+
+	if(faceUp){
+		return 1;
+	}
+	else if(faceDown){
+		return 2;
+	}
+	else if(faceLeft){
+		return 3;
+	}
+	else if(faceRight){
+		return 4;
+	}
+	return 0;
+}
+void Monster::faceThere(int dir){
+
+	switch(dir){
+	case 1:
+		faceUp=true;
+		faceDown=false;
+		faceLeft=false;
+		faceRight=false;
+		break;
+	case 2:
+		faceUp=false;
+		faceDown=true;
+		faceLeft=false;
+		faceRight=false;
+		break;
+	case 3:
+		faceUp=false;
+		faceDown=false;
+		faceLeft=true;
+		faceRight=false;
+		break;
+	case 4:
+		faceUp=false;
+		faceDown=false;
+		faceLeft=false;
+		faceRight=true;
+		break;
+	}
+
+}
 void Monster::moveUp(){
+	stopMove();
 	movingUp=true;
+	faceThere(1);
 	position.y-=1;
 }
 void Monster::moveDown(){
+	stopMove();
 	movingDown=true;
+	faceThere(2);
 	position.y+=1;
 }
 void Monster::moveLeft(){
+	stopMove();
 	movingLeft=true;
+	faceThere(3);
 	position.x-=1;
 }
 void Monster::moveRight(){
+	stopMove();
 	movingRight=true;
+	faceThere(4);
 	position.x+=1;
 }
 void Monster::detectPlr(sf::Vector2f pos){

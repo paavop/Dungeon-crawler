@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
+#include <iostream>
 
 
 class Monster {
@@ -32,6 +33,7 @@ class Monster {
 		int 			getAgi();
 		int 			getDef();
 		int				getHearingRadius();
+		int 			getMaxHp();
 		
 		bool			movesUp();
 		bool			movesDown();
@@ -42,7 +44,8 @@ class Monster {
 		void			moveDown();
 		void			moveLeft();
 		void			moveRight();
-		
+		int 			faceWhere();
+		void			faceThere(int dir);
 		
 	private:
 		bool alive;
@@ -60,6 +63,7 @@ class Monster {
 		int hearing;		//hearing radius
 		
 		bool movingUp,movingDown,movingLeft,movingRight;
+		bool faceUp, faceDown,faceLeft,faceRight;
 
 		sf::Vector2f position;
 		sf::Vector2f target_pos;	//place where the enemy tries to go
