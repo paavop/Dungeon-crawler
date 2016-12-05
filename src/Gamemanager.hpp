@@ -6,7 +6,7 @@
 #include <math.h>
 #include "reader.hpp"
 
-
+#include <sstream>
 #include "HUD.hpp"
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
@@ -33,6 +33,9 @@ public:
 	void tryDetectPlayer(Monster& monster);
 	
 private:
+	void newLevel();
+	unsigned int dungeonLevel;
+	void addMonsters();
 	void setEnemies();
 
 	void loadEnemyTexture(Monster& enemy);

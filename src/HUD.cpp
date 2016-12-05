@@ -68,7 +68,7 @@ HUD::HUD(Hero & hero){
 	bag=hero.getBag();
 
 }
-void HUD::updateStats(Hero & hero){
+void HUD::updateStats(Hero & hero,unsigned int lvl){
 	heroMaxHp=hero.getMaxHp();
 	heroHp=hero.getHp();
 	heroStr=hero.getStr();
@@ -79,6 +79,7 @@ void HUD::updateStats(Hero & hero){
 	heroExp=hero.getExp();
 	heroExpToNext=hero.getExpToNext();
 	bag=hero.getBag();
+	dngLvl=lvl;
 }
 void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero& hero){
 	sf::RectangleShape rect(sf::Vector2f(width-2*bordersize,height-2*bordersize));
@@ -247,8 +248,9 @@ void HUD::drawStats(sf::RenderWindow & window){
 	text.setCharacterSize(14);
 	text.setColor(sf::Color::Black);
 	
-	oss<<"Health: "<<heroHp<<"/"<<heroMaxHp<<std::endl;
-	oss<<"Mana  : "<<heroMana<<std::endl<<std::endl;
+	oss<<"Dungeon lvl: "<<dngLvl<<std::endl;
+	oss<<"Health: "<<heroHp<<"/"<<heroMaxHp<<std::endl<<std::endl;
+	
 	oss<<"Exp   : "<<heroExp<<"/"<<heroExpToNext<<std::endl;
 	oss<<"Level : "<<heroLvl<<std::endl<<std::endl;
 	oss<<"S:"<<heroStr<<" D:"<<heroDef<<" A:"<<heroAgi; 

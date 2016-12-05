@@ -6,16 +6,12 @@ GameManager::GameManager(){
 
 	Reader reader("itemlist.txt");
 	items=reader.get_items();
-
-	
-	
-	
 	hero=Hero(100,10,10,10,100);
 	hud=HUD(hero);
 	
-	mapsize=60;
-	map=makeMap(mapsize);
-	findStart(map);
+	dungeonLevel=0;
+	newLevel();
+	
 	
 	animationTime=0.15;
 	
@@ -52,43 +48,14 @@ GameManager::GameManager(){
 	stairs.setTexture(stairs_t);
 
 
-	//Load example monsters and items
+	//Load example items
 
 
 	/*	TESTING	*/
 
 	
 	
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	
 	
 	
 	for(int ind=0;ind<monsters.size();ind++){
@@ -102,11 +69,60 @@ GameManager::GameManager(){
 	hero.addItem(items[2]);
 	hero.addItem(items[3]);
 
-	setEnemies();
+
 	
 	
 
 }
+
+void GameManager::newLevel(){
+	dungeonLevel++;
+	std::ostringstream stm;
+	stm<<"You entered Dungeon lvl "<<dungeonLevel;
+	
+	hud.sendMsg(stm.str());
+	mapsize=60;
+	map=makeMap(mapsize);
+	findStart(map);
+	monsters.clear();
+	addMonsters();
+	
+}
+void GameManager::addMonsters(){
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	setEnemies();
+}
+	
+
 
 void GameManager::loadEnemyTexture(Monster& enemy){
 	if(enemy_textures.find(enemy.getName())==enemy_textures.end()){
@@ -136,6 +152,9 @@ void GameManager::loadItemTexture(Item& item){
 }
 
 void GameManager::updateAll(){
+	if(map[(int)MCspot.x][(int)MCspot.y]==2){
+		newLevel();
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
 		movePlayer(1);
 	}else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)){
@@ -151,7 +170,7 @@ void GameManager::updateAll(){
 		plrMadeMove=false;
 	}
 		
-	hud.updateStats(hero);
+	hud.updateStats(hero,dungeonLevel);
 	/*	TESTING */
 	hearPlayer(monsters[0]);
 	
@@ -487,6 +506,7 @@ std::vector<std::vector<int>> GameManager::makeMap(int size){
 	//Add a num. 2 to the last room, could be used as the exit of a level?
 	array[lastx+sizex/2-1][lasty-1]=2;
 	
+	/*
 	//print map to terminal
 	for(n=0;n<mapsize;n++){
 		for(m=0;m<mapsize;m++){
@@ -503,7 +523,7 @@ std::vector<std::vector<int>> GameManager::makeMap(int size){
 		}
 		std::cout<<std::endl;
 	}
-	
+	*/
 	
 	
 	

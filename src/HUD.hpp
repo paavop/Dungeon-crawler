@@ -16,9 +16,10 @@ public:
 	HUD(Hero& hero);
 	void drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero & hero);
 	void sendMsg(std::string s);
-	void updateStats(Hero& hero);
+	void updateStats(Hero& hero,unsigned int lvl);
 	
 private:
+	unsigned int dngLvl;
 	//Item coordinates
 	int stx;
 	int sty;
