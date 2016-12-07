@@ -70,7 +70,7 @@ void Game::Loop(){
 		case Game::Playing:
 			{
 
-				manager.updateAll();
+				manager.updateAll(gameWindow);
 				manager.drawAll(gameWindow);
 				
 				gameWindow.display();

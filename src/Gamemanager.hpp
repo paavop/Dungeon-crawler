@@ -22,7 +22,7 @@ class GameManager
 {
 public:
 	GameManager();
-	void updateAll();
+	void updateAll(sf::RenderWindow& window);
 	void drawAll(sf::RenderWindow & window);
 
 	bool isFreeTile(unsigned int x, unsigned int y);
@@ -34,6 +34,7 @@ public:
 	
 private:
 	void newLevel();
+	void nextLevel(sf::RenderWindow& window);
 	unsigned int dungeonLevel;
 	void addMonsters();
 	void setEnemies();

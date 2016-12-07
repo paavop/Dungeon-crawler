@@ -10,7 +10,7 @@ GameManager::GameManager(){
 	hud=HUD(hero);
 	
 	dungeonLevel=0;
-	newLevel();
+
 	
 	
 	animationTime=0.15;
@@ -58,6 +58,11 @@ GameManager::GameManager(){
 	
 	
 	
+
+	newLevel();
+
+
+	
 	for(int ind=0;ind<monsters.size();ind++){
 		loadEnemyTexture(monsters[ind]);
 	}
@@ -68,11 +73,6 @@ GameManager::GameManager(){
 	hero.addItem(items[1]);
 	hero.addItem(items[2]);
 	hero.addItem(items[3]);
-
-
-	
-	
-
 }
 
 void GameManager::newLevel(){
@@ -87,6 +87,43 @@ void GameManager::newLevel(){
 	monsters.clear();
 	addMonsters();
 	
+}
+void GameManager::nextLevel(sf::RenderWindow& window){
+	float cmdTime2=clock.getElapsedTime().asSeconds();
+	float transition=1;
+	sf::RectangleShape rect(sf::Vector2f(750,450));
+	rect.setPosition(0,0);
+	int alpha=0;
+	
+	while(clock.getElapsedTime().asSeconds()-cmdTime2<transition){
+		rect.setFillColor(sf::Color(0,0,0,255*((float)clock.getElapsedTime().asSeconds()-cmdTime2)/transition));
+
+		drawMap(window);
+		window.draw(MC);
+		hud.drawHUD(window,item_sprites,hero);
+		window.draw(rect);
+		alpha++;
+
+		window.display();
+		
+	}
+	newLevel();	
+	cmdTime2=clock.getElapsedTime().asSeconds();
+
+	while(clock.getElapsedTime().asSeconds()-cmdTime2<transition){
+		rect.setFillColor(sf::Color(0,0,0,255-255*((float)clock.getElapsedTime().asSeconds()-cmdTime2)/transition));
+
+		drawMap(window);
+		window.draw(MC);
+		hud.drawHUD(window,item_sprites,hero);
+		window.draw(rect);
+		alpha++;
+
+		window.display();
+		
+	}while(clock.getElapsedTime().asSeconds()-cmdTime2<transition){
+		//printf("asd");
+	}
 }
 void GameManager::addMonsters(){
 	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
@@ -151,9 +188,10 @@ void GameManager::loadItemTexture(Item& item){
 	}
 }
 
-void GameManager::updateAll(){
-	if(map[(int)MCspot.x][(int)MCspot.y]==2){
-		newLevel();
+void GameManager::updateAll(sf::RenderWindow& window){
+	
+	if(map[(int)MCspot.x][(int)MCspot.y]==2 && movePercentage==0){
+		nextLevel(window);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
 		movePlayer(1);
