@@ -1,6 +1,7 @@
 #include <SFML/Window.hpp>
 #include "SFML/Graphics.hpp"
 #include "Gamemanager.hpp"
+#include <SFML/Audio.hpp>
 
 class Game{
 public:
@@ -13,7 +14,7 @@ public:
 private:
 
 	enum gamestate{Starting,MainMenu, Playing, Exit};
-	
+	static sf::Music bg_track;
 	static gamestate state;
 	static void Loop();
 	static sf::RenderWindow gameWindow;
