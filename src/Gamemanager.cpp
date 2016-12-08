@@ -47,7 +47,7 @@ GameManager::GameManager(){
 
 
 	/*	TESTING	*/
-	Monster monsu(sf::Vector2f(MCspot.x+2,MCspot.y+2));
+	Monster monsu(sf::Vector2i(MCspot.x+2,MCspot.y+2));
 	monsters.push_back(monsu);
 	loadEnemyTexture(monsters[0]);
 
@@ -79,7 +79,8 @@ void GameManager::updateAll(){
 	}
 
 	/*	TESTING */
-	hearPlayer(monsters[0]);
+	tryDetectPlayer(monsters[0]);
+	monsters[0].moveTowardsTarget(map);
 	
 	
 }
@@ -387,7 +388,7 @@ void GameManager::movePlayer(int direction){
 			movingUp=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
-			monsters[0].moveLeft();
+			//monsters[0].moveLeft();
 		}
 		break;
 		
@@ -401,7 +402,7 @@ void GameManager::movePlayer(int direction){
 			movingDown=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
-			monsters[0].moveRight();
+			//monsters[0].moveRight();
 		}
 		break;
 		
@@ -416,7 +417,7 @@ void GameManager::movePlayer(int direction){
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
 			
-			monsters[0].moveDown();
+			//monsters[0].moveDown();
 		}
 		break;
 		
@@ -431,7 +432,7 @@ void GameManager::movePlayer(int direction){
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
 			
-			monsters[0].moveUp();
+			//monsters[0].moveUp();
 		}
 		break;
 	}
@@ -463,7 +464,10 @@ bool GameManager::hearPlayer(Monster& monster){
 }
 
 bool GameManager::seePlayer(Monster& monster){
-	if (freeLineOfSight(monster.getPos(), MCspot)){
+
+
+
+	if (freeLineOfSight(MCspot, monster.getPos())){
 		monster.detectPlr(MCspot);
 		hud.sendMsg("I see ya!");
 		return true;
@@ -476,68 +480,61 @@ bool GameManager::seePlayer(Monster& monster){
 }
 	
 
-bool GameManager::freeLineOfSight(sf::Vector2f a, sf::Vector2f b){
-	int dx,dy, max_dir_steps;
+bool GameManager::freeLineOfSight(sf::Vector2i a, sf::Vector2i b){
 
-	dx = (int) b.x - (int) a.x;
-	dy = (int) b.y - (int) a.y;
-	max_dir_steps = std::max(dx, dy)/std::min(dx,dy) /2; //how many steps we can go same direction in a row
+	return false;   //TESTING
 
-
-	int big_x = std::max(a.x,b.x);
-	int big_y = std::max(a.y,b.y);
-	int small_x = std::min(a.x,b.x);
-	int small_y = std::min(a.y,b.y);
+	int dx,dy, ax,ay,bx,by;
+	ax = (int) a.x; ay = (int) ay;
+	bx = (int) b.x; by = (int) by; 
 
 
-	if(!dx){	//they are on same vertical line
+	dx = bx - ax;
+	dy = by - ay;
+	bool paraller = (dx+1)%(dy+1);
+	int steps_row = (dx+1)/(dy+1);
+	if(paraller) steps_row +=1;
 
+	int x = ax , y = ay, steps = 1;
 
-		if(dy > 0){
+	
+	std::string coord=  "paraller: "+std::to_string(paraller)+"  steps: "+std::to_string(steps_row);
+	std::cout << coord;
+	while(!(x == bx && y == by)){
 
-			for(unsigned int i=0; i<dy; i++){
-				if(!isFreeTile((int)a.x, (int)a.y +i)){
-					return false;
-				}
-			}
+		if(!isFreeTile(x,y)){
+			return false;
 		}
-		if(dy < 0){
-
-			for(unsigned int i=0; i<dy; i--){
-				if(!isFreeTile((int)a.x, (int)a.y +i)){
-					return false;
-				}
-			}
+		if(steps != steps_row){
+			x++; steps++;
+			continue;
 		}
 		
+		//std::string coord=  "X: "+std::to_string(x)+"  Y: "+std::to_string(y);
+		//hud.sendMsg(coord);
+	
+		else{
+			if(paraller){
+				y++;
+			}
+			else{
+				y++; x++;
+			}
+
+
+			steps =1;
+
+
+		}
+	
 	}
+	return true;
 
-		if(!dy){	//vertical line
-
-
-			if(dx > 0){
-
-				for(unsigned int i=0; i<dx; i++){
-					if(!isFreeTile((int)a.x +i, (int)a.y)){
-						return false;
-					}
-				}
-			}
-			if(dx < 0){
-
-				for(unsigned int i=0; i<dx; i--){
-					if(!isFreeTile((int)a.x +i, (int)a.y)){
-						return false;
-					}
-				}
-			}
 		
 
 
 		
-	}
-	if(std::abs(dx) == std::abs(dy)) return false;//diagonal line
-
+	
 }
 	
 void GameManager::setEnemies(){

@@ -2,22 +2,22 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
-
+#include <cstdlib>
 
 class Monster {
 	public:
-		Monster(sf::Vector2f pos);
+		Monster(sf::Vector2i pos);
 		Monster(int health, int strength, int agility, 
 				int defense,  int lvl, int hearing_radius,
-				sf::Vector2f pos, std::string name);
+				sf::Vector2i pos, std::string name);
 
 		std::string		getPicName();
 		std::string	 	getName();
-		sf::Vector2f 	getPos();
+		sf::Vector2i 	getPos();
 		void 			setSprite(sf::Sprite& sprite);
 		void 			setPos(unsigned int x, unsigned int y);
-		void			setTargetPos(sf::Vector2f pos);
-		void			detectPlr(sf::Vector2f pos);
+		void			setTargetPos(sf::Vector2i pos);
+		void			detectPlr(sf::Vector2i pos);
 		void 			undetectPlr();
 		bool 			takeDamage(int dmg);
 		bool 			isAlive();
@@ -39,9 +39,15 @@ class Monster {
 		void			moveDown();
 		void			moveLeft();
 		void			moveRight();
-		
+
+		bool 			canMove(std::vector<std::vector<int>>& map);
+		void 			moveTowardsTarget(std::vector<std::vector<int>>& map);
 		
 	private:
+
+		enum Direction {Up, Right, Down, Left, Stop};
+		Direction dir = Stop;
+
 		bool alive;
 		bool detects_player;
 		std::string pic_name;
@@ -58,7 +64,7 @@ class Monster {
 		
 		bool movingUp,movingDown,movingLeft,movingRight;
 
-		sf::Vector2f position;
-		sf::Vector2f target_pos;	//place where the enemy tries to go
+		sf::Vector2i position;
+		sf::Vector2i target_pos;	//place where the enemy tries to go
 };
 
