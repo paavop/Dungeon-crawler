@@ -1,4 +1,5 @@
 #include "Gamemanager.hpp"
+
 bool combat(Hero& hero, Monster& monster, HUD &hud);
 bool combat( Monster& monster,Hero& hero, HUD &hud);
 
@@ -108,6 +109,7 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 		
 	}
 	newLevel();	
+	hero.heal(hero.getMaxHp());
 	cmdTime2=clock.getElapsedTime().asSeconds();
 
 	while(clock.getElapsedTime().asSeconds()-cmdTime2<transition){
@@ -459,10 +461,10 @@ void GameManager::updatePercentages(){
 }
 	
 
-std::vector<std::vector<int>> GameManager::makeMap(int size){
+std::vector<std::vector<int> > GameManager::makeMap(int size){
 	int mapsize=size;
 
-	std::vector<std::vector<int>> array;
+	std::vector<std::vector<int> > array;
 	int n,m;
 	array.resize(mapsize);
 	for(int i=0;i<mapsize;i++){
@@ -569,7 +571,7 @@ std::vector<std::vector<int>> GameManager::makeMap(int size){
 
 	return array;
 }
-void GameManager::findStart(std::vector<std::vector<int>> map){
+void GameManager::findStart(std::vector<std::vector<int> > map){
 	float mcx=0;
 	float mcy=0;
 	int n,m;

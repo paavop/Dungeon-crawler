@@ -6,7 +6,7 @@ Monster::Monster(sf::Vector2f pos){
 	position = pos;
 	name = "Gargant";
 	pic_name = "resources/gargant.png";
-	maxhp = 100;			//Monster's max health points	
+	maxhp = 1000;			//Monster's max health points	
 	hp = maxhp;			//Monster's current health points
 	lvl = 0;			//Level of the Monster
 	strength = 1;		//Monster's strength stat
