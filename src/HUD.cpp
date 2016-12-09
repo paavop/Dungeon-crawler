@@ -31,6 +31,8 @@ HUD::HUD(){
 	eqWepInd=-1;
 	eqArmInd=-1;
 	
+	clicked=false;
+	
 	
 }
 
@@ -66,6 +68,8 @@ HUD::HUD(Hero & hero){
 	eqArmInd=-1;
 	
 	bag=hero.getBag();
+	
+	clicked=false;
 
 }
 void HUD::updateStats(Hero & hero,unsigned int lvl){
@@ -220,7 +224,15 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 					}
 				}
 			}
-			
+
+			if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+				clicked=true;
+
+			}
+			if(clicked && not sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+				hero.dropItem(selected);
+				clicked=false;
+			}
 			
 			
 			

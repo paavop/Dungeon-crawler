@@ -45,8 +45,8 @@ private:
 	void enemyTurn();
 
 	
-	std::vector<std::vector<int>> makeMap(int a);
-	void findStart(std::vector<std::vector<int>> map);
+	std::vector<std::vector<int> > makeMap(int a);
+	void findStart(std::vector<std::vector<int> > map);
 	void movePlayer(int a);
 	void updatePercentages();
 	void drawMap(sf::RenderWindow& window);
@@ -83,7 +83,7 @@ private:
 	
 
 	sf::IntRect SourceSprite;
-	std::vector<std::vector<int>> map;
+	std::vector<std::vector<int> > map;
 	
 };
 

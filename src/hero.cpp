@@ -30,6 +30,9 @@ Hero::Hero(int h, int s, int a, int d, int m){
 	eqWepInd=-1;
 	eqArmInd=-1;
 }
+void Hero::dropItem(int itmInd){
+	bag.erase(bag.begin()+itmInd);
+}
 bool Hero::equip(int itmInd){
 	bool equipped=false;
 	if(itmInd>=0 && itmInd<bag.size()){
@@ -59,13 +62,15 @@ bool Hero::equip(int itmInd){
 		
 void Hero::gainExp(int e){
 	exp+=e;
-	if(exp>expToNextLvl){
+	if(exp>=expToNextLvl){
 		lvlUp();
 	}
 }
 void Hero::lvlUp(void){
 	lvl+=1;
 	maxhp+=100;
+	hp+=100;
+	expToNextLvl=lvl*1.05*1000;
 	strength+=1;
 	agility+=1;
 	defense+=1;

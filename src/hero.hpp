@@ -23,6 +23,7 @@ class Hero {
 		int getDef();
 		bool addItem(Item itm);
 		bool equip(int itmInd);
+		void dropItem(int itmInd);
 		std::vector<Item> getBag();
 
 		int eqWepInd;
@@ -40,7 +41,7 @@ class Hero {
 		int defense;		//Hero's defense stat
 		int mana;			//Hero's mana stat
 		int expToNextLvl;	//Needed exp to next lvl
-		
+
 };
 
 

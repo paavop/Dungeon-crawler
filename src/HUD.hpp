@@ -47,6 +47,8 @@ private:
 	
 	int eqWepInd;
 	int eqArmInd;
+	
+	bool clicked;		//checks mouse click
 };
 	
 #endif

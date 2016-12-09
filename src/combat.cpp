@@ -30,6 +30,10 @@ bool combat(Hero & hero, Monster & monster, HUD &hud){
 
   monster.takeDamage(damage);
   hud.sendMsg("The hit dealt "+ stm.str()  + " damage!");
+  if(monster.getHp()<=0){
+  	hud.sendMsg("The monster died");
+  	hero.gainExp(monster.getMaxHp());
+  }
   
   /*
   std::ostringstream stm2;
