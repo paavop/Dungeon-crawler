@@ -19,5 +19,6 @@ private:
 	static void Loop();
 	static sf::RenderWindow gameWindow;
 	static void showMenu();
+	static void endGame();
 	static GameManager manager;
 };

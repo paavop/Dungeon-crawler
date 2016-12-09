@@ -29,10 +29,11 @@ public:
 	bool freeLineOfSight(sf::Vector2i a, sf::Vector2i b); //Tells you is it possible to see from a to b
 	bool hearPlayer(Monster& monster);
 	bool seePlayer(Monster& monster);
-
+	bool gameOn();
 	void tryDetectPlayer(Monster& monster);
 	
 private:
+	bool gameon;
 	void itemLottery();
 	void newLevel();
 	void nextLevel(sf::RenderWindow& window);

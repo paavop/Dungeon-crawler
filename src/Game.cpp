@@ -27,7 +27,7 @@ void Game::Begin(){
 
 		Loop();
 	}
-	bg_track.stop();
+
 	
 
 }
@@ -53,9 +53,7 @@ void Game::Loop(){
 			gameWindow.close();
 	}
 
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
-		gameWindow.close();
-	}
+	
 	switch(state){
 		
 		case Game::MainMenu:
@@ -69,19 +67,23 @@ void Game::Loop(){
 			}
 		case Game::Playing:
 			{
-
-				manager.updateAll(gameWindow);
-				manager.drawAll(gameWindow);
+				if(manager.gameOn()){
+					manager.updateAll(gameWindow);
+					manager.drawAll(gameWindow);
 				
-				gameWindow.display();
+					gameWindow.display();
+				}else{
+					bg_track.stop();
+					state=Game::Exit;
+				}
 				
 				break;
 
 			}
 		case Game::Exit:
 			{
-				
-				gameWindow.close();
+				endGame();
+				//gameWindow.close();
 				gameWindow.display();
 				break;
 			}
@@ -109,6 +111,29 @@ void Game::showMenu(){
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
 		state=Game::Playing;
 		bg_track.play();
+	}
+
+}
+void Game::endGame(){
+
+	int bordersize=5;
+	sf::RectangleShape rect(sf::Vector2f(WIDTH-2*bordersize,HEIGHT-2*bordersize));
+	rect.setFillColor(sf::Color(150, 50, 250));
+	rect.setOutlineThickness(bordersize);
+	rect.setOutlineColor(sf::Color(250, 150, 100));
+	rect.setPosition(0+bordersize,0+bordersize);
+	gameWindow.draw(rect);
+	
+	sf::Font font;
+	font.loadFromFile("resources/Gameplay.ttf");
+	sf::Text text("GAME OVER",font);
+	text.setCharacterSize(50);
+	text.setStyle(sf::Text::Bold);
+	text.setColor(sf::Color::Red);
+	text.setPosition((WIDTH-text.getLocalBounds().width)/2,(HEIGHT-text.getLocalBounds().height)/2);
+	gameWindow.draw(text);
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
+		gameWindow.close();
 	}
 
 }

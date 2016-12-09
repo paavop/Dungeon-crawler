@@ -4,7 +4,7 @@ bool combat(Hero& hero, Monster& monster, HUD &hud);
 bool combat( Monster& monster,Hero& hero, HUD &hud);
 
 GameManager::GameManager(){
-
+	gameon=true;
 	Reader reader("itemlist.txt");
 	items=reader.get_items();
 	hero=Hero(100,10,10,10,100);
@@ -67,6 +67,9 @@ GameManager::GameManager(){
 	
 	
 	
+}
+bool GameManager::gameOn(){
+	return gameon;
 }
 void GameManager::itemLottery(){
 
@@ -170,9 +173,14 @@ void GameManager::loadItemTexture(Item& item){
 }
 
 void GameManager::updateAll(sf::RenderWindow& window){
-	
+	if(hero.getHp()<=0){
+		gameon=false;
+	}
 	if(map[MCspot.x][MCspot.y]==2 && !movingDown && !movingUp && !movingRight && !movingLeft ){
 		nextLevel(window);
+	}
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+		gameon=false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
 		movePlayer(1);
