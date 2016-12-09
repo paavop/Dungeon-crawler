@@ -1,3 +1,6 @@
+#ifndef HERO_H
+#define HERO_H
+
 #include "item.hpp"
 #include <vector>
 
@@ -19,9 +22,14 @@ class Hero {
 		int getMana();
 		int getDef();
 		bool addItem(Item itm);
+		bool equip(int itmInd);
 		std::vector<Item> getBag();
+
+		int eqWepInd;
+		int eqArmInd;
 		
 	private:
+
 		std::vector<Item> bag;  //Hero's available items
 		int maxhp;			//Hero's max health points	
 		int hp;				//Hero's current health points
@@ -34,3 +42,6 @@ class Hero {
 		int expToNextLvl;	//Needed exp to next lvl
 		
 };
+
+
+#endif

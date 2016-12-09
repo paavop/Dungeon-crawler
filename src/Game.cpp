@@ -8,6 +8,7 @@
 #include <utility>
 
 
+
 void Game::Begin(){
 	if(state!=Starting){
 		return;
@@ -15,11 +16,18 @@ void Game::Begin(){
 	gameWindow.create(sf::VideoMode(WIDTH,HEIGHT), "Luolaluovinta");
 	gameWindow.setFramerateLimit(60);
 	state=Game::MainMenu;
+	
+
+	if(!bg_track.openFromFile("resources/DungeonBeats.ogg")){
+		perror("can't load music"); //error
+	}
+	bg_track.setLoop(true);
 
 	while(gameWindow.isOpen()){
 
 		Loop();
 	}
+	bg_track.stop();
 	
 
 }
@@ -62,7 +70,7 @@ void Game::Loop(){
 		case Game::Playing:
 			{
 
-				manager.updateAll();
+				manager.updateAll(gameWindow);
 				manager.drawAll(gameWindow);
 				
 				gameWindow.display();
@@ -100,6 +108,7 @@ void Game::showMenu(){
 	gameWindow.draw(text);
 	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
 		state=Game::Playing;
+		bg_track.play();
 	}
 
 }
@@ -107,5 +116,6 @@ void Game::showMenu(){
 Game::gamestate Game::state=Starting;
 sf::RenderWindow Game::gameWindow;
 GameManager Game::manager;
+sf::Music Game::bg_track;
 			
 	

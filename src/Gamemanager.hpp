@@ -1,11 +1,12 @@
-
+#ifndef GAMEMANAGER_H
+#define GAMEMANAGER_H
 
 #include "monster.hpp"
 #include <algorithm>
 #include <math.h>
+#include "reader.hpp"
 
-
-
+#include <sstream>
 #include "HUD.hpp"
 #include <SFML/Graphics.hpp>
 #include <stdlib.h>
@@ -21,7 +22,7 @@ class GameManager
 {
 public:
 	GameManager();
-	void updateAll();
+	void updateAll(sf::RenderWindow& window);
 	void drawAll(sf::RenderWindow & window);
 
 	bool isFreeTile(unsigned int x, unsigned int y);
@@ -32,9 +33,16 @@ public:
 	void tryDetectPlayer(Monster& monster);
 	
 private:
+	void newLevel();
+	void nextLevel(sf::RenderWindow& window);
+	unsigned int dungeonLevel;
+	void addMonsters();
 	void setEnemies();
 
 	void loadEnemyTexture(Monster& enemy);
+	void loadItemTexture(Item& item);
+	
+	void enemyTurn();
 
 	
 	std::vector<std::vector<int>> makeMap(int a);
@@ -47,7 +55,8 @@ private:
 	void drawEnemies(sf::RenderWindow& window);
 	Hero hero;
 	HUD hud;
-	bool movingUp,movingDown,movingLeft,movingRight;
+	bool movingUp,movingDown,movingLeft,movingRight,plrMadeMove;
+	bool fighting;
 	int n,m,mapsize;
 	float animationTime,cmdTime,yPercentage,xPercentage,movePercentage,offsety,offsetx;
 	sf::Clock clock;
@@ -55,6 +64,7 @@ private:
 	float fpsTime;
 	sf::Vector2i MCspot;
 	std::vector<Monster> monsters;
+	std::vector<Item> items;
 	
 	
 	sf::Texture wall_t;
@@ -76,4 +86,6 @@ private:
 	std::vector<std::vector<int>> map;
 	
 };
+
+#endif
 	

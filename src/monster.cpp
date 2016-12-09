@@ -4,15 +4,25 @@ Monster::Monster(sf::Vector2i pos){
 	alive = true;
 	detects_player = false;
 	position = pos;
-	name = "risumies";
+	name = "Gargant";
 	pic_name = "resources/gargant.png";
-	maxhp = 1;			//Monster's max health points	
+	maxhp = 100;			//Monster's max health points	
 	hp = maxhp;			//Monster's current health points
 	lvl = 0;			//Level of the Monster
 	strength = 1;		//Monster's strength stat
 	agility = 1;		//Monster's agility stat
 	defense = 1;		//Monster's defense stat
 	hearing = 3;
+	movingUp = false;
+	movingDown = false;
+	movingLeft = false;
+	movingRight = false;
+	/*
+	faceUp = false;
+	faceDown = false;
+	faceLeft = false;
+	faceRight = false;
+	*/
 
 }
 
@@ -32,7 +42,17 @@ Monster::Monster(	int h, int s, int a,
 	defense=d;
 	lvl = lvl;
 	hearing = hearing_radius;
-
+	
+	movingUp = false;
+	movingDown = false;
+	movingLeft = false;
+	movingRight = false;
+	/*
+	faceUp = false;
+	faceDown = false;
+	faceLeft = false;
+	faceRight = false;
+	*/
 }
 
 std::string Monster::getName(){
@@ -54,6 +74,20 @@ void Monster::setSprite(sf::Sprite& sprite){
 int Monster::getHp(){
 	return hp;
 }
+
+int Monster::getMaxHp(){
+	return maxhp;
+}
+bool Monster::takeDamage(int dmg){
+	 hp -= dmg;
+	 if(hp > 0){
+                 return true;
+	         }
+	 else{
+                 return false;
+	         }
+ }
+
 int Monster::getStr(){
 	return strength;
 }
@@ -95,23 +129,65 @@ void Monster::stopMove(){
 	movingLeft=false;
 	movingRight=false;
 	movingUp=false;
-	dir = Stop;
+	moving_dir = Stop;
 }
 
+int Monster::faceWhere(){
+
+	if(facing_dir == Up){
+		return 1;
+	}
+	else if(facing_dir == Down){
+		return 2;
+	}
+	else if(facing_dir == Left){
+		return 3;
+	}
+	else if(facing_dir == Right){
+		return 4;
+	}
+	return 0;
+}
+void Monster::faceThere(int dir){
+
+	switch(dir){
+	case 1:
+		facing_dir = Up;
+		break;
+	case 2:
+		facing_dir = Down;
+		break;
+	case 3:
+		facing_dir = Left;
+		break;
+	case 4:
+		facing_dir = Right;
+		break;
+	}
+
+}
 void Monster::moveUp(){
+	stopMove();
 	movingUp=true;
+	faceThere(1);
 	position.y-=1;
 }
 void Monster::moveDown(){
+	stopMove();
 	movingDown=true;
+	faceThere(2);
 	position.y+=1;
 }
 void Monster::moveLeft(){
+	stopMove();
 	movingLeft=true;
+	faceThere(3);
 	position.x-=1;
 }
 void Monster::moveRight(){
+	stopMove();
 	movingRight=true;
+	faceThere(4);
 	position.x+=1;
 }
 void Monster::detectPlr(sf::Vector2i pos){
@@ -125,13 +201,14 @@ void Monster::undetectPlr(){
 
 void Monster::setTargetPos(sf::Vector2i pos){
 	target_pos = pos;
+	target_freshness = 3;
 }
 
 
 bool Monster::canMove(std::vector<std::vector<int>>& map){
 	
 
-	switch(dir)
+	switch(moving_dir)
 	{
 		case Up 	:return !(map[position.y-1][position.x]);
 		case Right 	:return !(map[position.y][position.x+1]);
@@ -159,21 +236,21 @@ void Monster::moveTowardsTarget(std::vector<std::vector<int>>& map){
 
 	if (horizontal){
 		if(dirs[0]==1) {
-			dir = Right;
+			moving_dir = Right;
 			if(canMove(map)) moveRight();
 		}
 		else if(dirs[0]==-1) {
-			dir = Left;
+			moving_dir = Left;
 			if(canMove(map)) moveLeft();
 		}
 	}
 	else{
 		if(dirs[1]==1) {
-			dir = Down;
+			moving_dir = Down;
 			if(canMove(map)) moveDown();
 		}
 		else if(dirs[1]==-1) {
-			dir = Up;
+			moving_dir = Up;
 			if(canMove(map)) moveUp();
 		}
 	}
@@ -181,3 +258,10 @@ void Monster::moveTowardsTarget(std::vector<std::vector<int>>& map){
 
 }
 
+bool Monster::isFreshTarget(){
+	if (target_freshness){
+		target_freshness--;
+		return true;
+	}
+	else return false;
+}

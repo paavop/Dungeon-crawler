@@ -1,8 +1,14 @@
+#ifndef MONSTER_H
+#define MONSTER_H
+
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
+
 #include <cstdlib>
+#include <iostream>
+
 
 class Monster {
 	public:
@@ -17,6 +23,7 @@ class Monster {
 		void 			setSprite(sf::Sprite& sprite);
 		void 			setPos(unsigned int x, unsigned int y);
 		void			setTargetPos(sf::Vector2i pos);
+		bool 			isFreshTarget();
 		void			detectPlr(sf::Vector2i pos);
 		void 			undetectPlr();
 		bool 			takeDamage(int dmg);
@@ -29,6 +36,7 @@ class Monster {
 		int 			getAgi();
 		int 			getDef();
 		int				getHearingRadius();
+		int 			getMaxHp();
 		
 		bool			movesUp();
 		bool			movesDown();
@@ -40,16 +48,22 @@ class Monster {
 		void			moveLeft();
 		void			moveRight();
 
+
 		bool 			canMove(std::vector<std::vector<int>>& map);
 		void 			moveTowardsTarget(std::vector<std::vector<int>>& map);
+		int 			faceWhere();
+		void			faceThere(int dir);
+
 		
 	private:
 
 		enum Direction {Up, Right, Down, Left, Stop};
-		Direction dir = Stop;
+		Direction moving_dir = Stop;
+		Direction facing_dir = Up;
 
 		bool alive;
 		bool detects_player;
+		unsigned int target_freshness =0;
 		std::string pic_name;
 		std::string name;	//Monster's name (daa-a)
 		//sf::Texture &texture;
@@ -63,8 +77,9 @@ class Monster {
 		int hearing;		//hearing radius
 		
 		bool movingUp,movingDown,movingLeft,movingRight;
+		bool faceUp, faceDown,faceLeft,faceRight;
 
 		sf::Vector2i position;
 		sf::Vector2i target_pos;	//place where the enemy tries to go
 };
-
+#endif
