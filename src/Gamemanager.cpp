@@ -63,16 +63,19 @@ GameManager::GameManager(){
 	for(int ind=0;ind<items.size();ind++){
 		loadItemTexture(items[ind]);
 	}
-	hero.addItem(items[0]);
-	hero.addItem(items[1]);
-	hero.addItem(items[2]);
-	hero.addItem(items[3]);
-	hero.addItem(items[4]);
-	hero.addItem(items[5]);
-	hero.addItem(items[6]);
-	hero.addItem(items[7]);
-}
 
+	
+	
+	
+}
+void GameManager::itemLottery(){
+
+	if(rand() %10==2){
+		hud.sendMsg("Monster dropped an item");
+		hero.addItem(items[rand() %items.size()]);
+	}
+
+}
 void GameManager::newLevel(){
 	dungeonLevel++;
 	std::ostringstream stm;
@@ -168,7 +171,7 @@ void GameManager::loadItemTexture(Item& item){
 
 void GameManager::updateAll(sf::RenderWindow& window){
 	
-	if(map[MCspot.x][MCspot.y]==2 && movePercentage==0){
+	if(map[MCspot.x][MCspot.y]==2 && !movingDown && !movingUp && !movingRight && !movingLeft ){
 		nextLevel(window);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
@@ -590,6 +593,9 @@ void GameManager::movePlayer(int direction){
 		for(n=0;n<monsters.size();n++){
 			if(monsters[n].getPos().x==MCspot.x && monsters[n].getPos().y==MCspot.y-1){
 				combat(hero,monsters[n],hud);
+				if(monsters[n].getHp()<=0){
+					itemLottery();
+				}
 				fighting=true;
 				attacked=true;
 				break;
@@ -622,6 +628,9 @@ void GameManager::movePlayer(int direction){
 		for(n=0;n<monsters.size();n++){
 			if(monsters[n].getPos().x==MCspot.x && monsters[n].getPos().y==MCspot.y+1){
 				combat(hero,monsters[n],hud);
+				if(monsters[n].getHp()<=0){
+					itemLottery();
+				}
 				fighting=true;
 				attacked=true;
 				break;
@@ -652,6 +661,9 @@ void GameManager::movePlayer(int direction){
 		for(n=0;n<monsters.size();n++){
 			if(monsters[n].getPos().x==MCspot.x-1 && monsters[n].getPos().y==MCspot.y){
 				combat(hero,monsters[n],hud);
+				if(monsters[n].getHp()<=0){
+					itemLottery();
+				}
 				fighting=true;
 				attacked=true;
 				break;
@@ -683,6 +695,9 @@ void GameManager::movePlayer(int direction){
 		for(n=0;n<monsters.size();n++){
 			if(monsters[n].getPos().x==MCspot.x+1 && monsters[n].getPos().y==MCspot.y){
 				combat(hero,monsters[n],hud);
+				if(monsters[n].getHp()<=0){
+					itemLottery();
+				}
 				fighting=true;
 				attacked=true;
 				break;

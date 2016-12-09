@@ -33,6 +33,7 @@ public:
 	void tryDetectPlayer(Monster& monster);
 	
 private:
+	void itemLottery();
 	void newLevel();
 	void nextLevel(sf::RenderWindow& window);
 	unsigned int dungeonLevel;

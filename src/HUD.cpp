@@ -156,20 +156,20 @@ void HUD::drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> &
 			y=1;
 		}
 		
-		sf::RectangleShape rect2(sf::Vector2f(50,50));
+		sf::RectangleShape rect2(sf::Vector2f(46,46));
 
 		if(z==eqWepInd){
 			rect2.setOutlineColor(sf::Color::Red);
 			rect2.setOutlineThickness(2);
 			rect2.setFillColor(sf::Color::Transparent);
-			rect2.setPosition(stx+x*50,sty+y*50);
+			rect2.setPosition(2+stx+x*50,2+sty+y*50);
 			window.draw(rect2);
 		}
 		if(z==eqArmInd){
 			rect2.setOutlineColor(sf::Color::Blue);
 			rect2.setOutlineThickness(2);
 			rect2.setFillColor(sf::Color::Transparent);
-			rect2.setPosition(stx+x*50,sty+y*50);
+			rect2.setPosition(2+stx+x*50,2+sty+y*50);
 			window.draw(rect2);
 		}
 	}
