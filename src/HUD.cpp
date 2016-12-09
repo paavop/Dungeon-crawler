@@ -230,6 +230,12 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 
 			}
 			if(clicked && not sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+				if(selected==eqWepInd){
+					eqWepInd=-1;
+				}
+				if(selected==eqArmInd){
+					eqArmInd=-1;
+				}
 				hero.dropItem(selected);
 				clicked=false;
 			}
