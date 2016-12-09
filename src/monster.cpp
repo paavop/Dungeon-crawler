@@ -207,24 +207,26 @@ void Monster::setTargetPos(sf::Vector2i pos){
 
 bool Monster::canMove(std::vector<std::vector<int>>& map){
 	
-
 	switch(moving_dir)
 	{
-		case Up 	:return !(map[position.y-1][position.x]);
-		case Right 	:return !(map[position.y][position.x+1]);
-		case Down 	:return !(map[position.y+1][position.x]);
-		case Left 	:return !(map[position.y][position.x-1]);
+		case Up 	:return (map[position.x][position.y-1] == 0);
+		case Right 	:return (map[position.x+1][position.y] == 0);
+		case Down 	:return (map[position.x][position.y+1] == 0);
+		case Left 	:return (map[position.x-1][position.y] == 0);
 	}
 }
 
 void Monster::moveTowardsTarget(std::vector<std::vector<int>>& map){
 	int dx,dy, tx,ty,mx,my;
+	//ARE THESE OBSOLETE?
 	tx = target_pos.x;	 ty = target_pos.y;
 	mx = position.x;	 my = position.y; 
-	dx = tx - mx;
-	dy = ty - my;
+	dx = target_pos.x - position.x;
+	dy = target_pos.y - position.y;
 	bool horizontal = false;
 	if(std::abs(dx) > std::abs(dy)) horizontal = true;
+
+	//std::cout << "Toimiiko:"<< horizontal<<  std::flush; //TESTING
 
 	std::vector<int> dirs(2);
 	if 		(dx>0) dirs[0] = 1;		//right
@@ -234,24 +236,24 @@ void Monster::moveTowardsTarget(std::vector<std::vector<int>>& map){
 	else if (dy<0) dirs[1] = -1;	//up
 	else		   dirs[1] = 0;
 
+	//std::cout << " where2: " <<dirs[0]<<"x"<<dirs[1] <<std::endl<< std::flush;
 	if (horizontal){
 		if(dirs[0]==1) {
 			moving_dir = Right;
-			if(canMove(map)) moveRight();
+			if(canMove(map)){std::cout<<"RIGHT"<<std::endl<<std::flush; moveRight();}
 		}
 		else if(dirs[0]==-1) {
 			moving_dir = Left;
-			if(canMove(map)) moveLeft();
+			if(canMove(map)) {std::cout<<"LEFT"<<std::endl<<std::flush;moveLeft();}
 		}
 	}
 	else{
 		if(dirs[1]==1) {
 			moving_dir = Down;
-			if(canMove(map)) moveDown();
-		}
+			if(canMove(map)) {std::cout<<"DOWN"<<std::endl<<std::flush;moveDown();}		}
 		else if(dirs[1]==-1) {
 			moving_dir = Up;
-			if(canMove(map)) moveUp();
+			if(canMove(map)) {std::cout<<"UP"<<std::endl<<std::flush;moveUp();}
 		}
 	}
 
