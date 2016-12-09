@@ -187,18 +187,18 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 		int selected=x/50+4*(int)(y/50);
 		if(selected>=0 && selected<bag.size()){
 			//std::cout<<bag[selected].getName()<<std::endl;
-			sf::RectangleShape rect(sf::Vector2f(150,50));
+			sf::RectangleShape rect(sf::Vector2f(175,50));
 			//std::cout<<x<<","<<y<<std::endl;
 			rect.setFillColor(sf::Color::Black);
 			rect.setOutlineThickness(3);
 			rect.setOutlineColor(sf::Color::White);
-			rect.setPosition(stx+x-150,sty+y-50);
+			rect.setPosition(stx+x-175,sty+y-50);
 			window.draw(rect);
 			sf::Font font;
 			font.loadFromFile("resources/joystix_monospace.ttf");
 			sf::Text text(bag[selected].getName(),font);
 			text.setCharacterSize(14);
-			text.setPosition(stx+x-150,sty+y-50);
+			text.setPosition(stx+x-175,sty+y-50);
 			window.draw(text);
 			
 			std::ostringstream tmp;
@@ -212,6 +212,9 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 				text.setString("Defense: "+tmp.str());
 			}
 
+			text.move(0,20);
+			window.draw(text);
+			text.setString(bag[selected].getDescription());
 			text.move(0,15);
 			window.draw(text);
 			

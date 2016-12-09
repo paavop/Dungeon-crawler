@@ -14,14 +14,16 @@ Reader::Reader(std::string filename){
 				bool gotImage = false;
 				bool gotName = false;
 				bool gotHitchance = false;
+				bool gotDescription = false;
 
 				std::string tmpname;
 				std::string tmpimage;
+				std::string tmpdescription;
 				int tmpvalue;
 				int tmphitchance;
 
 				while(std::getline(open_file, newline) && newline!="}"){
-					newline.erase(std::remove_if(newline.begin(), newline.end(), isspace), newline.end());
+					//newline.erase(std::remove_if(newline.begin(), newline.end(), isspace), newline.end());
 					std::string delimiter = ":";
 					if(newline.substr(0, newline.find(delimiter)) =="type"){
 						std::string tmptype = newline.substr(newline.find(delimiter)+1);
@@ -53,15 +55,23 @@ Reader::Reader(std::string filename){
 
 						gotHitchance = true;
 					}
-				}
-				if(gotType && gotValue && gotImage && gotName && !gotHitchance){
+					else if(newline.substr(0, newline.find(delimiter)) =="description"){
 
-					Armor jokuarmor(tmpname, tmpvalue, tmpimage);
+						tmpdescription=newline.substr(newline.find(delimiter)+1);
+
+						
+
+						gotDescription = true;
+					}
+				}
+				if(gotType && gotValue && gotImage && gotName && !gotHitchance && gotDescription){
+
+					Armor jokuarmor(tmpname, tmpvalue, tmpimage,tmpdescription);
 					items.push_back(jokuarmor);
 				}
 				
-				else if(gotType && gotValue && gotImage && gotName && gotHitchance){
-					Weapon jokuweapon (tmpname, tmpvalue, tmpimage, tmphitchance);
+				else if(gotType && gotValue && gotImage && gotName && gotHitchance && gotDescription){
+					Weapon jokuweapon (tmpname, tmpvalue, tmpimage, tmphitchance,tmpdescription);
 
 					items.push_back(jokuweapon);
 				}

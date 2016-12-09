@@ -11,7 +11,7 @@ Hero::Hero(){
 	mana=100;
 	lvl=1;
 	exp=0;
-	expToNextLvl=1000;
+	expToNextLvl=100;
 	
 	eqWepInd=-1;
 	eqArmInd=-1;
@@ -25,7 +25,7 @@ Hero::Hero(int h, int s, int a, int d, int m){
 	mana=m;
 	lvl=1;
 	exp=0;
-	expToNextLvl=1000;
+	expToNextLvl=100;
 	
 	eqWepInd=-1;
 	eqArmInd=-1;
@@ -96,9 +96,9 @@ void Hero::gainExp(int e){
 }
 void Hero::lvlUp(void){
 	lvl+=1;
-	maxhp+=100;
-	hp+=100;
-	expToNextLvl=expToNextLvl+((lvl*0.05)+1)*1000;
+	maxhp+=((lvl*0.05)+1)*40;
+	hp+=((lvl*0.05)+1)*40;
+	expToNextLvl=expToNextLvl+((lvl*0.05)+1)*100;
 	strength+=1;
 	agility+=1;
 	defense+=1;

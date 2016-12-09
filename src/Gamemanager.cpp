@@ -261,112 +261,116 @@ void GameManager::drawEnemies(sf::RenderWindow& window){
 	//This is how:
 
 	for(n=0;n<monsters.size();n++){
-		float xmonmove=0;
-		float ymonmove=0;
-		int monoffy=0;
-		int monoffx=0;
-		std::string name=monsters[n].getName();
-		int dir=monsters[n].faceWhere();
-		//std::cout<<dir<<std::endl<<std::flush;
-		switch(dir){
-			case 1:
-				enemy_sprites[name].setRotation(180);
-				enemy_sprites[name].setOrigin(50,50);
-				break;
-			case 2:
-				enemy_sprites[name].setRotation(0);
-				enemy_sprites[name].setOrigin(0,0);
-				break;
-			case 3:
-				enemy_sprites[name].setRotation(90);
-				enemy_sprites[name].setOrigin(0,50);
-				break;
-			case 4:
-				enemy_sprites[name].setRotation(270);
-				enemy_sprites[name].setOrigin(50,0);
-				break;
-		}
-		/*
-		float percentageMoved=0;
-		if((clock.getElapsedTime().asSeconds()-cmdTime)/animationTime<1){
-			percentageMoved=(clock.getElapsedTime().asSeconds()-cmdTime)/animationTime;
-		}else{
-			percentageMoved=1;
-		}
-		*/
-		int a,b;
-		if(fighting){
-			if(monsters[n].movesUp())
-			{
-				ymonmove=-movePercentage;
-				monoffy=50;
-				//std::cout<<ymonmove<<std::endl;
-			}
-			else if(monsters[n].movesDown()){
-				ymonmove=movePercentage;
-				monoffy=-50;
-			}
-			else if(monsters[n].movesLeft()){
-				xmonmove=-movePercentage;
-
-				monoffx=50;
-			}
-			else if(monsters[n].movesRight()){
-				xmonmove=movePercentage;
-				monoffx=-50;
-			}
+		if(abs(monsters[n].getPos().x-MCspot.x)<10 && abs(monsters[n].getPos().y-MCspot.y)<7){
 			
-			a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+50*xmonmove+monoffx;
-			b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+50*ymonmove+monoffy;
 		
-		}else{
-			if(monsters[n].movesUp())
-			{
-				ymonmove=-movePercentage;
-				monoffy=50;
-				//std::cout<<ymonmove<<std::endl;
+			float xmonmove=0;
+			float ymonmove=0;
+			int monoffy=0;
+			int monoffx=0;
+			std::string name=monsters[n].getName();
+			int dir=monsters[n].faceWhere();
+			//std::cout<<dir<<std::endl<<std::flush;
+			switch(dir){
+				case 1:
+					enemy_sprites[name].setRotation(180);
+					enemy_sprites[name].setOrigin(50,50);
+					break;
+				case 2:
+					enemy_sprites[name].setRotation(0);
+					enemy_sprites[name].setOrigin(0,0);
+					break;
+				case 3:
+					enemy_sprites[name].setRotation(90);
+					enemy_sprites[name].setOrigin(0,50);
+					break;
+				case 4:
+					enemy_sprites[name].setRotation(270);
+					enemy_sprites[name].setOrigin(50,0);
+					break;
 			}
-			else if(monsters[n].movesDown()){
-				ymonmove=movePercentage;
-				monoffy=-50;
+			/*
+			float percentageMoved=0;
+			if((clock.getElapsedTime().asSeconds()-cmdTime)/animationTime<1){
+				percentageMoved=(clock.getElapsedTime().asSeconds()-cmdTime)/animationTime;
+			}else{
+				percentageMoved=1;
 			}
-			else if(monsters[n].movesLeft()){
-				xmonmove=-movePercentage;
-				monoffx=50;
-			}
-			else if(monsters[n].movesRight()){
-				xmonmove=movePercentage;
-				monoffx=-50;
-			}
+			*/
+			int a,b;
+			if(fighting){
+				if(monsters[n].movesUp())
+				{
+					ymonmove=-movePercentage;
+					monoffy=50;
+					//std::cout<<ymonmove<<std::endl;
+				}
+				else if(monsters[n].movesDown()){
+					ymonmove=movePercentage;
+					monoffy=-50;
+				}
+				else if(monsters[n].movesLeft()){
+					xmonmove=-movePercentage;
+
+					monoffx=50;
+				}
+				else if(monsters[n].movesRight()){
+					xmonmove=movePercentage;
+					monoffx=-50;
+				}
+			
+				a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+50*xmonmove+monoffx;
+				b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+50*ymonmove+monoffy;
 		
-			a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50+xmonmove*50+monoffx;
-			b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50+ymonmove*50+monoffy;
-		}	//std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
-		enemy_sprites[name].setPosition(a,b);
-		window.draw(enemy_sprites[name]);
+			}else{
+				if(monsters[n].movesUp())
+				{
+					ymonmove=-movePercentage;
+					monoffy=50;
+					//std::cout<<ymonmove<<std::endl;
+				}
+				else if(monsters[n].movesDown()){
+					ymonmove=movePercentage;
+					monoffy=-50;
+				}
+				else if(monsters[n].movesLeft()){
+					xmonmove=-movePercentage;
+					monoffx=50;
+				}
+				else if(monsters[n].movesRight()){
+					xmonmove=movePercentage;
+					monoffx=-50;
+				}
 		
-		//Draws a health bar above monster if it has taken damage
-		if(monsters[n].getHp()<monsters[n].getMaxHp() && monsters[n].getHp()>0){
+				a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50+xmonmove*50+monoffx;
+				b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50+ymonmove*50+monoffy;
+			}	//std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
+			enemy_sprites[name].setPosition(a,b);
+			window.draw(enemy_sprites[name]);
+		
+			//Draws a health bar above monster if it has taken damage
+			if(monsters[n].getHp()<monsters[n].getMaxHp() && monsters[n].getHp()>0){
 		
 
 		
-			sf::RectangleShape rect(sf::Vector2f(46,3));
-			sf::RectangleShape green(sf::Vector2f(((float)monsters[n].getHp()/monsters[n].getMaxHp())*46,3));
-			sf::RectangleShape red(sf::Vector2f((1-(float)monsters[n].getHp()/monsters[n].getMaxHp())*46,3));
-			green.setFillColor(sf::Color::Green);
-			green.setPosition(a+1,b);
-			red.setFillColor(sf::Color::Red);
-			red.setPosition(a+1+(float)monsters[n].getHp()/monsters[n].getMaxHp()*46,b);
-			rect.setFillColor(sf::Color::Transparent);
-			rect.setOutlineThickness(1);
-			rect.setOutlineColor(sf::Color::Black);
-			rect.setPosition(a+1,b);
+				sf::RectangleShape rect(sf::Vector2f(46,3));
+				sf::RectangleShape green(sf::Vector2f(((float)monsters[n].getHp()/monsters[n].getMaxHp())*46,3));
+				sf::RectangleShape red(sf::Vector2f((1-(float)monsters[n].getHp()/monsters[n].getMaxHp())*46,3));
+				green.setFillColor(sf::Color::Green);
+				green.setPosition(a+1,b);
+				red.setFillColor(sf::Color::Red);
+				red.setPosition(a+1+(float)monsters[n].getHp()/monsters[n].getMaxHp()*46,b);
+				rect.setFillColor(sf::Color::Transparent);
+				rect.setOutlineThickness(1);
+				rect.setOutlineColor(sf::Color::Black);
+				rect.setPosition(a+1,b);
 			
-			window.draw(rect);
-			window.draw(red);
-			window.draw(green);
+				window.draw(rect);
+				window.draw(red);
+				window.draw(green);
 			
 				
+			}
 		}
 	}
 		

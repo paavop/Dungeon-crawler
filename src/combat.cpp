@@ -32,7 +32,7 @@ bool combat(Hero & hero, Monster & monster, HUD &hud){
   hud.sendMsg("The hit dealt "+ stm.str()  + " damage!");
   if(monster.getHp()<=0){
   	hud.sendMsg("The monster died");
-  	hero.gainExp(monster.getMaxHp());
+  	hero.gainExp(monster.getMaxHp()/10);
   }
   
   /*
