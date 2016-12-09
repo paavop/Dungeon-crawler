@@ -50,13 +50,6 @@ GameManager::GameManager(){
 
 
 	//Load example items
-
-
-	/*	TESTING	*/
-
-	
-	
-	
 	
 	
 
@@ -132,36 +125,36 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 	}
 }
 void GameManager::addMonsters(){
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2f(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	setEnemies();
 }
 	
@@ -196,7 +189,7 @@ void GameManager::loadItemTexture(Item& item){
 
 void GameManager::updateAll(sf::RenderWindow& window){
 	
-	if(map[(int)MCspot.x][(int)MCspot.y]==2 && movePercentage==0){
+	if(map[MCspot.x][MCspot.y]==2 && movePercentage==0){
 		nextLevel(window);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
@@ -216,7 +209,7 @@ void GameManager::updateAll(sf::RenderWindow& window){
 		
 	hud.updateStats(hero,dungeonLevel);
 	/*	TESTING */
-	hearPlayer(monsters[0]);
+	
 	
 	
 }
@@ -259,8 +252,8 @@ void GameManager::drawMap(sf::RenderWindow& window){
 			window.draw(wall);
 		}
 	}
-	for(n=(int) MCspot.x -8;n<(int) MCspot.x +9;n++){
-		for(m=(int) MCspot.y -6;m<(int) MCspot.y +6;m++){
+	for(n= MCspot.x -8;n< MCspot.x +9;n++){
+		for(m= MCspot.y -6;m< MCspot.y +6;m++){
 			if(n>-1 && m>-1 && n<mapsize && m<mapsize){
 				if(map[n][m]==1){
 
@@ -612,7 +605,7 @@ void GameManager::movePlayer(int direction){
 		MC.setOrigin(50,50);
 
 		for(n=0;n<monsters.size();n++){
-			if(monsters[n].getPos().x==MCspot.x && (int)monsters[n].getPos().y==(int)MCspot.y-1){
+			if(monsters[n].getPos().x==MCspot.x && monsters[n].getPos().y==MCspot.y-1){
 				combat(hero,monsters[n],hud);
 				fighting=true;
 				attacked=true;
@@ -625,7 +618,7 @@ void GameManager::movePlayer(int direction){
 			break;
 		}
 		
-		if (not (map[(int)MCspot.x][(int)MCspot.y-1]==1)){
+		if (not (map[MCspot.x][MCspot.y-1]==1)){
 
 			//hud.sendMsg("Moving up");
 			MCspot.y-=1;
@@ -633,7 +626,7 @@ void GameManager::movePlayer(int direction){
 			plrMadeMove=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
-			//monsters[0].moveLeft();
+			
 
 		}
 		break;
@@ -644,7 +637,7 @@ void GameManager::movePlayer(int direction){
 		MC.setOrigin(0,0);
 		
 		for(n=0;n<monsters.size();n++){
-			if(monsters[n].getPos().x==MCspot.x && (int)monsters[n].getPos().y==(int)MCspot.y+1){
+			if(monsters[n].getPos().x==MCspot.x && monsters[n].getPos().y==MCspot.y+1){
 				combat(hero,monsters[n],hud);
 				fighting=true;
 				attacked=true;
@@ -656,7 +649,7 @@ void GameManager::movePlayer(int direction){
 			plrMadeMove=true;
 			break;
 		}
-		if (not (map[(int)MCspot.x][(int)MCspot.y+1]==1)){
+		if (not (map[MCspot.x][MCspot.y+1]==1)){
 
 			//hud.sendMsg("Moving down");
 			MCspot.y+=1;
@@ -664,7 +657,7 @@ void GameManager::movePlayer(int direction){
 			plrMadeMove=true;
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
-			//monsters[0].moveRight();
+			
 		}
 		break;
 		
@@ -674,7 +667,7 @@ void GameManager::movePlayer(int direction){
 		MC.setOrigin(0,50);
 		
 		for(n=0;n<monsters.size();n++){
-			if((int)monsters[n].getPos().x==(int)MCspot.x-1 && monsters[n].getPos().y==MCspot.y){
+			if(monsters[n].getPos().x==MCspot.x-1 && monsters[n].getPos().y==MCspot.y){
 				combat(hero,monsters[n],hud);
 				fighting=true;
 				attacked=true;
@@ -686,7 +679,7 @@ void GameManager::movePlayer(int direction){
 			plrMadeMove=true;			
 			break;
 		}
-		if (not (map[(int)MCspot.x-1][(int)MCspot.y]==1)){
+		if (not (map[MCspot.x-1][MCspot.y]==1)){
 
 			//hud.sendMsg("Moving left");
 			MCspot.x-=1;
@@ -695,7 +688,7 @@ void GameManager::movePlayer(int direction){
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
 			
-			//monsters[0].moveDown();
+		
 		}
 		break;
 		
@@ -705,7 +698,7 @@ void GameManager::movePlayer(int direction){
 		MC.setOrigin(50,0);
 		
 		for(n=0;n<monsters.size();n++){
-			if((int)monsters[n].getPos().x==(int)MCspot.x+1 && monsters[n].getPos().y==MCspot.y){
+			if(monsters[n].getPos().x==MCspot.x+1 && monsters[n].getPos().y==MCspot.y){
 				combat(hero,monsters[n],hud);
 				fighting=true;
 				attacked=true;
@@ -717,7 +710,7 @@ void GameManager::movePlayer(int direction){
 			plrMadeMove=true;
 			break;
 		}
-		if (not (map[(int)MCspot.x+1][(int)MCspot.y]==1)){
+		if (not (map[MCspot.x+1][MCspot.y]==1)){
 
 			//hud.sendMsg("Moving right");			
 			MCspot.x+=1;
@@ -726,7 +719,7 @@ void GameManager::movePlayer(int direction){
 			cmdTime=clock.getElapsedTime().asSeconds();
 			
 			
-			//monsters[0].moveUp();
+			
 		}
 		break;
 	}
@@ -740,34 +733,41 @@ void GameManager::enemyTurn(){
 			remove=n;
 			break;
 		}
+		tryDetectPlayer(monsters[n]);
 		monsters[n].stopMove();
-		if((int)monsters[n].getPos().x==(int)MCspot.x && ((int) monsters[n].getPos().y-1==(int)MCspot.y)){
+		if(monsters[n].getPos().x==MCspot.x && ( monsters[n].getPos().y-1==MCspot.y)){
 			monsters[n].faceThere(1);
 			
 			combat(monsters[n],hero,hud);
 		}
-		else if((int)monsters[n].getPos().x==(int)MCspot.x && ((int) monsters[n].getPos().y+1==(int)MCspot.y)){
+		else if(monsters[n].getPos().x==MCspot.x && ( monsters[n].getPos().y+1==MCspot.y)){
 			monsters[n].faceThere(2);			
 			combat(monsters[n],hero,hud);
 		}
-		else if((int)monsters[n].getPos().y==(int)MCspot.y && ((int)monsters[n].getPos().x-1==(int)MCspot.x)){
+		else if(monsters[n].getPos().y==MCspot.y && (monsters[n].getPos().x-1==MCspot.x)){
 			monsters[n].faceThere(3);			
 			combat(monsters[n],hero,hud);
 		}
-		else if((int)monsters[n].getPos().y==(int)MCspot.y && ((int)monsters[n].getPos().x+1==(int)MCspot.x)){
+		else if(monsters[n].getPos().y==MCspot.y && (monsters[n].getPos().x+1==MCspot.x)){
 			monsters[n].faceThere(4);			
 			combat(monsters[n],hero,hud);
 		}
 
-		
+
+		else if (monsters[n].isFreshTarget()){
+			monsters[n].moveTowardsTarget(map);
+			std::string  hunting_str = "Enemy follows";
+			hud.sendMsg(hunting_str);
+		} 
 	
+
 		else{
 			int dir=rand() %4 +1;
 			switch(dir){
 			//up
 			case 1:
 				monsters[n].faceThere(1);
-				if (not (map[(int)monsters[n].getPos().x][(int)monsters[n].getPos().y-1]==1)){
+				if (not (map[monsters[n].getPos().x][monsters[n].getPos().y-1]==1)){
 					monsters[n].moveUp();
 				}
 				break;
@@ -775,7 +775,7 @@ void GameManager::enemyTurn(){
 			//down
 			case 2:
 				monsters[n].faceThere(2);
-				if (not (map[(int)monsters[n].getPos().x][(int)monsters[n].getPos().y+1]==1)){
+				if (not (map[monsters[n].getPos().x][monsters[n].getPos().y+1]==1)){
 				
 			
 					monsters[n].moveDown();
@@ -785,7 +785,7 @@ void GameManager::enemyTurn(){
 			//left
 			case 3:
 				monsters[n].faceThere(3);
-				if (not (map[(int)monsters[n].getPos().x-1][(int)monsters[n].getPos().y]==1)){
+				if (not (map[monsters[n].getPos().x-1][monsters[n].getPos().y]==1)){
 			
 					monsters[n].moveLeft();
 				}
@@ -794,7 +794,7 @@ void GameManager::enemyTurn(){
 			//right
 			case 4:
 				monsters[n].faceThere(4);			
-				if (not (map[(int)monsters[n].getPos().x+1][(int)monsters[n].getPos().y]==1)){
+				if (not (map[monsters[n].getPos().x+1][monsters[n].getPos().y]==1)){
 				
 					monsters[n].moveRight();
 				}
@@ -834,7 +834,10 @@ bool GameManager::hearPlayer(Monster& monster){
 }
 
 bool GameManager::seePlayer(Monster& monster){
-	if (freeLineOfSight(monster.getPos(), MCspot)){
+
+
+
+	if (freeLineOfSight(MCspot, monster.getPos())){
 		monster.detectPlr(MCspot);
 		hud.sendMsg("I see ya!");
 		return true;
@@ -847,68 +850,61 @@ bool GameManager::seePlayer(Monster& monster){
 }
 	
 
-bool GameManager::freeLineOfSight(sf::Vector2f a, sf::Vector2f b){
-	int dx,dy, max_dir_steps;
+bool GameManager::freeLineOfSight(sf::Vector2i a, sf::Vector2i b){
 
-	dx = (int) b.x - (int) a.x;
-	dy = (int) b.y - (int) a.y;
-	max_dir_steps = std::max(dx, dy)/std::min(dx,dy) /2; //how many steps we can go same direction in a row
+	return false;   //TESTING
 
-
-	int big_x = std::max(a.x,b.x);
-	int big_y = std::max(a.y,b.y);
-	int small_x = std::min(a.x,b.x);
-	int small_y = std::min(a.y,b.y);
+	int dx,dy, ax,ay,bx,by;
+	ax =  a.x; ay =  ay;
+	bx =  b.x; by =  by; 
 
 
-	if(!dx){	//they are on same vertical line
+	dx = bx - ax;
+	dy = by - ay;
+	bool paraller = (dx+1)%(dy+1);
+	int steps_row = (dx+1)/(dy+1);
+	if(paraller) steps_row +=1;
 
+	int x = ax , y = ay, steps = 1;
 
-		if(dy > 0){
+	
+	std::string coord=  "paraller: "+std::to_string(paraller)+"  steps: "+std::to_string(steps_row);
+	std::cout << coord;
+	while(!(x == bx && y == by)){
 
-			for(unsigned int i=0; i<dy; i++){
-				if(!isFreeTile((int)a.x, (int)a.y +i)){
-					return false;
-				}
-			}
+		if(!isFreeTile(x,y)){
+			return false;
 		}
-		if(dy < 0){
-
-			for(unsigned int i=0; i<dy; i--){
-				if(!isFreeTile((int)a.x, (int)a.y +i)){
-					return false;
-				}
-			}
+		if(steps != steps_row){
+			x++; steps++;
+			continue;
 		}
 		
+		//std::string coord=  "X: "+std::to_string(x)+"  Y: "+std::to_string(y);
+		//hud.sendMsg(coord);
+	
+		else{
+			if(paraller){
+				y++;
+			}
+			else{
+				y++; x++;
+			}
+
+
+			steps =1;
+
+
+		}
+	
 	}
+	return true;
 
-		if(!dy){	//vertical line
-
-
-			if(dx > 0){
-
-				for(unsigned int i=0; i<dx; i++){
-					if(!isFreeTile((int)a.x +i, (int)a.y)){
-						return false;
-					}
-				}
-			}
-			if(dx < 0){
-
-				for(unsigned int i=0; i<dx; i--){
-					if(!isFreeTile((int)a.x +i, (int)a.y)){
-						return false;
-					}
-				}
-			}
 		
 
 
 		
-	}
-	if(std::abs(dx) == std::abs(dy)) return false;//diagonal line
-
+	
 }
 	
 void GameManager::setEnemies(){

@@ -5,23 +5,26 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
+
+#include <cstdlib>
 #include <iostream>
 
 
 class Monster {
 	public:
-		Monster(sf::Vector2f pos);
+		Monster(sf::Vector2i pos);
 		Monster(int health, int strength, int agility, 
 				int defense,  int lvl, int hearing_radius,
-				sf::Vector2f pos, std::string name);
+				sf::Vector2i pos, std::string name);
 
 		std::string		getPicName();
 		std::string	 	getName();
-		sf::Vector2f 	getPos();
+		sf::Vector2i 	getPos();
 		void 			setSprite(sf::Sprite& sprite);
 		void 			setPos(unsigned int x, unsigned int y);
-		void			setTargetPos(sf::Vector2f pos);
-		void			detectPlr(sf::Vector2f pos);
+		void			setTargetPos(sf::Vector2i pos);
+		bool 			isFreshTarget();
+		void			detectPlr(sf::Vector2i pos);
 		void 			undetectPlr();
 		bool 			takeDamage(int dmg);
 		bool 			isAlive();
@@ -44,12 +47,23 @@ class Monster {
 		void			moveDown();
 		void			moveLeft();
 		void			moveRight();
+
+
+		bool 			canMove(std::vector<std::vector<int>>& map);
+		void 			moveTowardsTarget(std::vector<std::vector<int>>& map);
 		int 			faceWhere();
 		void			faceThere(int dir);
+
 		
 	private:
+
+		enum Direction {Up, Right, Down, Left, Stop};
+		Direction moving_dir = Stop;
+		Direction facing_dir = Up;
+
 		bool alive;
 		bool detects_player;
+		unsigned int target_freshness =0;
 		std::string pic_name;
 		std::string name;	//Monster's name (daa-a)
 		//sf::Texture &texture;
@@ -65,7 +79,7 @@ class Monster {
 		bool movingUp,movingDown,movingLeft,movingRight;
 		bool faceUp, faceDown,faceLeft,faceRight;
 
-		sf::Vector2f position;
-		sf::Vector2f target_pos;	//place where the enemy tries to go
+		sf::Vector2i position;
+		sf::Vector2i target_pos;	//place where the enemy tries to go
 };
 #endif

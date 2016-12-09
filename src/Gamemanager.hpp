@@ -26,7 +26,7 @@ public:
 	void drawAll(sf::RenderWindow & window);
 
 	bool isFreeTile(unsigned int x, unsigned int y);
-	bool freeLineOfSight(sf::Vector2f a, sf::Vector2f b); //Tells you is it possible to see from a to b
+	bool freeLineOfSight(sf::Vector2i a, sf::Vector2i b); //Tells you is it possible to see from a to b
 	bool hearPlayer(Monster& monster);
 	bool seePlayer(Monster& monster);
 
@@ -62,7 +62,7 @@ private:
 	sf::Clock clock;
 	sf::Clock fpsClock;
 	float fpsTime;
-	sf::Vector2f MCspot;
+	sf::Vector2i MCspot;
 	std::vector<Monster> monsters;
 	std::vector<Item> items;
 	
