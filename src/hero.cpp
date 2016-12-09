@@ -31,7 +31,35 @@ Hero::Hero(int h, int s, int a, int d, int m){
 	eqArmInd=-1;
 }
 void Hero::dropItem(int itmInd){
+	
+	if(itmInd==eqWepInd){
+		unEquip(0);
+	}
+	if(itmInd==eqArmInd){
+		unEquip(1);
+	}
+	if(itmInd<eqWepInd){
+
+		eqWepInd-=1;
+
+	}
+	if(itmInd<eqArmInd){
+		eqArmInd-=1;
+	}
 	bag.erase(bag.begin()+itmInd);
+}
+void Hero::unEquip(int ind){
+
+	if(ind==0){
+		
+		strength-=bag[eqWepInd].getValue();
+		eqWepInd=-1;
+		
+	}else{
+
+		defense-=bag[eqArmInd].getValue();
+		eqArmInd=-1;
+	}
 }
 bool Hero::equip(int itmInd){
 	bool equipped=false;
@@ -70,7 +98,7 @@ void Hero::lvlUp(void){
 	lvl+=1;
 	maxhp+=100;
 	hp+=100;
-	expToNextLvl=lvl*1.05*1000;
+	expToNextLvl=expToNextLvl+((lvl*0.05)+1)*1000;
 	strength+=1;
 	agility+=1;
 	defense+=1;

@@ -23,6 +23,7 @@ class Hero {
 		int getDef();
 		bool addItem(Item itm);
 		bool equip(int itmInd);
+		void unEquip(int ind);
 		void dropItem(int itmInd);
 		std::vector<Item> getBag();
 

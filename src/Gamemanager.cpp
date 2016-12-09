@@ -91,7 +91,7 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 	float transition=1;
 	sf::RectangleShape rect(sf::Vector2f(750,450));
 	rect.setPosition(0,0);
-	int alpha=0;
+
 	
 	while(clock.getElapsedTime().asSeconds()-cmdTime2<transition){
 		rect.setFillColor(sf::Color(0,0,0,255*((float)clock.getElapsedTime().asSeconds()-cmdTime2)/transition));
@@ -100,7 +100,7 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 		window.draw(MC);
 		hud.drawHUD(window,item_sprites,hero);
 		window.draw(rect);
-		alpha++;
+
 
 		window.display();
 		
@@ -116,7 +116,7 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 		window.draw(MC);
 		hud.drawHUD(window,item_sprites,hero);
 		window.draw(rect);
-		alpha++;
+
 
 		window.display();
 		
@@ -155,6 +155,7 @@ void GameManager::addMonsters(){
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	
 	setEnemies();
 }
 	

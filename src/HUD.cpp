@@ -31,7 +31,8 @@ HUD::HUD(){
 	eqWepInd=-1;
 	eqArmInd=-1;
 	
-	clicked=false;
+	clickedl=false;
+	clickedr=false;
 	
 	
 }
@@ -69,7 +70,9 @@ HUD::HUD(Hero & hero){
 	
 	bag=hero.getBag();
 	
-	clicked=false;
+	clickedl=false;
+	clickedr=false;
+	
 
 }
 void HUD::updateStats(Hero & hero,unsigned int lvl){
@@ -213,7 +216,22 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 			window.draw(text);
 			
 			if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-				if(hero.equip(selected)){
+				clickedl=true;
+			}
+			if(clickedl && not sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+			
+				if(selected==eqWepInd){
+					sendMsg("Unequipped "+bag[selected].getName());
+					eqWepInd=-1;
+					hero.unEquip(0);
+					
+				}
+				else if(selected==eqArmInd){
+					sendMsg("Unequipped "+bag[selected].getName());
+					eqArmInd=-1;
+					hero.unEquip(1);
+				}
+				else if(hero.equip(selected)){
 					sendMsg("Equipped "+bag[selected].getName());
 					if(bag[selected].getType()=="Weapon"){
 						eqWepInd=selected;
@@ -223,21 +241,31 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 						eqArmInd=selected;
 					}
 				}
+				clickedl=false;
 			}
 
 			if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
-				clicked=true;
+				clickedr=true;
 
 			}
-			if(clicked && not sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+			if(clickedr && not sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+				sendMsg("Threw away "+bag[selected].getName());
 				if(selected==eqWepInd){
 					eqWepInd=-1;
 				}
 				if(selected==eqArmInd){
 					eqArmInd=-1;
 				}
+				if(selected<eqWepInd){
+
+					eqWepInd-=1;
+
+				}
+				if(selected<eqArmInd){
+					eqArmInd-=1;
+				}
 				hero.dropItem(selected);
-				clicked=false;
+				clickedr=false;
 			}
 			
 			
