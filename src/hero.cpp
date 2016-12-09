@@ -30,6 +30,9 @@ Hero::Hero(int h, int s, int a, int d, int m){
 	eqWepInd=-1;
 	eqArmInd=-1;
 }
+void Hero::dropItem(int itmInd){
+	bag.erase(bag.begin()+itmInd);
+}
 bool Hero::equip(int itmInd){
 	bool equipped=false;
 	if(itmInd>=0 && itmInd<bag.size()){

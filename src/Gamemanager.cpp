@@ -74,6 +74,10 @@ GameManager::GameManager(){
 	hero.addItem(items[1]);
 	hero.addItem(items[2]);
 	hero.addItem(items[3]);
+	hero.addItem(items[4]);
+	hero.addItem(items[5]);
+	hero.addItem(items[6]);
+	hero.addItem(items[7]);
 }
 
 void GameManager::newLevel(){
