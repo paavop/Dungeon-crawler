@@ -133,28 +133,6 @@ void GameManager::addMonsters(){
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	
 	setEnemies();
 }
