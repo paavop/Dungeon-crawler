@@ -4,6 +4,7 @@ bool combat(Hero& hero, Monster& monster, HUD &hud);
 bool combat( Monster& monster,Hero& hero, HUD &hud);
 
 GameManager::GameManager(){
+	score=0;
 	gameon=true;
 	Reader reader("itemlist.txt");
 	items=reader.get_items();
@@ -68,12 +69,15 @@ GameManager::GameManager(){
 	
 	
 }
+int GameManager::getScore(){
+	return score;
+}
 bool GameManager::gameOn(){
 	return gameon;
 }
 void GameManager::itemLottery(){
-
-	if(rand() %10==2){
+	score+=10;
+	if(rand() %10<3){
 		hud.sendMsg("Monster dropped an item");
 		hero.addItem(items[rand() %items.size()]);
 	}
@@ -93,6 +97,7 @@ void GameManager::newLevel(){
 	
 }
 void GameManager::nextLevel(sf::RenderWindow& window){
+	score+=50;
 	float cmdTime2=clock.getElapsedTime().asSeconds();
 	float transition=1;
 	sf::RectangleShape rect(sf::Vector2f(750,450));
@@ -139,7 +144,9 @@ void GameManager::addMonsters(){
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+
 	setEnemies();
 }
 	
@@ -602,6 +609,8 @@ void GameManager::movePlayer(int direction){
 			if(monsters[n].getPos().x==MCspot.x && monsters[n].getPos().y==MCspot.y-1){
 				combat(hero,monsters[n],hud);
 				if(monsters[n].getHp()<=0){
+
+
 					itemLottery();
 				}
 				fighting=true;

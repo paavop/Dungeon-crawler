@@ -31,8 +31,10 @@ public:
 	bool seePlayer(Monster& monster);
 	bool gameOn();
 	void tryDetectPlayer(Monster& monster);
+	int getScore();
 	
 private:
+	int score;
 	bool gameon;
 	void itemLottery();
 	void newLevel();

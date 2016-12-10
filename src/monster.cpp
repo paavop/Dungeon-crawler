@@ -9,9 +9,9 @@ Monster::Monster(sf::Vector2i pos){
 	maxhp = 100;			//Monster's max health points	
 	hp = maxhp;			//Monster's current health points
 	lvl = 0;			//Level of the Monster
-	strength = 10;		//Monster's strength stat
-	agility = 10;		//Monster's agility stat
-	defense = 10;		//Monster's defense stat
+	strength = 5;		//Monster's strength stat
+	agility = 5;		//Monster's agility stat
+	defense = 5;		//Monster's defense stat
 	hearing = 3;
 	movingUp = false;
 	movingDown = false;
