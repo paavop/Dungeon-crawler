@@ -267,3 +267,18 @@ bool Monster::isFreshTarget(){
 	}
 	else return false;
 }
+
+
+
+
+/*
+MonsterCatalog::MonsterCatalog() {}
+
+MonsterCatalog::~MonsterCatalog(){
+	for (std::list<MonsterCatalog*>::iterator it = monster_catalog_.begin();
+		 it != monster_catalog_.end(); it++)
+	{
+		delete it;
+	}
+}
+*/

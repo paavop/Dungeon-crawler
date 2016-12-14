@@ -14,10 +14,10 @@
 class Reader{
 	public:
 		Reader(std::string filename = "itemlist.txt");
-		void push_item(Item itemi);
-		std::vector<Item> get_items();
+		//void push_item(Item itemi);
+		std::vector<Item*> get_items();
 	private:
-		std::vector<Item> items;
+		std::vector<Item*> items;
 };
 
 

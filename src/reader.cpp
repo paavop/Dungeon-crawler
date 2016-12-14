@@ -57,13 +57,17 @@ Reader::Reader(std::string filename){
 				if(gotType && gotValue && gotImage && gotName && !gotHitchance){
 
 					Armor jokuarmor(tmpname, tmpvalue, tmpimage);
-					items.push_back(jokuarmor);
+					Armor* p;
+					p = &jokuarmor;
+					items.push_back(p);
 				}
 				
 				else if(gotType && gotValue && gotImage && gotName && gotHitchance){
 					Weapon jokuweapon (tmpname, tmpvalue, tmpimage, tmphitchance);
+					Weapon* p;
+					p = &jokuweapon;
 
-					items.push_back(jokuweapon);
+					items.push_back(p);
 				}
 				else{
 					std::cout << "Itemin tiedot vialliset" << std::endl;
@@ -77,12 +81,12 @@ Reader::Reader(std::string filename){
 
 
 }
-
+/*
 void Reader::push_item(Item itemi){
 	items.push_back(itemi);
 }
-
-std::vector<Item> Reader::get_items(){
+*/
+std::vector<Item*> Reader::get_items(){
 
 	return items;
 }

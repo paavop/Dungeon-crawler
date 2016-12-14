@@ -61,16 +61,10 @@ GameManager::GameManager(){
 		loadEnemyTexture(monsters[ind]);
 	}
 	for(int ind=0;ind<items.size();ind++){
-		loadItemTexture(items[ind]);
+		loadItemTexture(*(items[ind]));
 	}
-	hero.addItem(items[0]);
-	hero.addItem(items[1]);
-	hero.addItem(items[2]);
-	hero.addItem(items[3]);
-	hero.addItem(items[4]);
-	hero.addItem(items[5]);
-	hero.addItem(items[6]);
-	hero.addItem(items[7]);
+	hero.addItem(*items[0]);
+
 }
 
 void GameManager::newLevel(){

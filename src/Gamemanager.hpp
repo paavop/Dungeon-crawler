@@ -64,7 +64,7 @@ private:
 	float fpsTime;
 	sf::Vector2i MCspot;
 	std::vector<Monster> monsters;
-	std::vector<Item> items;
+	std::vector<Item*> items;
 	
 	
 	sf::Texture wall_t;

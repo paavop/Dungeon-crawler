@@ -82,4 +82,21 @@ class Monster {
 		sf::Vector2i position;
 		sf::Vector2i target_pos;	//place where the enemy tries to go
 };
+
+
+/*
+
+class MonsterCatalog {
+public:
+	explicit MonsterCatalog();
+	~MonsterCatalog();
+
+	std::vector<Monster*> const& 	getMonsters() const			{return monster_catalog_;}
+	void 							setMonster(Monster* monster){monster_catalog_.push_back(monster);}	
+
+
+private:
+	std::vector<Monster*> monster_catalog_;
+}
+*/
 #endif
