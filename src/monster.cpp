@@ -54,7 +54,15 @@ Monster::Monster(	int h, int s, int a,
 	faceRight = false;
 	*/
 }
-
+void Monster::lvlUp(int lvl){
+	this->lvl+=lvl;
+	maxhp=maxhp*pow(1.3,lvl);
+	hp=hp*pow(1.3,lvl);
+	strength=strength*pow(1.3,lvl);
+	agility=agility*pow(1.3,lvl);
+	defense=defense*pow(1.3,lvl);
+	
+}
 std::string Monster::getName(){
 	return name;
 }
@@ -240,20 +248,32 @@ void Monster::moveTowardsTarget(std::vector<std::vector<int>>& map){
 	if (horizontal){
 		if(dirs[0]==1) {
 			moving_dir = Right;
-			if(canMove(map)){std::cout<<"RIGHT"<<std::endl<<std::flush; moveRight();}
+			if(canMove(map)){
+				//std::cout<<"RIGHT"<<std::endl<<std::flush;
+				moveRight();
+			}
 		}
 		else if(dirs[0]==-1) {
 			moving_dir = Left;
-			if(canMove(map)) {std::cout<<"LEFT"<<std::endl<<std::flush;moveLeft();}
+			if(canMove(map)) {
+				//std::cout<<"LEFT"<<std::endl<<std::flush;
+				moveLeft();
+			}
 		}
 	}
 	else{
 		if(dirs[1]==1) {
 			moving_dir = Down;
-			if(canMove(map)) {std::cout<<"DOWN"<<std::endl<<std::flush;moveDown();}		}
+			if(canMove(map)) {
+				//std::cout<<"DOWN"<<std::endl<<std::flush;
+				moveDown();
+			}		}
 		else if(dirs[1]==-1) {
 			moving_dir = Up;
-			if(canMove(map)) {std::cout<<"UP"<<std::endl<<std::flush;moveUp();}
+			if(canMove(map)) {
+				//std::cout<<"UP"<<std::endl<<std::flush;
+				moveUp();
+			}
 		}
 	}
 
