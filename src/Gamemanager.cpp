@@ -3,6 +3,7 @@
 bool combat(Hero& hero, Monster& monster, HUD &hud);
 bool combat( Monster& monster,Hero& hero, HUD &hud);
 
+
 GameManager::GameManager(){
 	score=0;
 	gameon=true;
@@ -50,14 +51,9 @@ GameManager::GameManager(){
 	stairs.setTexture(stairs_t);
 
 
-	//Load example items
-	
 	
 
 	newLevel();
-
-
-	
 	for(int ind=0;ind<monsters.size();ind++){
 		loadEnemyTexture(monsters[ind]);
 	}
@@ -69,12 +65,15 @@ GameManager::GameManager(){
 	
 	
 }
+//Returns the game score
 int GameManager::getScore(){
 	return score;
 }
+//checks the game status
 bool GameManager::gameOn(){
 	return gameon;
 }
+//20% chance to get an item from monster
 void GameManager::itemLottery(){
 	score+=10;
 	if(rand() %10<3){
@@ -83,6 +82,7 @@ void GameManager::itemLottery(){
 	}
 
 }
+//Creates new level, adds monsters with addMonsters()
 void GameManager::newLevel(){
 	dungeonLevel++;
 	std::ostringstream stm;
@@ -93,9 +93,9 @@ void GameManager::newLevel(){
 	map=makeMap(mapsize);
 	findStart(map);
 	monsters.clear();
-	addMonsters();
-	
+	addMonsters();	
 }
+//Draws transition to new level, uses newLevel()-method to create new level, adds 50 score
 void GameManager::nextLevel(sf::RenderWindow& window){
 	score+=50;
 	float cmdTime2=clock.getElapsedTime().asSeconds();
@@ -135,6 +135,8 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 		//printf("asd");
 	}
 }
+
+//Adds random monsters to the map
 void GameManager::addMonsters(){
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
@@ -146,12 +148,15 @@ void GameManager::addMonsters(){
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	
+	for(int x=0;x<monsters.size();x++){
+		monsters[x].lvlUp(dungeonLevel-1);
+	}
 
 	setEnemies();
 }
 	
-
-
+//Goes through enemylist and adds every texture and sprite 
 void GameManager::loadEnemyTexture(Monster& enemy){
 	if(enemy_textures.find(enemy.getName())==enemy_textures.end()){
 		sf::Texture new_texture;
@@ -165,6 +170,7 @@ void GameManager::loadEnemyTexture(Monster& enemy){
 		enemy_sprites[enemy.getName()].setTexture(enemy_textures[enemy.getName()]);
 	}
 }
+//Goes through itemlist and adds every texture and sprite
 void GameManager::loadItemTexture(Item& item){
 	if(item_textures.find(item.getName())==item_textures.end()){
 		sf::Texture new_texture;
@@ -178,7 +184,7 @@ void GameManager::loadItemTexture(Item& item){
 		item_sprites[item.getName()].setTexture(item_textures[item.getName()]);
 	}
 }
-
+//Checks for user input, checks if the player has found next level, updates HUD
 void GameManager::updateAll(sf::RenderWindow& window){
 	if(hero.getHp()<=0){
 		gameon=false;
@@ -205,12 +211,8 @@ void GameManager::updateAll(sf::RenderWindow& window){
 	}
 		
 	hud.updateStats(hero,dungeonLevel);
-	/*	TESTING */
-	
-	
-	
 }
-
+//Uses different draw-functions to draw everything
 void GameManager::drawAll(sf::RenderWindow & window){
 	updatePercentages();
 	if (movePercentage>0 && movePercentage<0.5){
@@ -233,16 +235,15 @@ void GameManager::drawAll(sf::RenderWindow & window){
 
 
 }
-
+//Prints fps in console (for testing purposes)
 void GameManager::drawFps(sf::RenderWindow& window){
 	fpsTime=fpsClock.restart().asSeconds();
 	int fps=(int) 1.f/(fpsTime);
 	
 	std::cout<<"FPS: "<<fps<<std::endl;
 }
-
+//Draws map-tiles, checks if player is moving and to which direction to draw correctly
 void GameManager::drawMap(sf::RenderWindow& window){
-	
 	for(n=-1;n<16;n++){
 		for(m=-1;m<10;m++){
 			wall.setPosition(offsetx+xPercentage*50+50*(n),offsety+yPercentage*50+50*(m));
@@ -271,13 +272,11 @@ void GameManager::drawMap(sf::RenderWindow& window){
 		}
 	}
 }
-
+/*
+Goes through enemylist, draws everything close to player. Checks if monster is moving and if player is 
+moving to draw correctly. 
+*/
 void GameManager::drawEnemies(sf::RenderWindow& window){
-	
-		// How I'm supposed to draw something?
-		
-	//This is how:
-
 	for(n=0;n<monsters.size();n++){
 		if(abs(monsters[n].getPos().x-MCspot.x)<10 && abs(monsters[n].getPos().y-MCspot.y)<7){
 			
@@ -394,7 +393,7 @@ void GameManager::drawEnemies(sf::RenderWindow& window){
 		
 	
 }	
-
+//Updates percentages used in moving animations (every move is 0.15s)
 void GameManager::updatePercentages(){
 	if(movingUp || movingDown || movingLeft || movingRight){
 		if(movingUp || movingDown){
@@ -458,7 +457,10 @@ void GameManager::updatePercentages(){
 	
 }
 	
-
+/* Randomizes a new map
+Defaul size is 60x60, makes random number of rooms, randomizes sizes for them, randomizes x and y 
+coordinates for them. Map is stored as 1s ans 0s in two dimensional vector
+*/
 std::vector<std::vector<int> > GameManager::makeMap(int size){
 	int mapsize=size;
 
@@ -569,6 +571,8 @@ std::vector<std::vector<int> > GameManager::makeMap(int size){
 
 	return array;
 }
+//Looks for a suitable starting position for the player
+//Now simply looks for the first open spot
 void GameManager::findStart(std::vector<std::vector<int> > map){
 	float mcx=0;
 	float mcy=0;
@@ -592,7 +596,10 @@ void GameManager::findStart(std::vector<std::vector<int> > map){
 
 	return ;
 }
-
+/*Four cases:up,down,left,right.
+**For each case checks if there is a monster there and utilizes combat if necessary
+**Checks for walls, if no walls moves player there
+*/
 void GameManager::movePlayer(int direction){
 	if(movingDown || movingLeft || movingRight || movingUp || fighting){
 		return;
@@ -740,7 +747,7 @@ void GameManager::movePlayer(int direction){
 	}
 
 }
-
+//Moves every monster in the map. If player is close to enemy they follow the player and attack
 void GameManager::enemyTurn(){
 	int remove=-1;
 	for(n=0;n<monsters.size();n++){
@@ -770,9 +777,14 @@ void GameManager::enemyTurn(){
 
 
 		else if (monsters[n].isFreshTarget()){
-			monsters[n].moveTowardsTarget(map);
-			std::string  hunting_str = "Enemy follows";
-			hud.sendMsg(hunting_str);
+			int chance=rand() %10 ;
+			if(chance<9){
+				monsters[n].moveTowardsTarget(map);
+				/*
+				std::string  hunting_str = "Enemy follows";
+				hud.sendMsg(hunting_str);
+				*/
+			}
 		} 
 	
 
@@ -921,7 +933,7 @@ bool GameManager::freeLineOfSight(sf::Vector2i a, sf::Vector2i b){
 		
 	
 }
-	
+//Counts free spaces on map, sets all monsters randomly on map
 void GameManager::setEnemies(){
 	int floorcount=0;
 	
@@ -932,8 +944,6 @@ void GameManager::setEnemies(){
 			}
 		}
 	}
-	
-
 	for(int i=0;i<monsters.size();i++){
 		int count=0;
 		int spot=rand() %floorcount;

@@ -10,7 +10,7 @@
 
 bool combat(Hero & hero, Monster & monster, HUD &hud){
   hud.sendMsg("Player is attacking");
-  
+
   int hit_chance = std::rand() %100 + 1; // random chance to hit the target
   
   if((monster.getAgi() * 2) > hit_chance){ // if targets agility is high enough, dodge
@@ -32,7 +32,7 @@ bool combat(Hero & hero, Monster & monster, HUD &hud){
   hud.sendMsg("The hit dealt "+ stm.str()  + " damage!");
   if(monster.getHp()<=0){
   	hud.sendMsg("The monster died");
-  	hero.gainExp(monster.getMaxHp()/10);
+  	hero.gainExp(monster.getMaxHp()/6);
   }
   
   /*
