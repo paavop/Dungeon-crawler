@@ -222,6 +222,7 @@ bool Monster::canMove(std::vector<std::vector<int>>& map){
 		case Down 	:return (map[position.x][position.y+1] == 0);
 		case Left 	:return (map[position.x-1][position.y] == 0);
 	}
+	return false;
 }
 
 void Monster::moveTowardsTarget(std::vector<std::vector<int>>& map){
