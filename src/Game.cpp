@@ -166,10 +166,11 @@ void Game::endGame(){
 			
 			if (event.type == sf::Event::TextEntered){
 				if(event.text.unicode==8){
+
 					if(my_name.length()>0)
 						my_name.pop_back();
 				}
-				if(event.text.unicode==27){
+				else if(event.text.unicode==27){
 					gameWindow.close();
 				}
 				else if (event.text.unicode < 128 && my_name.length()<12){
