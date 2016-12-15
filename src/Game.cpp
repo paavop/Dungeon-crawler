@@ -50,7 +50,6 @@ void Game::Loop(){
 	while (gameWindow.pollEvent(event)){
 		
 		if (event.type == sf::Event::Closed)
-
 			gameWindow.close();
 	}
 
@@ -166,13 +165,18 @@ void Game::endGame(){
 
 		sf::Event event;
 		gameWindow.clear();
+		
 		while (gameWindow.pollEvent(event)){
-			
+			if (event.type == sf::Event::Closed)
+				gameWindow.close();
 			if (event.type == sf::Event::TextEntered){
 				if(event.text.unicode==8){
 
 					if(my_name.length()>0)
 						my_name.pop_back();
+				}
+				else if(event.text.unicode==13){
+					
 				}
 				else if(event.text.unicode==27){
 					gameWindow.close();
@@ -245,8 +249,12 @@ void Game::endGame(){
 			}
 			file.close();
 			
-			while(not sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ){
+			while(not sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && gameWindow.isOpen()){
 				drawHighScore(scores);
+				while (gameWindow.pollEvent(event)){
+					if (event.type == sf::Event::Closed)
+						gameWindow.close();
+				}
 			}
 			gameWindow.close();
 		}
