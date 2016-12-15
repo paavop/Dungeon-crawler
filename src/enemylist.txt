@@ -8,12 +8,21 @@ hearing:3
 picture:resources/gargant.png
 }
 {
-name:Wall
-health:100
-strength:5
-defense:3
-agility:5
+name:Badass Gargant
+health:200
+strength:10
+defense:1
+agility:1
 hearing:3
-picture:resources/wall50.png
+picture:resources/gargant-boss.png
+}
+{
+name:Giant bug
+health:50
+strength:5
+defense:1
+agility:1
+hearing:3
+picture:resources/giantbug.png
 }
 
