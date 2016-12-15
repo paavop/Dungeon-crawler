@@ -88,7 +88,7 @@ Reader::Reader(std::string filename,std::string enemyfile){
 	else{
 		std::cout << "Could not open the file: '" << filename << "'" << std::endl;
 	}
-	
+	open_file.close();
 
 	std::ifstream open_file2(enemyfile.c_str());
 	if(open_file2.is_open()){
@@ -173,6 +173,7 @@ Reader::Reader(std::string filename,std::string enemyfile){
 	else{
 		std::cout << "Could not open the file: '" << filename << "'" << std::endl;
 	}
+	open_file2.close();
 
 
 }

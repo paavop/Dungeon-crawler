@@ -133,10 +133,14 @@ void Game::endGame(){
 			while(std::getline(highscore,newline)){
 
 				std::regex ws_re("\\s+");
+				
 				std::vector<std::string> result{
 					std::sregex_token_iterator(newline.begin(), newline.end(), ws_re, -1), {}
 				};
 
+				if(result.size()<2){
+					result.push_back("");
+				}
 				scores.push_back(std::make_tuple(result[0],result[1]));
 
 
@@ -218,6 +222,9 @@ void Game::endGame(){
 		text.setPosition((WIDTH-text.getLocalBounds().width)/2,40+2*(HEIGHT-text.getLocalBounds().height)/3);
 		gameWindow.draw(text);
 		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Return)){
+			if(my_name==""){
+				my_name="ANON";
+			}
 			std::tuple<std::string,std::string> tmp(stm.str(),my_name);
 			std::tuple<std::string,std::string> tmp2;
 			for(int i=0;i<scores.size();i++){
@@ -237,8 +244,10 @@ void Game::endGame(){
 				std::cout<<"Can't open high scores"<<std::endl;
 			}
 			file.close();
-			drawHighScore(scores);
-			while(not sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ){}
+			
+			while(not sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ){
+				drawHighScore(scores);
+			}
 			gameWindow.close();
 		}
 		gameWindow.display();

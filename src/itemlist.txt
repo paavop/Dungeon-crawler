@@ -2,7 +2,7 @@
 type:weapon
 name:Key
 value:1
-hitchance:0.99
+hitchance:0.90
 image:resources/key.png
 description:Aim for their eyes?
 }
@@ -10,7 +10,7 @@ description:Aim for their eyes?
 type:weapon
 name:Log
 value:2
-hitchance:0.99
+hitchance:0.95
 image:resources/log.png
 description:Oh wow, a log
 }
@@ -34,7 +34,7 @@ description:At least it's sharp
 type:weapon
 name:Monsterbone
 value:8
-hitchance:0.99
+hitchance:0.95
 image:resources/bone.png
 description:Your former enemy
 }
@@ -42,7 +42,7 @@ description:Your former enemy
 type:weapon
 name:Sword
 value:10
-hitchance:0.99
+hitchance:0.95
 image:resources/sword.png
 description:Your basic sword
 }
@@ -50,7 +50,7 @@ description:Your basic sword
 type:weapon
 name:Hammer
 value:15
-hitchance:0.99
+hitchance:0.90
 image:resources/hammer.png
 description:It's hammertime
 }
@@ -58,7 +58,7 @@ description:It's hammertime
 type:weapon
 name:Ice sword
 value:18
-hitchance:0.99
+hitchance:0.95
 image:resources/icesword.png
 description:Cool as ice
 }
@@ -66,7 +66,7 @@ description:Cool as ice
 type:weapon
 name:Lightbringer
 value:20
-hitchance:0.99
+hitchance:0.95
 image:resources/flamesword.png
 description:Bring the heat
 }
