@@ -169,10 +169,14 @@ void Game::endGame(){
 					if(my_name.length()>0)
 						my_name.pop_back();
 				}
+				if(event.text.unicode==27){
+					gameWindow.close();
+				}
 				else if (event.text.unicode < 128 && my_name.length()<12){
 					sf::String tmp=(event.text.unicode);
 					std::string tmp2=tmp;
 					my_name.append(tmp2);
+					
 
 				}
 		    
@@ -233,7 +237,7 @@ void Game::endGame(){
 			}
 			file.close();
 			drawHighScore(scores);
-			while(not sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){}
+			while(not sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) ){}
 			gameWindow.close();
 		}
 		gameWindow.display();
