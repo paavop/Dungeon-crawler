@@ -9,7 +9,7 @@
 
 
 bool combat(Hero & hero, Monster & monster, HUD &hud){
-  hud.sendMsg("You try to attack");
+  hud.sendMsg("You attack");
 
   int hit_chance = std::rand() %100 + 1; // random chance to hit the target
   
@@ -21,7 +21,7 @@ bool combat(Hero & hero, Monster & monster, HUD &hud){
   int weapon_hit_chance= (int)floor(hero.getWepHitchance() * 100 + 1);
 
   if((std::rand() %100 + 1) > weapon_hit_chance) { // Weapon hit chance check
-    hud.sendMsg("Your attack missed!");
+    hud.sendMsg("but your attack missed!");
     return true;
   }
   int penetration = hero.getStr() - monster.getDef(); // Comparing stats
@@ -37,9 +37,10 @@ bool combat(Hero & hero, Monster & monster, HUD &hud){
   monster.takeDamage(damage);
   hud.sendMsg("The hit dealt "+ stm.str()  + " damage!");
   if(monster.getHp()<=0){
-  	hud.sendMsg("The monster died");
+  	hud.sendMsg(monster.getName() +" died");
   	hero.gainExp(monster.getMaxHp()/6);
   }
+  
   
   /*
   std::ostringstream stm2;
