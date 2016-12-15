@@ -58,9 +58,9 @@ void Monster::lvlUp(int lvl){
 	this->lvl+=lvl;
 	maxhp=maxhp*pow(1.3,lvl);
 	hp=hp*pow(1.3,lvl);
-	strength+=1;
-	agility+=1;
-	defense+=1;
+	strength+=2;
+	agility+=2;
+	defense+=2;
 	
 }
 std::string Monster::getName(){

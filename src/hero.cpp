@@ -98,7 +98,7 @@ void Hero::lvlUp(void){
 	lvl+=1;
 	maxhp+=((lvl*0.05)+1)*40;
 	hp+=((lvl*0.05)+1)*40;
-	expToNextLvl=expToNextLvl+((lvl*0.05)+1)*100;
+	expToNextLvl=expToNextLvl+(pow(1.2,lvl)*100);
 	strength+=1;
 	agility+=1;
 	defense+=1;

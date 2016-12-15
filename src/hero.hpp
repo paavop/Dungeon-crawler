@@ -3,6 +3,7 @@
 
 #include "item.hpp"
 #include <vector>
+#include <math.h>
 
 class Hero {
 	public:
