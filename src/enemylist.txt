@@ -7,4 +7,13 @@ agility:5
 hearing:3
 picture:resources/gargant.png
 }
+{
+name:Wall
+health:100
+strength:5
+defense:3
+agility:5
+hearing:3
+picture:resources/wall50.png
+}
 

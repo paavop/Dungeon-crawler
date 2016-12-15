@@ -32,7 +32,7 @@ Monster::Monster(	int h, int s, int a,
 {
 	alive = true;
 	detects_player = false;
-	name = name;
+	this->name = name;
 	position = pos;
 	pic_name = image;
 	maxhp=h;

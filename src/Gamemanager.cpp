@@ -159,6 +159,8 @@ void GameManager::addMonsters(){
 		monsters.push_back(availableMonsters[i]);
 		monsters.push_back(availableMonsters[i]);
 		monsters.push_back(availableMonsters[i]);
+	
+		
 	}
 	
 	

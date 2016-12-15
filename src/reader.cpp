@@ -160,12 +160,12 @@ Reader::Reader(std::string filename,std::string enemyfile){
 				}
 				
 				if(gotName && gotHp && gotStr && gotDef && gotAgi && gotHearing && gotPic){
-					std::cout<<tmpname<<std::flush;
+
 					monsters.push_back(Monster(tmphp, tmpstr, tmpagi,tmpdef,0,tmphear,sf::Vector2i(0,0),tmpname,tmpimage));
-				
+
 				}
 				else{
-					std::cout << "Itemin tiedot vialliset" << std::endl <<std::flush;
+					std::cout << "Invalid monster" << std::endl <<std::flush;
 				}
 			}
 		}
@@ -186,6 +186,7 @@ std::vector<Item*> Reader::get_items(){
 	return items;
 }
 std::vector<Monster> Reader::get_monsters(){
+	
 	return monsters;
 }
 
