@@ -18,7 +18,7 @@ GameManager::GameManager(){
 
 	
 	
-	animationTime=0.15;
+	animationTime=0.5;
 	
 	fpsTime=0;
 	//Loading textures to sprites
