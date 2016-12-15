@@ -25,4 +25,22 @@ agility:1
 hearing:3
 picture:resources/giantbug.png
 }
+{
+name:Rat
+health:10
+strength:1
+defense:1
+agility:10
+hearing:3
+picture:resources/enemy_rat.png
+}
+{
+name:Demon
+health:300
+strength:15
+defense:5
+agility:5
+hearing:5
+picture:resources/enemy_demon.png
+}
 
