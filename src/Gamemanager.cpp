@@ -7,8 +7,10 @@ bool combat( Monster& monster,Hero& hero, HUD &hud);
 GameManager::GameManager(){
 	score=0;
 	gameon=true;
-	Reader reader("itemlist.txt");
+	Reader reader("itemlist.txt","enemylist.txt");
 	items=reader.get_items();
+	availableMonsters=reader.get_monsters();
+	
 	hero=Hero(100,10,10,10,100);
 	hud=HUD(hero);
 	
@@ -54,8 +56,8 @@ GameManager::GameManager(){
 
 	newLevel();
 
-	for(int ind=0;ind<monsters.size();ind++){
-		loadEnemyTexture(monsters[ind]);
+	for(int ind=0;ind<availableMonsters.size();ind++){
+		loadEnemyTexture(availableMonsters[ind]);
 	}
 	//std::cout << "Successful: load enemy textures\n" <<std::flush; 
 
@@ -66,7 +68,7 @@ GameManager::GameManager(){
 	}
 	//std::cout << "Successful: load item textures\n" <<std::flush; 
 
-	hero.addItem(items[0]);
+
 	//std::cout << "Successful: set initial item for hero\n" <<std::flush; 
 
 
@@ -152,16 +154,13 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 
 //Adds random monsters to the map
 void GameManager::addMonsters(){
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
+	for(int i=0;i<availableMonsters.size();i++){
+		monsters.push_back(availableMonsters[i]);
+		monsters.push_back(availableMonsters[i]);
+		monsters.push_back(availableMonsters[i]);
+		monsters.push_back(availableMonsters[i]);
+	}
+	
 	
 	for(int x=0;x<monsters.size();x++){
 		monsters[x].lvlUp(dungeonLevel-1);

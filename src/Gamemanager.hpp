@@ -67,6 +67,7 @@ private:
 	sf::Clock fpsClock;
 	float fpsTime;
 	sf::Vector2i MCspot;
+	std::vector<Monster> availableMonsters;
 	std::vector<Monster> monsters;
 	std::vector<Item*> items;
 	

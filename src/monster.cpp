@@ -28,13 +28,13 @@ Monster::Monster(sf::Vector2i pos){
 
 Monster::Monster(	int h, int s, int a, 
 					int d,  int lvl, int hearing_radius,
-					sf::Vector2i pos, std::string name)
+					sf::Vector2i pos, std::string name,std::string image)
 {
 	alive = true;
 	detects_player = false;
 	name = name;
 	position = pos;
-	pic_name = "resources/enemy_risumies.png";
+	pic_name = image;
 	maxhp=h;
 	hp=h;
 	strength=s;

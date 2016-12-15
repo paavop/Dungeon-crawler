@@ -317,11 +317,11 @@ void HUD::drawStats(sf::RenderWindow & window,int score){
 	text.setColor(sf::Color::Black);
 	
 	oss<<"Dungeon lvl: "<<dngLvl<<std::endl;
-	oss<<"Score: "<<score<<std::endl;
+	oss<<"Score: "<<score<<std::endl<<std::endl;
 	oss<<"Health: "<<heroHp<<"/"<<heroMaxHp<<std::endl;
 	
 	oss<<"Exp   : "<<heroExp<<"/"<<heroExpToNext<<std::endl;
-	oss<<"Level : "<<heroLvl<<std::endl<<std::endl;
+	oss<<"Level : "<<heroLvl<<std::endl;
 	oss<<"S:"<<heroStr<<" D:"<<heroDef<<" A:"<<heroAgi; 
 	std::string str1=oss.str();
 	text.setString(str1);

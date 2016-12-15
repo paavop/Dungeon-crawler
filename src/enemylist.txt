@@ -1,0 +1,10 @@
+{
+name:Gargant
+health:100
+strength:5
+defense:3
+agility:5
+hearing:3
+picture:resources/gargant.png
+}
+

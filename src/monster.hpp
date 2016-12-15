@@ -15,7 +15,7 @@ class Monster {
 		Monster(sf::Vector2i pos);
 		Monster(int health, int strength, int agility, 
 				int defense,  int lvl, int hearing_radius,
-				sf::Vector2i pos, std::string name);
+				sf::Vector2i pos, std::string name,std::string image);
 
 		std::string		getPicName();
 		std::string	 	getName();
