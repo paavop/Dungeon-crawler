@@ -154,13 +154,10 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 
 //Adds random monsters to the map
 void GameManager::addMonsters(){
-	for(int i=0;i<availableMonsters.size();i++){
-		monsters.push_back(availableMonsters[i]);
-		monsters.push_back(availableMonsters[i]);
-		monsters.push_back(availableMonsters[i]);
-		monsters.push_back(availableMonsters[i]);
-	
-		
+	int random=rand() %20 +15+dungeonLevel;
+	for(int i=0;i<random;i++){
+		int choice=rand() %availableMonsters.size();
+		monsters.push_back(availableMonsters[choice]);		
 	}
 	
 	

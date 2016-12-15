@@ -328,6 +328,24 @@ void HUD::drawStats(sf::RenderWindow & window,int score){
 	text.setPosition(20,starty+height-bordersize-6*5-5*20);
 	window.draw(text);
 	
+	int hpbarsizex=200;
+	int hpbarsizey=20;
+	int hpbarx=5;
+	int hpbary=5;
+	sf::RectangleShape rect(sf::Vector2f(hpbarsizex,hpbarsizey));
+	sf::RectangleShape green(sf::Vector2f(((float)heroHp/heroMaxHp)*hpbarsizex,hpbarsizey));
+	sf::RectangleShape red(sf::Vector2f((1-(float)heroHp/heroMaxHp)*hpbarsizex,hpbarsizey));
+	green.setFillColor(sf::Color::Green);
+	green.setPosition(hpbarx,hpbary);
+	red.setFillColor(sf::Color::Red);
+	red.setPosition((int)(hpbarx+(float)heroHp/heroMaxHp*hpbarsizex),hpbary);
+	rect.setFillColor(sf::Color::Transparent);
+	rect.setOutlineThickness(1);
+	rect.setOutlineColor(sf::Color::Black);
+	rect.setPosition(hpbarx,hpbary);
+	window.draw(rect);
+	window.draw(red);
+	window.draw(green);
 	
 	
 	

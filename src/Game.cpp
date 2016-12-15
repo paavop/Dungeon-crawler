@@ -83,6 +83,7 @@ void Game::Loop(){
 			}
 		case Game::Exit:
 			{
+
 				endGame();
 				//gameWindow.close();
 				gameWindow.display();
@@ -116,7 +117,9 @@ void Game::showMenu(){
 
 }
 void Game::endGame(){
+
 	std::vector<std::tuple<std::string,std::string>> scores;
+
 	if(!loaded){
 
 		std::ifstream highscore("highscores.txt");
@@ -126,6 +129,7 @@ void Game::endGame(){
 		}else{
 
 			std::string newline;
+
 			while(std::getline(highscore,newline)){
 
 				std::regex ws_re("\\s+");
@@ -135,7 +139,10 @@ void Game::endGame(){
 
 				scores.push_back(std::make_tuple(result[0],result[1]));
 
+
 			}
+
+
 			highscore.close();
 
 		}
@@ -147,9 +154,12 @@ void Game::endGame(){
 		}
 		*/
 	}
+
 	int yourScore=manager.getScore();
 	std::string my_name="";
+
 	while(gameWindow.isOpen()){
+
 		sf::Event event;
 		gameWindow.clear();
 		while (gameWindow.pollEvent(event)){
