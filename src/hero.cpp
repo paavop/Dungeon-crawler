@@ -167,6 +167,8 @@ std::vector<Item*> Hero::getBag(){
 	return bag;
 }
 
-
+double Hero::getWepHitchance(){
+	return bag[eqWepInd]->getHitchance();
+}
 	
 	
