@@ -3,8 +3,10 @@
 bool combat(Hero& hero, Monster& monster, HUD &hud);
 bool combat( Monster& monster,Hero& hero, HUD &hud);
 
-GameManager::GameManager(){
 
+GameManager::GameManager(){
+	score=0;
+	gameon=true;
 	Reader reader("itemlist.txt");
 	items=reader.get_items();
 	hero=Hero(100,10,10,10,100);
@@ -48,25 +50,53 @@ GameManager::GameManager(){
 	}
 	stairs.setTexture(stairs_t);
 
-
-	//Load example items
-	
 	
 
 	newLevel();
 
-
-	
 	for(int ind=0;ind<monsters.size();ind++){
 		loadEnemyTexture(monsters[ind]);
 	}
+	std::cout << "Successful: load enemy textures\n" <<std::flush; 
+
 	for(int ind=0;ind<items.size();ind++){
-		loadItemTexture(*(items[ind]));
+		std::cout << "Try: load no."<<ind+1<<" of item textures\n" <<std::flush; 
+		std::cout << "Try: Get name: "<<items[0]->getName()<<" of item textures\n" <<std::flush; 
+		loadItemTexture(items[ind]);
 	}
-	hero.addItem(*items[0]);
+	std::cout << "Successful: load item textures\n" <<std::flush; 
+
+	hero.addItem(items[0]);
+	std::cout << "Successful: set initial item for hero\n" <<std::flush; 
+
+
+
+
+		//loadItemTexture(items[ind]);
+
+	
+	
+	
+}
+//Returns the game score
+int GameManager::getScore(){
+	return score;
 
 }
+//checks the game status
+bool GameManager::gameOn(){
+	return gameon;
+}
+//20% chance to get an item from monster
+void GameManager::itemLottery(){
+	score+=10;
+	if(rand() %10<3){
+		hud.sendMsg("Monster dropped an item");
+		hero.addItem(items[rand() %items.size()]);
+	}
 
+}
+//Creates new level, adds monsters with addMonsters()
 void GameManager::newLevel(){
 	dungeonLevel++;
 	std::ostringstream stm;
@@ -77,15 +107,16 @@ void GameManager::newLevel(){
 	map=makeMap(mapsize);
 	findStart(map);
 	monsters.clear();
-	addMonsters();
-	
+	addMonsters();	
 }
+//Draws transition to new level, uses newLevel()-method to create new level, adds 50 score
 void GameManager::nextLevel(sf::RenderWindow& window){
+	score+=50;
 	float cmdTime2=clock.getElapsedTime().asSeconds();
 	float transition=1;
 	sf::RectangleShape rect(sf::Vector2f(750,450));
 	rect.setPosition(0,0);
-	int alpha=0;
+
 	
 	while(clock.getElapsedTime().asSeconds()-cmdTime2<transition){
 		rect.setFillColor(sf::Color(0,0,0,255*((float)clock.getElapsedTime().asSeconds()-cmdTime2)/transition));
@@ -94,7 +125,7 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 		window.draw(MC);
 		hud.drawHUD(window,item_sprites,hero);
 		window.draw(rect);
-		alpha++;
+
 
 		window.display();
 		
@@ -110,7 +141,7 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 		window.draw(MC);
 		hud.drawHUD(window,item_sprites,hero);
 		window.draw(rect);
-		alpha++;
+
 
 		window.display();
 		
@@ -118,6 +149,8 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 		//printf("asd");
 	}
 }
+
+//Adds random monsters to the map
 void GameManager::addMonsters(){
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
@@ -127,35 +160,17 @@ void GameManager::addMonsters(){
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	/*
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
 	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	monsters.push_back(Monster(sf::Vector2i(MCspot.x+1,MCspot.y+1)));
-	*/
+	
+	for(int x=0;x<monsters.size();x++){
+		monsters[x].lvlUp(dungeonLevel-1);
+	}
+
 	setEnemies();
 }
 	
-
-
+//Goes through enemylist and adds every texture and sprite 
 void GameManager::loadEnemyTexture(Monster& enemy){
 	if(enemy_textures.find(enemy.getName())==enemy_textures.end()){
 		sf::Texture new_texture;
@@ -164,29 +179,39 @@ void GameManager::loadEnemyTexture(Monster& enemy){
 		}
 		enemy_textures[enemy.getName()]=new_texture;
 		enemy_sprites[enemy.getName()]=sf::Sprite();
-	
-		//SourceSprite=sf::IntRect(0,0,50,50);
 		enemy_sprites[enemy.getName()].setTexture(enemy_textures[enemy.getName()]);
-	}
-}
-void GameManager::loadItemTexture(Item& item){
-	if(item_textures.find(item.getName())==item_textures.end()){
-		sf::Texture new_texture;
-		if (!new_texture.loadFromFile(item.getImagename())){
-			perror("Couldn't load item texture: ");
-		}
-		item_textures[item.getName()]=new_texture;
-		item_sprites[item.getName()]=sf::Sprite();
-	
-		//SourceSprite=sf::IntRect(0,0,50,50);
-		item_sprites[item.getName()].setTexture(item_textures[item.getName()]);
-	}
-}
 
+
+	}
+}
+//Goes through itemlist and adds every texture and sprite
+void GameManager::loadItemTexture(Item* item){
+	std::cout << "TEST, loadItemTexure $0\n" <<std::flush;
+	std::cout << "Current item name: "<<item->getName()<<" & "<<item->getImagename()<<std::flush;
+	if(item_textures.find(item->getName())==item_textures.end()){
+		std::cout << "TEST, loadItemTexture $1\n" <<std::flush;
+		sf::Texture new_texture;
+		if (!new_texture.loadFromFile(item->getImagename())){
+			perror("Couldn't load item texture: "); std::cout << item->getImagename()<<std::flush;
+		}
+		std::cout << "TEST, loadItemTexture $2\n" <<std::flush;
+
+		item_textures[item->getName()]=new_texture;
+		item_sprites[item->getName()]=sf::Sprite();
+		item_sprites[item->getName()].setTexture(item_textures[item->getName()]);
+		std::cout << "TEST, loadItemTexture $3\n" <<std::flush;
+	}
+}
+//Checks for user input, checks if the player has found next level, updates HUD
 void GameManager::updateAll(sf::RenderWindow& window){
-	
-	if(map[MCspot.x][MCspot.y]==2 && movePercentage==0){
+	if(hero.getHp()<=0){
+		gameon=false;
+	}
+	if(map[MCspot.x][MCspot.y]==2 && !movingDown && !movingUp && !movingRight && !movingLeft ){
 		nextLevel(window);
+	}
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+		gameon=false;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)){
 		movePlayer(1);
@@ -204,12 +229,8 @@ void GameManager::updateAll(sf::RenderWindow& window){
 	}
 		
 	hud.updateStats(hero,dungeonLevel);
-	/*	TESTING */
-	
-	
-	
 }
-
+//Uses different draw-functions to draw everything
 void GameManager::drawAll(sf::RenderWindow & window){
 	updatePercentages();
 	if (movePercentage>0 && movePercentage<0.5){
@@ -232,16 +253,15 @@ void GameManager::drawAll(sf::RenderWindow & window){
 
 
 }
-
+//Prints fps in console (for testing purposes)
 void GameManager::drawFps(sf::RenderWindow& window){
 	fpsTime=fpsClock.restart().asSeconds();
 	int fps=(int) 1.f/(fpsTime);
 	
 	std::cout<<"FPS: "<<fps<<std::endl;
 }
-
+//Draws map-tiles, checks if player is moving and to which direction to draw correctly
 void GameManager::drawMap(sf::RenderWindow& window){
-	
 	for(n=-1;n<16;n++){
 		for(m=-1;m<10;m++){
 			wall.setPosition(offsetx+xPercentage*50+50*(n),offsety+yPercentage*50+50*(m));
@@ -270,126 +290,128 @@ void GameManager::drawMap(sf::RenderWindow& window){
 		}
 	}
 }
-
+/*
+Goes through enemylist, draws everything close to player. Checks if monster is moving and if player is 
+moving to draw correctly. 
+*/
 void GameManager::drawEnemies(sf::RenderWindow& window){
-	
-		// How I'm supposed to draw something?
-		
-	//This is how:
-
 	for(n=0;n<monsters.size();n++){
-		float xmonmove=0;
-		float ymonmove=0;
-		int monoffy=0;
-		int monoffx=0;
-		std::string name=monsters[n].getName();
-		int dir=monsters[n].faceWhere();
-		//std::cout<<dir<<std::endl<<std::flush;
-		switch(dir){
-			case 1:
-				enemy_sprites[name].setRotation(180);
-				enemy_sprites[name].setOrigin(50,50);
-				break;
-			case 2:
-				enemy_sprites[name].setRotation(0);
-				enemy_sprites[name].setOrigin(0,0);
-				break;
-			case 3:
-				enemy_sprites[name].setRotation(90);
-				enemy_sprites[name].setOrigin(0,50);
-				break;
-			case 4:
-				enemy_sprites[name].setRotation(270);
-				enemy_sprites[name].setOrigin(50,0);
-				break;
-		}
-		/*
-		float percentageMoved=0;
-		if((clock.getElapsedTime().asSeconds()-cmdTime)/animationTime<1){
-			percentageMoved=(clock.getElapsedTime().asSeconds()-cmdTime)/animationTime;
-		}else{
-			percentageMoved=1;
-		}
-		*/
-		int a,b;
-		if(fighting){
-			if(monsters[n].movesUp())
-			{
-				ymonmove=-movePercentage;
-				monoffy=50;
-				//std::cout<<ymonmove<<std::endl;
-			}
-			else if(monsters[n].movesDown()){
-				ymonmove=movePercentage;
-				monoffy=-50;
-			}
-			else if(monsters[n].movesLeft()){
-				xmonmove=-movePercentage;
-
-				monoffx=50;
-			}
-			else if(monsters[n].movesRight()){
-				xmonmove=movePercentage;
-				monoffx=-50;
-			}
+		if(abs(monsters[n].getPos().x-MCspot.x)<10 && abs(monsters[n].getPos().y-MCspot.y)<7){
 			
-			a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+50*xmonmove+monoffx;
-			b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+50*ymonmove+monoffy;
 		
-		}else{
-			if(monsters[n].movesUp())
-			{
-				ymonmove=-movePercentage;
-				monoffy=50;
-				//std::cout<<ymonmove<<std::endl;
+			float xmonmove=0;
+			float ymonmove=0;
+			int monoffy=0;
+			int monoffx=0;
+			std::string name=monsters[n].getName();
+			int dir=monsters[n].faceWhere();
+			//std::cout<<dir<<std::endl<<std::flush;
+			switch(dir){
+				case 1:
+					enemy_sprites[name].setRotation(180);
+					enemy_sprites[name].setOrigin(50,50);
+					break;
+				case 2:
+					enemy_sprites[name].setRotation(0);
+					enemy_sprites[name].setOrigin(0,0);
+					break;
+				case 3:
+					enemy_sprites[name].setRotation(90);
+					enemy_sprites[name].setOrigin(0,50);
+					break;
+				case 4:
+					enemy_sprites[name].setRotation(270);
+					enemy_sprites[name].setOrigin(50,0);
+					break;
 			}
-			else if(monsters[n].movesDown()){
-				ymonmove=movePercentage;
-				monoffy=-50;
+			/*
+			float percentageMoved=0;
+			if((clock.getElapsedTime().asSeconds()-cmdTime)/animationTime<1){
+				percentageMoved=(clock.getElapsedTime().asSeconds()-cmdTime)/animationTime;
+			}else{
+				percentageMoved=1;
 			}
-			else if(monsters[n].movesLeft()){
-				xmonmove=-movePercentage;
-				monoffx=50;
-			}
-			else if(monsters[n].movesRight()){
-				xmonmove=movePercentage;
-				monoffx=-50;
-			}
+			*/
+			int a,b;
+			if(fighting){
+				if(monsters[n].movesUp())
+				{
+					ymonmove=-movePercentage;
+					monoffy=50;
+					//std::cout<<ymonmove<<std::endl;
+				}
+				else if(monsters[n].movesDown()){
+					ymonmove=movePercentage;
+					monoffy=-50;
+				}
+				else if(monsters[n].movesLeft()){
+					xmonmove=-movePercentage;
+
+					monoffx=50;
+				}
+				else if(monsters[n].movesRight()){
+					xmonmove=movePercentage;
+					monoffx=-50;
+				}
+			
+				a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+50*xmonmove+monoffx;
+				b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+50*ymonmove+monoffy;
 		
-			a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50+xmonmove*50+monoffx;
-			b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50+ymonmove*50+monoffy;
-		}	//std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
-		enemy_sprites[name].setPosition(a,b);
-		window.draw(enemy_sprites[name]);
+			}else{
+				if(monsters[n].movesUp())
+				{
+					ymonmove=-movePercentage;
+					monoffy=50;
+					//std::cout<<ymonmove<<std::endl;
+				}
+				else if(monsters[n].movesDown()){
+					ymonmove=movePercentage;
+					monoffy=-50;
+				}
+				else if(monsters[n].movesLeft()){
+					xmonmove=-movePercentage;
+					monoffx=50;
+				}
+				else if(monsters[n].movesRight()){
+					xmonmove=movePercentage;
+					monoffx=-50;
+				}
 		
-		//Draws a health bar above monster if it has taken damage
-		if(monsters[n].getHp()<monsters[n].getMaxHp() && monsters[n].getHp()>0){
+				a=(int)50*(monsters[n].getPos().x-MCspot.x+7)+offsetx+xPercentage*50+xmonmove*50+monoffx;
+				b=(int)50*(monsters[n].getPos().y-MCspot.y+4)+offsety+yPercentage*50+ymonmove*50+monoffy;
+			}	//std::cout<<"Drew enemy in: "<<a<<","<<b<<std::endl;
+			enemy_sprites[name].setPosition(a,b);
+			window.draw(enemy_sprites[name]);
+		
+			//Draws a health bar above monster if it has taken damage
+			if(monsters[n].getHp()<monsters[n].getMaxHp() && monsters[n].getHp()>0){
 		
 
 		
-			sf::RectangleShape rect(sf::Vector2f(46,3));
-			sf::RectangleShape green(sf::Vector2f(((float)monsters[n].getHp()/monsters[n].getMaxHp())*46,3));
-			sf::RectangleShape red(sf::Vector2f((1-(float)monsters[n].getHp()/monsters[n].getMaxHp())*46,3));
-			green.setFillColor(sf::Color::Green);
-			green.setPosition(a+1,b);
-			red.setFillColor(sf::Color::Red);
-			red.setPosition(a+1+(float)monsters[n].getHp()/monsters[n].getMaxHp()*46,b);
-			rect.setFillColor(sf::Color::Transparent);
-			rect.setOutlineThickness(1);
-			rect.setOutlineColor(sf::Color::Black);
-			rect.setPosition(a+1,b);
+				sf::RectangleShape rect(sf::Vector2f(46,3));
+				sf::RectangleShape green(sf::Vector2f(((float)monsters[n].getHp()/monsters[n].getMaxHp())*46,3));
+				sf::RectangleShape red(sf::Vector2f((1-(float)monsters[n].getHp()/monsters[n].getMaxHp())*46,3));
+				green.setFillColor(sf::Color::Green);
+				green.setPosition(a+1,b);
+				red.setFillColor(sf::Color::Red);
+				red.setPosition(a+1+(float)monsters[n].getHp()/monsters[n].getMaxHp()*46,b);
+				rect.setFillColor(sf::Color::Transparent);
+				rect.setOutlineThickness(1);
+				rect.setOutlineColor(sf::Color::Black);
+				rect.setPosition(a+1,b);
 			
-			window.draw(rect);
-			window.draw(red);
-			window.draw(green);
+				window.draw(rect);
+				window.draw(red);
+				window.draw(green);
 			
 				
+			}
 		}
 	}
 		
 	
 }	
-
+//Updates percentages used in moving animations (every move is 0.15s)
 void GameManager::updatePercentages(){
 	if(movingUp || movingDown || movingLeft || movingRight){
 		if(movingUp || movingDown){
@@ -453,7 +475,10 @@ void GameManager::updatePercentages(){
 	
 }
 	
-
+/* Randomizes a new map
+Defaul size is 60x60, makes random number of rooms, randomizes sizes for them, randomizes x and y 
+coordinates for them. Map is stored as 1s ans 0s in two dimensional vector
+*/
 std::vector<std::vector<int> > GameManager::makeMap(int size){
 	int mapsize=size;
 
@@ -564,6 +589,8 @@ std::vector<std::vector<int> > GameManager::makeMap(int size){
 
 	return array;
 }
+//Looks for a suitable starting position for the player
+//Now simply looks for the first open spot
 void GameManager::findStart(std::vector<std::vector<int> > map){
 	float mcx=0;
 	float mcy=0;
@@ -587,7 +614,10 @@ void GameManager::findStart(std::vector<std::vector<int> > map){
 
 	return ;
 }
-
+/*Four cases:up,down,left,right.
+**For each case checks if there is a monster there and utilizes combat if necessary
+**Checks for walls, if no walls moves player there
+*/
 void GameManager::movePlayer(int direction){
 	if(movingDown || movingLeft || movingRight || movingUp || fighting){
 		return;
@@ -603,6 +633,11 @@ void GameManager::movePlayer(int direction){
 		for(n=0;n<monsters.size();n++){
 			if(monsters[n].getPos().x==MCspot.x && monsters[n].getPos().y==MCspot.y-1){
 				combat(hero,monsters[n],hud);
+				if(monsters[n].getHp()<=0){
+
+
+					itemLottery();
+				}
 				fighting=true;
 				attacked=true;
 				break;
@@ -635,6 +670,9 @@ void GameManager::movePlayer(int direction){
 		for(n=0;n<monsters.size();n++){
 			if(monsters[n].getPos().x==MCspot.x && monsters[n].getPos().y==MCspot.y+1){
 				combat(hero,monsters[n],hud);
+				if(monsters[n].getHp()<=0){
+					itemLottery();
+				}
 				fighting=true;
 				attacked=true;
 				break;
@@ -665,6 +703,9 @@ void GameManager::movePlayer(int direction){
 		for(n=0;n<monsters.size();n++){
 			if(monsters[n].getPos().x==MCspot.x-1 && monsters[n].getPos().y==MCspot.y){
 				combat(hero,monsters[n],hud);
+				if(monsters[n].getHp()<=0){
+					itemLottery();
+				}
 				fighting=true;
 				attacked=true;
 				break;
@@ -696,6 +737,9 @@ void GameManager::movePlayer(int direction){
 		for(n=0;n<monsters.size();n++){
 			if(monsters[n].getPos().x==MCspot.x+1 && monsters[n].getPos().y==MCspot.y){
 				combat(hero,monsters[n],hud);
+				if(monsters[n].getHp()<=0){
+					itemLottery();
+				}
 				fighting=true;
 				attacked=true;
 				break;
@@ -721,7 +765,7 @@ void GameManager::movePlayer(int direction){
 	}
 
 }
-
+//Moves every monster in the map. If player is close to enemy they follow the player and attack
 void GameManager::enemyTurn(){
 	int remove=-1;
 	for(n=0;n<monsters.size();n++){
@@ -751,9 +795,14 @@ void GameManager::enemyTurn(){
 
 
 		else if (monsters[n].isFreshTarget()){
-			monsters[n].moveTowardsTarget(map);
-			std::string  hunting_str = "Enemy follows";
-			hud.sendMsg(hunting_str);
+			int chance=rand() %10 ;
+			if(chance<9){
+				monsters[n].moveTowardsTarget(map);
+				/*
+				std::string  hunting_str = "Enemy follows";
+				hud.sendMsg(hunting_str);
+				*/
+			}
 		} 
 	
 
@@ -902,7 +951,7 @@ bool GameManager::freeLineOfSight(sf::Vector2i a, sf::Vector2i b){
 		
 	
 }
-	
+//Counts free spaces on map, sets all monsters randomly on map
 void GameManager::setEnemies(){
 	int floorcount=0;
 	
@@ -913,8 +962,6 @@ void GameManager::setEnemies(){
 			}
 		}
 	}
-	
-
 	for(int i=0;i<monsters.size();i++){
 		int count=0;
 		int spot=rand() %floorcount;

@@ -53,6 +53,7 @@ class Monster {
 		void 			moveTowardsTarget(std::vector<std::vector<int>>& map);
 		int 			faceWhere();
 		void			faceThere(int dir);
+		void 			lvlUp(int lvl);
 
 		
 	private:

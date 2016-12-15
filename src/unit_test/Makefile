@@ -61,6 +61,8 @@ gtest_main.a : gtest-all.o gtest_main.o
 # Builds a sample test.  A test should link with either gtest.a or
 # gtest_main.a, depending on whether it defines its own main()
 # function.
+monster.o : $(USER_DIR)/monster.cpp $(USER_DIR)/monster.hpp $(GTEST_HEADERS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/monster.cpp 
 
 hero.o : $(USER_DIR)/hero.cpp $(USER_DIR)/hero.hpp $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/hero.cpp 
@@ -69,8 +71,8 @@ item.o : $(USER_DIR)/item.cpp $(USER_DIR)/item.hpp $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(USER_DIR)/item.cpp 
 
 test_source.o : $(TEST_DIR)/test_source.cpp \
-                     $(USER_DIR)/hero.hpp $(USER_DIR)/item.hpp  $(GTEST_HEADERS)
+                     $(USER_DIR)/monster.hpp $(USER_DIR)/hero.hpp $(USER_DIR)/item.hpp  $(GTEST_HEADERS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $(TEST_DIR)/test_source.cpp
 
-test : hero.o item.o test_source.o gtest_main.a
+test : monster.o hero.o item.o test_source.o gtest_main.a
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -lpthread $^ -o $@

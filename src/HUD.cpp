@@ -31,7 +31,8 @@ HUD::HUD(){
 	eqWepInd=-1;
 	eqArmInd=-1;
 	
-	clicked=false;
+	clickedl=false;
+	clickedr=false;
 	
 	
 }
@@ -69,7 +70,9 @@ HUD::HUD(Hero & hero){
 	
 	bag=hero.getBag();
 	
-	clicked=false;
+	clickedl=false;
+	clickedr=false;
+	
 
 }
 void HUD::updateStats(Hero & hero,unsigned int lvl){
@@ -140,9 +143,9 @@ void HUD::drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> &
 			y=1;
 		}
 		
-		sprites[bag[z].getName()].setPosition(stx+x*50,sty+y*50);
+		sprites[bag[z]->getName()].setPosition(stx+x*50,sty+y*50);
 		
-		window.draw(sprites[bag[z].getName()]);
+		window.draw(sprites[bag[z]->getName()]);
 	}
 	for(int z=0;z<8;z++){
 		if(z<4){
@@ -153,20 +156,20 @@ void HUD::drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> &
 			y=1;
 		}
 		
-		sf::RectangleShape rect2(sf::Vector2f(50,50));
+		sf::RectangleShape rect2(sf::Vector2f(46,46));
 
 		if(z==eqWepInd){
 			rect2.setOutlineColor(sf::Color::Red);
 			rect2.setOutlineThickness(2);
 			rect2.setFillColor(sf::Color::Transparent);
-			rect2.setPosition(stx+x*50,sty+y*50);
+			rect2.setPosition(2+stx+x*50,2+sty+y*50);
 			window.draw(rect2);
 		}
 		if(z==eqArmInd){
 			rect2.setOutlineColor(sf::Color::Blue);
 			rect2.setOutlineThickness(2);
 			rect2.setFillColor(sf::Color::Transparent);
-			rect2.setPosition(stx+x*50,sty+y*50);
+			rect2.setPosition(2+stx+x*50,2+sty+y*50);
 			window.draw(rect2);
 		}
 	}
@@ -184,60 +187,89 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 		int selected=x/50+4*(int)(y/50);
 		if(selected>=0 && selected<bag.size()){
 			//std::cout<<bag[selected].getName()<<std::endl;
-			sf::RectangleShape rect(sf::Vector2f(150,50));
+			sf::RectangleShape rect(sf::Vector2f(175,50));
 			//std::cout<<x<<","<<y<<std::endl;
 			rect.setFillColor(sf::Color::Black);
 			rect.setOutlineThickness(3);
 			rect.setOutlineColor(sf::Color::White);
-			rect.setPosition(stx+x-150,sty+y-50);
+			rect.setPosition(stx+x-175,sty+y-50);
 			window.draw(rect);
 			sf::Font font;
 			font.loadFromFile("resources/joystix_monospace.ttf");
-			sf::Text text(bag[selected].getName(),font);
+			sf::Text text(bag[selected]->getName(),font);
 			text.setCharacterSize(14);
-			text.setPosition(stx+x-150,sty+y-50);
+			text.setPosition(stx+x-175,sty+y-50);
 			window.draw(text);
 			
 			std::ostringstream tmp;
-			tmp<<bag[selected].getValue();
+			tmp<<bag[selected]->getValue();
 			text.setCharacterSize(10);
-			if(bag[selected].getType()=="Weapon"){
+			if(bag[selected]->getType()=="Weapon"){
 				text.setString("Attack: "+tmp.str());
+				std::cout<<bag[selected]->getHitchance()<<std::endl;
 
 			}
-			if(bag[selected].getType()=="Armor"){
+			if(bag[selected]->getType()=="Armor"){
 				text.setString("Defense: "+tmp.str());
 			}
 
+			text.move(0,20);
+			window.draw(text);
+			text.setString(bag[selected]->getDescription());
 			text.move(0,15);
 			window.draw(text);
 			
 			if(sf::Mouse::isButtonPressed(sf::Mouse::Left)){
-				if(hero.equip(selected)){
-					sendMsg("Equipped "+bag[selected].getName());
-					if(bag[selected].getType()=="Weapon"){
+				clickedl=true;
+			}
+			if(clickedl && not sf::Mouse::isButtonPressed(sf::Mouse::Left)){
+			
+				if(selected==eqWepInd){
+					sendMsg("Unequipped "+bag[selected]->getName());
+					eqWepInd=-1;
+					hero.unEquip(0);
+					
+				}
+				else if(selected==eqArmInd){
+					sendMsg("Unequipped "+bag[selected]->getName());
+					eqArmInd=-1;
+					hero.unEquip(1);
+				}
+				else if(hero.equip(selected)){
+					sendMsg("Equipped "+bag[selected]->getName());
+					if(bag[selected]->getType()=="Weapon"){
 						eqWepInd=selected;
 
 					}
-					if(bag[selected].getType()=="Armor"){
+					if(bag[selected]->getType()=="Armor"){
 						eqArmInd=selected;
 					}
 				}
+				clickedl=false;
 			}
 
 			if(sf::Mouse::isButtonPressed(sf::Mouse::Right)){
-				clicked=true;
+				clickedr=true;
 
 			}
-			if(clicked && not sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+			if(clickedr && not sf::Mouse::isButtonPressed(sf::Mouse::Right)){
+				sendMsg("Threw away "+bag[selected]->getName());
 				if(selected==eqWepInd){
 					eqWepInd=-1;
 				}
 				if(selected==eqArmInd){
 					eqArmInd=-1;
 				}
+				if(selected<eqWepInd){
+
+					eqWepInd-=1;
+
+				}
+				if(selected<eqArmInd){
+					eqArmInd-=1;
+				}
 				hero.dropItem(selected);
-				clicked=false;
+				clickedr=false;
 			}
 			
 			

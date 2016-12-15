@@ -1,9 +1,18 @@
 {
 type:weapon
+name:Key
+value:1
+hitchance:0.99
+image:resources/key.png
+description:Aim for their eyes?
+}
+{
+type:weapon
 name:Log
 value:2
 hitchance:0.99
 image:resources/log.png
+description:Oh wow, a log
 }
 {
 type:weapon
@@ -11,6 +20,7 @@ name:Knife
 value:4
 hitchance:0.99
 image:resources/knife.png
+description:Good for potatoes
 }
 {
 type:weapon
@@ -18,6 +28,15 @@ name:Smallsword
 value:6
 hitchance:0.99
 image:resources/smallsword.png
+description:At least it's sharp
+}
+{
+type:weapon
+name:Monsterbone
+value:8
+hitchance:0.99
+image:resources/bone.png
+description:Your former enemy
 }
 {
 type:weapon
@@ -25,80 +44,93 @@ name:Sword
 value:10
 hitchance:0.99
 image:resources/sword.png
+description:Your basic sword
+}
+{
+type:weapon
+name:Hammer
+value:15
+hitchance:0.99
+image:resources/hammer.png
+description:It's hammertime
+}
+{
+type:weapon
+name:Ice sword
+value:18
+hitchance:0.99
+image:resources/icesword.png
+description:Cool as ice
+}
+{
+type:weapon
+name:Lightbringer
+value:20
+hitchance:0.99
+image:resources/flamesword.png
+description:Bring the heat
+}
+{
+type:armor
+name:Fancy dress
+value:3
+image:resources/dress.png
+description:You look fabulous
+}
+{
+type:armor
+name:Gloves
+value:4
+image:resources/gloves.png
+description:Strangely pixelated...
 }
 {
 type:armor
 name:Shirt
 value:5
 image:resources/shirt.png
+description:A nice shirt
+}
+{
+type:armor
+name:Wizard hat
+value:6
+image:resources/wizhat.png
+description:...And my wizard hat
+}
+{
+type:armor
+name:Helmet
+value:7
+image:resources/helmet.png
+description:Protects your head
+}
+{
+type:armor
+name:Robe
+value:8
+image:resources/robe.png
+description:I put on my robe...
 }
 {
 type:armor
 name:Chainmail
 value:10
 image:resources/chainmail.png
+description:Rusty but effective
 }
 {
 type:armor
 name:Shield
 value:15
 image:resources/coolshield.png
+description:A protective shield
 }
 {
 type:armor
 name:IronArmor
 value:20
 image:resources/ironarmor.png
+description:A sturdy armor
 }
-{
-type:weapon
-name:Jumalmiekka 5000
-value:20
-hitchance:0.99
-image:miekka.png
-}
-{
-type:weapon
-name:Perunaveitsi
-value:2
-hitchance:0.95
-image:miekka.png
-}
-{
-type:weapon
-name:Ruosteinen Miekka
-value:5
-hitchance:0.80
-image:miekka.png
-}
-{
-type:weapon
-name:Longsword
-value:12
-hitchance:0.85
-image:miekka.png
-}
-{
-type:armor
-name:Jumalhaarniska 5000
-value:20
-image:haarniska.png
-}
-{
-type:armor
-name:Plebi vaatteet
-value:2
-image:haarniska.png
-}
-{
-type:armor
-name:Vanha Gladiaattori Haarniska
-value:8
-image:haarniska.png
-}
-{
-type:armor
-name:Linnanvartian Reikäpanssari
-value:12
-image:haarniska.png
-}
+

@@ -6,12 +6,12 @@ Monster::Monster(sf::Vector2i pos){
 	position = pos;
 	name = "Gargant";
 	pic_name = "resources/gargant.png";
-	maxhp = 1000;			//Monster's max health points	
+	maxhp = 100;			//Monster's max health points	
 	hp = maxhp;			//Monster's current health points
 	lvl = 0;			//Level of the Monster
-	strength = 1;		//Monster's strength stat
-	agility = 1;		//Monster's agility stat
-	defense = 1;		//Monster's defense stat
+	strength = 5;		//Monster's strength stat
+	agility = 5;		//Monster's agility stat
+	defense = 5;		//Monster's defense stat
 	hearing = 3;
 	movingUp = false;
 	movingDown = false;
@@ -54,7 +54,15 @@ Monster::Monster(	int h, int s, int a,
 	faceRight = false;
 	*/
 }
-
+void Monster::lvlUp(int lvl){
+	this->lvl+=lvl;
+	maxhp=maxhp*pow(1.3,lvl);
+	hp=hp*pow(1.3,lvl);
+	strength=strength*pow(1.3,lvl);
+	agility=agility*pow(1.3,lvl);
+	defense=defense*pow(1.3,lvl);
+	
+}
 std::string Monster::getName(){
 	return name;
 }
@@ -214,6 +222,7 @@ bool Monster::canMove(std::vector<std::vector<int>>& map){
 		case Down 	:return (map[position.x][position.y+1] == 0);
 		case Left 	:return (map[position.x-1][position.y] == 0);
 	}
+	return false;
 }
 
 void Monster::moveTowardsTarget(std::vector<std::vector<int>>& map){
@@ -240,20 +249,32 @@ void Monster::moveTowardsTarget(std::vector<std::vector<int>>& map){
 	if (horizontal){
 		if(dirs[0]==1) {
 			moving_dir = Right;
-			if(canMove(map)){std::cout<<"RIGHT"<<std::endl<<std::flush; moveRight();}
+			if(canMove(map)){
+				//std::cout<<"RIGHT"<<std::endl<<std::flush;
+				moveRight();
+			}
 		}
 		else if(dirs[0]==-1) {
 			moving_dir = Left;
-			if(canMove(map)) {std::cout<<"LEFT"<<std::endl<<std::flush;moveLeft();}
+			if(canMove(map)) {
+				//std::cout<<"LEFT"<<std::endl<<std::flush;
+				moveLeft();
+			}
 		}
 	}
 	else{
 		if(dirs[1]==1) {
 			moving_dir = Down;
-			if(canMove(map)) {std::cout<<"DOWN"<<std::endl<<std::flush;moveDown();}		}
+			if(canMove(map)) {
+				//std::cout<<"DOWN"<<std::endl<<std::flush;
+				moveDown();
+			}		}
 		else if(dirs[1]==-1) {
 			moving_dir = Up;
-			if(canMove(map)) {std::cout<<"UP"<<std::endl<<std::flush;moveUp();}
+			if(canMove(map)) {
+				//std::cout<<"UP"<<std::endl<<std::flush;
+				moveUp();
+			}
 		}
 	}
 
@@ -282,3 +303,4 @@ MonsterCatalog::~MonsterCatalog(){
 	}
 }
 */
+

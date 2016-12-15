@@ -14,14 +14,16 @@ Reader::Reader(std::string filename){
 				bool gotImage = false;
 				bool gotName = false;
 				bool gotHitchance = false;
+				bool gotDescription = false;
 
 				std::string tmpname;
 				std::string tmpimage;
+				std::string tmpdescription;
 				int tmpvalue;
-				int tmphitchance;
+				double tmphitchance;
 
 				while(std::getline(open_file, newline) && newline!="}"){
-					newline.erase(std::remove_if(newline.begin(), newline.end(), isspace), newline.end());
+					//newline.erase(std::remove_if(newline.begin(), newline.end(), isspace), newline.end());
 					std::string delimiter = ":";
 					if(newline.substr(0, newline.find(delimiter)) =="type"){
 						std::string tmptype = newline.substr(newline.find(delimiter)+1);
@@ -47,30 +49,36 @@ Reader::Reader(std::string filename){
 					else if(newline.substr(0, newline.find(delimiter)) =="hitchance"){
 						std::string tmptmphitchance = newline.substr(newline.find(delimiter)+1);
 
-						tmphitchance = std::stoi(tmptmphitchance);
+						tmphitchance = std::stod(tmptmphitchance);
 
-						int tmphitchance = std::stoi(tmptmphitchance);
+						double tmphitchance = std::stod(tmptmphitchance);
 
 						gotHitchance = true;
 					}
-				}
-				if(gotType && gotValue && gotImage && gotName && !gotHitchance){
+					else if(newline.substr(0, newline.find(delimiter)) =="description"){
 
-					Armor jokuarmor(tmpname, tmpvalue, tmpimage);
-					Armor* p;
-					p = &jokuarmor;
-					items.push_back(p);
+						tmpdescription=newline.substr(newline.find(delimiter)+1);
+
+						
+
+						gotDescription = true;
+					}
 				}
 				
-				else if(gotType && gotValue && gotImage && gotName && gotHitchance){
-					Weapon jokuweapon (tmpname, tmpvalue, tmpimage, tmphitchance);
-					Weapon* p;
-					p = &jokuweapon;
-
-					items.push_back(p);
+				if(gotType && gotValue && gotImage && gotName && !gotHitchance && gotDescription){
+					items.push_back(new Armor(tmpname, tmpvalue, tmpimage, tmpdescription));
+					
+				}
+				
+				else if(gotType && gotValue && gotImage && gotName && gotHitchance && gotDescription){
+					items.push_back(new Weapon(tmpname, tmpvalue, tmpimage, tmphitchance,tmpdescription));
+					for(int i=0;i<items.size();i++){
+						std::cout<<items[i]->getHitchance()<<"  "<<tmphitchance<<std::endl;
+					}
+					std::cout<<std::endl<<std::flush;
 				}
 				else{
-					std::cout << "Itemin tiedot vialliset" << std::endl;
+					std::cout << "Itemin tiedot vialliset" << std::endl <<std::flush;
 				}
 			}
 		}
@@ -87,7 +95,7 @@ void Reader::push_item(Item itemi){
 }
 */
 std::vector<Item*> Reader::get_items(){
-
+	std::cout<<items.size()<<std::endl<<std::flush;
 	return items;
 }
 

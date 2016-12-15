@@ -30,7 +30,7 @@ private:
 	void drawStats(sf::RenderWindow & window);
 	void drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero & hero);
 	std::deque<std::string> messages;
-	std::vector<Item> bag;
+	std::vector<Item*> bag;
 	sf::Color fillColor;
 	sf::Color borderColor;
 	
@@ -48,7 +48,8 @@ private:
 	int eqWepInd;
 	int eqArmInd;
 	
-	bool clicked;		//checks mouse click
+	bool clickedl;
+	bool clickedr;		//checks mouse click
 };
 	
 #endif

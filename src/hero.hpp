@@ -21,17 +21,18 @@ class Hero {
 		int getAgi();
 		int getMana();
 		int getDef();
-		bool addItem(Item itm);
+		bool addItem(Item* itm);
 		bool equip(int itmInd);
+		void unEquip(int ind);
 		void dropItem(int itmInd);
-		std::vector<Item> getBag();
+		std::vector<Item*> getBag();
 
 		int eqWepInd;
 		int eqArmInd;
 		
 	private:
 
-		std::vector<Item> bag;  //Hero's available items
+		std::vector<Item*> bag;  //Hero's available items
 		int maxhp;			//Hero's max health points	
 		int hp;				//Hero's current health points
 		int lvl;			//Level of the hero
