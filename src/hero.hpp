@@ -26,6 +26,7 @@ class Hero {
 		void unEquip(int ind);
 		void dropItem(int itmInd);
 		std::vector<Item*> getBag();
+		double getWepHitchance();
 
 		int eqWepInd;
 		int eqArmInd;
