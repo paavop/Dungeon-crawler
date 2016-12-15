@@ -72,10 +72,12 @@ Reader::Reader(std::string filename){
 				
 				else if(gotType && gotValue && gotImage && gotName && gotHitchance && gotDescription){
 					items.push_back(new Weapon(tmpname, tmpvalue, tmpimage, tmphitchance,tmpdescription));
+					/*
 					for(int i=0;i<items.size();i++){
 						std::cout<<items[i]->getHitchance()<<"  "<<tmphitchance<<std::endl;
 					}
 					std::cout<<std::endl<<std::flush;
+					*/
 				}
 				else{
 					std::cout << "Itemin tiedot vialliset" << std::endl <<std::flush;
@@ -95,7 +97,7 @@ void Reader::push_item(Item itemi){
 }
 */
 std::vector<Item*> Reader::get_items(){
-	std::cout<<items.size()<<std::endl<<std::flush;
+
 	return items;
 }
 

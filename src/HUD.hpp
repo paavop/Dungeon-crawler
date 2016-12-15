@@ -14,7 +14,7 @@ class HUD{
 public:
 	HUD();
 	HUD(Hero& hero);
-	void drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero & hero);
+	void drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero & hero,int score);
 	void sendMsg(std::string s);
 	void updateStats(Hero& hero,unsigned int lvl);
 	
@@ -27,7 +27,7 @@ private:
 	void drawItemStats(int x,int y,sf::RenderWindow & window,Hero & hero);
 	void drawTextBox(sf::RenderWindow & window);
 
-	void drawStats(sf::RenderWindow & window);
+	void drawStats(sf::RenderWindow & window,int score);
 	void drawItems(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero & hero);
 	std::deque<std::string> messages;
 	std::vector<Item*> bag;

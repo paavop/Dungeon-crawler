@@ -88,7 +88,7 @@ void HUD::updateStats(Hero & hero,unsigned int lvl){
 	bag=hero.getBag();
 	dngLvl=lvl;
 }
-void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero& hero){
+void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & sprites,Hero& hero,int score){
 	sf::RectangleShape rect(sf::Vector2f(width-2*bordersize,height-2*bordersize));
 	rect.setFillColor(fillColor);
 	rect.setOutlineThickness(bordersize);
@@ -96,7 +96,7 @@ void HUD::drawHUD(sf::RenderWindow & window,std::map<std::string,sf::Sprite> & s
 	rect.setPosition(startx+bordersize,starty+bordersize);
 	window.draw(rect);
 	drawTextBox(window);
-	drawStats(window);
+	drawStats(window,score);
 
 	drawItems(window,sprites,hero);
 	
@@ -186,19 +186,25 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 	if(x<200 && y<100 && x>0 && y>0){
 		int selected=x/50+4*(int)(y/50);
 		if(selected>=0 && selected<bag.size()){
+			int ysize=0;
+			if(bag[selected]->getType()=="Weapon"){
+				ysize=65;
+			}else{
+				ysize=50;
+			}
 			//std::cout<<bag[selected].getName()<<std::endl;
-			sf::RectangleShape rect(sf::Vector2f(175,50));
+			sf::RectangleShape rect(sf::Vector2f(175,ysize));
 			//std::cout<<x<<","<<y<<std::endl;
 			rect.setFillColor(sf::Color::Black);
 			rect.setOutlineThickness(3);
 			rect.setOutlineColor(sf::Color::White);
-			rect.setPosition(stx+x-175,sty+y-50);
+			rect.setPosition(stx+x-175,sty+y-ysize);
 			window.draw(rect);
 			sf::Font font;
 			font.loadFromFile("resources/joystix_monospace.ttf");
 			sf::Text text(bag[selected]->getName(),font);
 			text.setCharacterSize(14);
-			text.setPosition(stx+x-175,sty+y-50);
+			text.setPosition(stx+x-175,sty+y-ysize);
 			window.draw(text);
 			
 			std::ostringstream tmp;
@@ -206,7 +212,7 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 			text.setCharacterSize(10);
 			if(bag[selected]->getType()=="Weapon"){
 				text.setString("Attack: "+tmp.str());
-				std::cout<<bag[selected]->getHitchance()<<std::endl;
+
 
 			}
 			if(bag[selected]->getType()=="Armor"){
@@ -215,6 +221,18 @@ void HUD::drawItemStats(int x, int y,sf::RenderWindow & window,Hero & hero){
 
 			text.move(0,20);
 			window.draw(text);
+			
+			if(bag[selected]->getType()=="Weapon"){
+				tmp.str("");
+				tmp.clear();
+				tmp<<bag[selected]->getHitchance();
+				text.setString("Hit%: "+tmp.str());
+				text.move(0,15);
+				window.draw(text);
+
+
+			}
+			
 			text.setString(bag[selected]->getDescription());
 			text.move(0,15);
 			window.draw(text);
@@ -287,7 +305,7 @@ void HUD::sendMsg(std::string msg){
 		messages.pop_back();
 	}
 }
-void HUD::drawStats(sf::RenderWindow & window){
+void HUD::drawStats(sf::RenderWindow & window,int score){
 
 	std::ostringstream oss;
 	
@@ -299,7 +317,8 @@ void HUD::drawStats(sf::RenderWindow & window){
 	text.setColor(sf::Color::Black);
 	
 	oss<<"Dungeon lvl: "<<dngLvl<<std::endl;
-	oss<<"Health: "<<heroHp<<"/"<<heroMaxHp<<std::endl<<std::endl;
+	oss<<"Score: "<<score<<std::endl;
+	oss<<"Health: "<<heroHp<<"/"<<heroMaxHp<<std::endl;
 	
 	oss<<"Exp   : "<<heroExp<<"/"<<heroExpToNext<<std::endl;
 	oss<<"Level : "<<heroLvl<<std::endl<<std::endl;

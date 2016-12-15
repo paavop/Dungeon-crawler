@@ -57,17 +57,17 @@ GameManager::GameManager(){
 	for(int ind=0;ind<monsters.size();ind++){
 		loadEnemyTexture(monsters[ind]);
 	}
-	std::cout << "Successful: load enemy textures\n" <<std::flush; 
+	//std::cout << "Successful: load enemy textures\n" <<std::flush; 
 
 	for(int ind=0;ind<items.size();ind++){
-		std::cout << "Try: load no."<<ind+1<<" of item textures\n" <<std::flush; 
-		std::cout << "Try: Get name: "<<items[0]->getName()<<" of item textures\n" <<std::flush; 
+		//std::cout << "Try: load no."<<ind+1<<" of item textures\n" <<std::flush; 
+		//std::cout << "Try: Get name: "<<items[0]->getName()<<" of item textures\n" <<std::flush; 
 		loadItemTexture(items[ind]);
 	}
-	std::cout << "Successful: load item textures\n" <<std::flush; 
+	//std::cout << "Successful: load item textures\n" <<std::flush; 
 
 	hero.addItem(items[0]);
-	std::cout << "Successful: set initial item for hero\n" <<std::flush; 
+	//std::cout << "Successful: set initial item for hero\n" <<std::flush; 
 
 
 
@@ -123,7 +123,7 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 
 		drawMap(window);
 		window.draw(MC);
-		hud.drawHUD(window,item_sprites,hero);
+		hud.drawHUD(window,item_sprites,hero,score);
 		window.draw(rect);
 
 
@@ -139,7 +139,7 @@ void GameManager::nextLevel(sf::RenderWindow& window){
 
 		drawMap(window);
 		window.draw(MC);
-		hud.drawHUD(window,item_sprites,hero);
+		hud.drawHUD(window,item_sprites,hero,score);
 		window.draw(rect);
 
 
@@ -186,20 +186,20 @@ void GameManager::loadEnemyTexture(Monster& enemy){
 }
 //Goes through itemlist and adds every texture and sprite
 void GameManager::loadItemTexture(Item* item){
-	std::cout << "TEST, loadItemTexure $0\n" <<std::flush;
-	std::cout << "Current item name: "<<item->getName()<<" & "<<item->getImagename()<<std::flush;
+	//std::cout << "TEST, loadItemTexure $0\n" <<std::flush;
+	//std::cout << "Current item name: "<<item->getName()<<" & "<<item->getImagename()<<std::flush;
 	if(item_textures.find(item->getName())==item_textures.end()){
-		std::cout << "TEST, loadItemTexture $1\n" <<std::flush;
+		//std::cout << "TEST, loadItemTexture $1\n" <<std::flush;
 		sf::Texture new_texture;
 		if (!new_texture.loadFromFile(item->getImagename())){
 			perror("Couldn't load item texture: "); std::cout << item->getImagename()<<std::flush;
 		}
-		std::cout << "TEST, loadItemTexture $2\n" <<std::flush;
+		//std::cout << "TEST, loadItemTexture $2\n" <<std::flush;
 
 		item_textures[item->getName()]=new_texture;
 		item_sprites[item->getName()]=sf::Sprite();
 		item_sprites[item->getName()].setTexture(item_textures[item->getName()]);
-		std::cout << "TEST, loadItemTexture $3\n" <<std::flush;
+		//std::cout << "TEST, loadItemTexture $3\n" <<std::flush;
 	}
 }
 //Checks for user input, checks if the player has found next level, updates HUD
@@ -248,7 +248,7 @@ void GameManager::drawAll(sf::RenderWindow & window){
 	//drawFps(window);
 	window.draw(MC);
 	drawEnemies(window);
-	hud.drawHUD(window,item_sprites,hero);
+	hud.drawHUD(window,item_sprites,hero,score);
 	
 
 
