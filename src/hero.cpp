@@ -168,7 +168,14 @@ std::vector<Item*> Hero::getBag(){
 }
 
 double Hero::getWepHitchance(){
-	return bag[eqWepInd]->getHitchance();
+	if(eqWepInd==-1){
+		double basicChance = 0.95
+		return basicChance;
+	}
+	else{
+		return bag[eqWepInd]->getHitchance();
+	}
+
 }
 	
 	
