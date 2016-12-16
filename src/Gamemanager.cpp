@@ -18,7 +18,7 @@ GameManager::GameManager(){
 
 	
 	
-	animationTime=0.5;
+	animationTime=0.15;
 	
 	fpsTime=0;
 	//Loading textures to sprites
@@ -230,7 +230,9 @@ void GameManager::updateAll(sf::RenderWindow& window){
 }
 //Uses different draw-functions to draw everything
 void GameManager::drawAll(sf::RenderWindow & window){
+	
 	updatePercentages();
+	
 	if (movePercentage>0 && movePercentage<0.5){
 		SourceSprite.left=50;
 	}else if (movePercentage>0.5 && movePercentage<1){
@@ -443,7 +445,7 @@ void GameManager::updatePercentages(){
 			movePercentage=fabs(xPercentage);
 		}
 
-		if(movePercentage>=1){
+		if(movePercentage>=1 || movePercentage==0){
 
 			movingLeft=false;
 			movingUp=false;
@@ -769,7 +771,7 @@ void GameManager::enemyTurn(){
 	for(n=0;n<monsters.size();n++){
 		if(monsters[n].getHp()<=0){
 			remove=n;
-			break;
+			continue;
 		}
 		tryDetectPlayer(monsters[n]);
 		monsters[n].stopMove();
