@@ -31,7 +31,7 @@ TEST(test_game, test_hero_weapon) {
 	Hero hero;
 	hero=Hero(100,10,10,10,100);
 	Weapon weapon("ase",10,"src",0.5,"sharp");
-	hero.addItem(weapon);
+	hero.addItem(&weapon);
 	hero.equip(0);
 	EXPECT_EQ (20,hero.getStr());
 }
@@ -39,7 +39,7 @@ TEST(test_game, test_hero_armor) {
 	Hero hero;
 	hero=Hero(100,10,10,10,100);
 	Armor armor("kilpi",10,"src","cool");
-	hero.addItem(armor);
+	hero.addItem(&armor);
 	hero.equip(0);
 	EXPECT_EQ (20,hero.getDef());
 }
@@ -63,13 +63,13 @@ TEST(test_game, test_hero_lvlup) {
 	EXPECT_LT (10,hero.getAgi());
 }
 TEST(test_game, test_monster_creation) {
-	Monster monster(100,10,10,10,1,3,sf::Vector2i(0,0),"badguy");
+	Monster monster(100,10,10,10,1,3,sf::Vector2i(0,0),"badguy","image");
 	
 	EXPECT_EQ (100,monster.getHp());
 	
 }
 TEST(test_game, test_monster_move) {
-	Monster monster(100,10,10,10,1,3,sf::Vector2i(1,1),"badguy");
+	Monster monster(100,10,10,10,1,3,sf::Vector2i(1,1),"badguy","image");
 	monster.moveUp();
 	EXPECT_EQ (0,monster.getPos().y);
 	monster.moveDown();

@@ -10,7 +10,7 @@ TEST_DIR = .
 CPPFLAGS += -isystem $(GTEST_DIR)/include
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += -std=c++0x -g -Wall -Wextra -pthread -Wno-missing-field-initializers
+CXXFLAGS += -std=c++0x -g  -Wextra -pthread -Wno-missing-field-initializers
 
 # All tests produced by this Makefile.  Remember to add new tests you
 # created to the list.
